@@ -1,0 +1,101 @@
+:root {
+  --ink: #000000;
+  --paper: #ffffff;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font:
+    1.125rem / 1.6 system-ui,
+    sans-serif;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+header {
+  text-align: right;
+}
+
+main {
+  flex: 1;
+}
+
+h1 {
+  margin: 0.5rem 0 0;
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
+.tagline {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+a {
+  color: var(--ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+button,
+.actions a {
+  display: inline-block;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.actions .primary,
+button:hover,
+.actions a:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.actions .primary:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+footer {
+  padding-top: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none;
+    animation: none;
+  }
+}

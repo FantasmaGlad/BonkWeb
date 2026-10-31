@@ -1,0 +1,5 @@
+{
+  "formatter": { "indentStyle": "space", "lineWidth": 100 },
+  "files": { "includes": ["**", "!dist"] },
+  "linter": { "enabled": true, "rules": { "recommended": true, "a11y": { "recommended": true } } }
+}
