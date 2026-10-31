@@ -1,4 +1,4 @@
-export const VERSION = "0.0.2";
+export const VERSION = "0.0.3";
 
 const BASE = `https://github.com/FantasmaGlad/Bonk/releases/download/v${VERSION}`;
 
@@ -11,6 +11,12 @@ export type Family = {
   writes: boolean;
   files: readonly Download[];
 };
+
+const cli = (arch: string, target: string, format: ".tar.gz" | ".zip"): Download => ({
+  arch: `${arch} CLI`,
+  format,
+  file: `bonk-cli-${VERSION}-${target}${format}`,
+});
 
 const tar = (arch: string, target: string): Download => ({
   arch,
@@ -44,7 +50,10 @@ export const FAMILIES: readonly Family[] = [
     name: "Arch, Manjaro",
     logos: ["arch", "manjaro"],
     writes: true,
-    files: [tar("x86_64", "linux-x86_64"), tar("ARM64", "linux-aarch64")],
+    files: [
+      { arch: "x86_64", format: ".pkg.tar.zst", file: `bonk-${VERSION}-1-x86_64.pkg.tar.zst` },
+      tar("ARM64", "linux-aarch64"),
+    ],
   },
   {
     id: "linux",
@@ -65,9 +74,12 @@ export const FAMILIES: readonly Family[] = [
     logos: ["windows"],
     writes: false,
     files: [
-      { arch: "x86_64", format: ".exe", file: `bonk-${VERSION}-windows-x86_64.exe` },
-      { arch: "ARM64", format: ".exe", file: `bonk-${VERSION}-windows-aarch64.exe` },
-      { arch: "x86", format: ".exe", file: `bonk-${VERSION}-windows-i686.exe` },
+      { arch: "x86_64", format: ".exe", file: `bonk-${VERSION}-windows-x86_64-setup.exe` },
+      { arch: "ARM64", format: ".exe", file: `bonk-${VERSION}-windows-aarch64-setup.exe` },
+      { arch: "x86", format: ".exe", file: `bonk-${VERSION}-windows-i686-setup.exe` },
+      cli("x86_64", "windows-x86_64", ".zip"),
+      cli("ARM64", "windows-aarch64", ".zip"),
+      cli("x86", "windows-i686", ".zip"),
     ],
   },
   {
@@ -75,7 +87,11 @@ export const FAMILIES: readonly Family[] = [
     name: "macOS 12+",
     logos: ["apple"],
     writes: false,
-    files: [tar("Universal", "macos-universal")],
+    files: [
+      { arch: "Universal", format: ".dmg", file: `bonk-${VERSION}-macos-universal.dmg` },
+      cli("x86_64", "macos-x86_64", ".tar.gz"),
+      cli("ARM64", "macos-aarch64", ".tar.gz"),
+    ],
   },
 ];
 

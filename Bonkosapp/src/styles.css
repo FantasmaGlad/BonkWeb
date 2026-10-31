@@ -27,7 +27,21 @@ body {
 }
 
 header {
-  text-align: right;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+[aria-current="page"] {
+  font-weight: 700;
 }
 
 main {
@@ -136,4 +150,52 @@ footer {
     transition: none;
     animation: none;
   }
+}
+
+.manager {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--ink);
+}
+
+.manager h3 {
+  margin: 1rem 0 0.25rem;
+  font-size: 1rem;
+}
+
+pre {
+  margin: 0;
+  padding: 0.75rem;
+  overflow-x: auto;
+  border: 2px solid var(--ink);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+code {
+  overflow-wrap: anywhere;
+}
+
+dl {
+  margin: 0;
+}
+
+dl div {
+  padding: 0.5rem 0;
+}
+
+dt {
+  font-weight: 700;
+}
+
+dd {
+  margin: 0;
+}
+
+.index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  padding: 0;
+  list-style: none;
 }
