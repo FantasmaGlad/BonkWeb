@@ -1,5 +1,19 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+# Vulnerability disclosure policy for bonk-os.app (RFC 9116).
+# OpenPGP key fingerprint: A782 AC57 321A 862C 2ED8 F0FB 34F1 5332 E2A0 7A30
 Contact: mailto:security@bonk-os.app
+Contact: https://github.com/FantasmaGlad/Bonk/security/advisories/new
 Expires: 2027-10-31T00:00:00.000Z
+Encryption: https://bonk-os.app/.well-known/security.asc
 Preferred-Languages: en, fr
 Canonical: https://bonk-os.app/.well-known/security.txt
 Policy: https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.md
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQSngqxXMhqGLC7Y8Ps08VMy4qB6MAUCauZxPwAKCRA08VMy4qB6
+MCnYAQDgzH8kJgNnpf1sppeyY1LXYeMGUfirQzV4m6qa6ZZo9QEA0hHOfmCALooK
+v8dk/UeBoAH7djBVP05dZHb8BtVz7Ag=
+=ZdGT
+-----END PGP SIGNATURE-----
