@@ -3,8 +3,10 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import axe from "axe-core";
 import { afterEach, describe, expect, it } from "vitest";
 import { App } from "./App";
+import commands from "./commands.json";
 import { contrastRatio } from "./contrast";
 import { downloadUrl, FAMILIES, VERSION } from "./downloads";
+import { MANAGERS } from "./install";
 
 afterEach(cleanup);
 
@@ -49,6 +51,33 @@ describe("téléchargements", () => {
     const previews = FAMILIES.filter((family) => !family.writes).map((family) => family.id);
     expect(previews).toEqual(["windows", "macos"]);
     expect(screen.getAllByText("Preview: cannot write to disks yet.").length).toBe(2);
+  });
+});
+
+describe("installation", () => {
+  it("donne installer, mettre à jour et retirer pour chaque gestionnaire", () => {
+    render(<App page="install" />);
+    expect(screen.getAllByRole("heading", { level: 2 }).length).toBe(MANAGERS.length + 1);
+    for (const manager of MANAGERS) {
+      expect(manager.install && manager.update && manager.remove).toBeTruthy();
+    }
+  });
+});
+
+describe("commandes", () => {
+  it("liste chaque commande, sans texte vide, dans les deux langues", () => {
+    render(<App page="docs" />);
+    expect(commands.commands.length).toBeGreaterThan(20);
+    for (const command of commands.commands) {
+      expect(command.text.en && command.text.fr, command.command).toBeTruthy();
+      expect(document.getElementById(command.command.replaceAll(" ", "-"))).toBeTruthy();
+    }
+  });
+
+  it("reste accessible", async () => {
+    const { container } = render(<App page="docs" />);
+    const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
+    expect(result.violations.map((violation) => violation.id)).toEqual([]);
   });
 });
 
