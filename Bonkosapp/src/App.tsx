@@ -1,7 +1,13 @@
 import { type ReactNode, useEffect, useState } from "react";
 import commands from "./commands.json";
-import { downloadUrl, FAMILIES, VERSION } from "./downloads";
-import { HEADLESS_INSTALL, HEADLESS_REMOVE, MANAGERS } from "./install";
+import { CLI_FAMILIES, downloadUrl, FAMILIES, type Family, VERSION } from "./downloads";
+import {
+  HEADLESS_INSTALL,
+  HEADLESS_INSTALL_WINDOWS,
+  HEADLESS_REMOVE,
+  HEADLESS_REMOVE_WINDOWS,
+  MANAGERS,
+} from "./install";
 import { type Language, RELEASES, SECURITY_MAIL, SOURCE, TEXT } from "./text";
 
 export type Page = "home" | "install" | "docs";
@@ -35,27 +41,42 @@ function Home({ language }: { language: Language }) {
       <h2>
         {text.downloads} <span className="version">{`${text.version} ${VERSION}`}</span>
       </h2>
-      <div className="families">
-        {FAMILIES.map((family) => (
-          <section key={family.id} aria-labelledby={family.id} className="family">
-            <Logos names={family.logos} />
-            <h3 id={family.id}>{family.name}</h3>
-            {family.writes ? null : <p className="note">{text.preview}</p>}
-            <p className="actions">
-              {family.files.map(({ arch, format, file }) => (
-                <a key={file} href={downloadUrl(file)}>
-                  {arch} <small>{format}</small>
-                </a>
-              ))}
-            </p>
-          </section>
-        ))}
-      </div>
+      <Families families={FAMILIES} language={language} />
+      <h2 id="cli">{text.headless}</h2>
+      <p>{text.headlessText}</p>
+      <pre>{HEADLESS_INSTALL}</pre>
+      <pre>{HEADLESS_INSTALL_WINDOWS}</pre>
+      <Families families={CLI_FAMILIES} language={language} />
+      <p className="links">
+        <a href="/install/#headless">{text.cliCommands}</a>
+      </p>
       <p className="links">
         <a href={RELEASES}>{text.allReleases}</a>
         <a href={SOURCE}>{text.source}</a>
       </p>
     </>
+  );
+}
+
+function Families({ families, language }: { families: readonly Family[]; language: Language }) {
+  const text = TEXT[language];
+  return (
+    <div className="families">
+      {families.map((family) => (
+        <section key={family.id} aria-labelledby={family.id} className="family">
+          <Logos names={family.logos} />
+          <h3 id={family.id}>{family.name}</h3>
+          {family.writes ? null : <p className="note">{text.preview}</p>}
+          <p className="actions">
+            {family.files.map(({ arch, format, file }) => (
+              <a key={file} href={downloadUrl(file)}>
+                {arch} <small>{format}</small>
+              </a>
+            ))}
+          </p>
+        </section>
+      ))}
+    </div>
   );
 }
 
@@ -71,6 +92,8 @@ function Install({ language }: { language: Language }) {
           {manager.note ? <p className="note">{manager.note[language]}</p> : null}
           <h3>{text.installStep}</h3>
           <pre>{manager.install}</pre>
+          <h3>{text.cliStep}</h3>
+          <pre>{manager.cli}</pre>
           <h3>{text.updateStep}</h3>
           <pre>{manager.update}</pre>
           <h3>{text.removeStep}</h3>
@@ -78,15 +101,18 @@ function Install({ language }: { language: Language }) {
         </section>
       ))}
       <section aria-labelledby="headless" className="manager">
-        <Logos names={["linux", "apple"]} />
+        <Logos names={["linux", "apple", "windows"]} />
         <h2 id="headless">{text.headless}</h2>
         <p>{text.headlessText}</p>
         <h3>{text.installStep}</h3>
         <pre>{HEADLESS_INSTALL}</pre>
+        <pre>{HEADLESS_INSTALL_WINDOWS}</pre>
         <h3>{text.updateStep}</h3>
         <pre>{HEADLESS_INSTALL}</pre>
+        <pre>{HEADLESS_INSTALL_WINDOWS}</pre>
         <h3>{text.removeStep}</h3>
         <pre>{HEADLESS_REMOVE}</pre>
+        <pre>{HEADLESS_REMOVE_WINDOWS}</pre>
       </section>
     </>
   );

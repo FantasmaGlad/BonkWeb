@@ -9,6 +9,8 @@ export type Manager = {
   logos: readonly string[];
   note?: Record<Language, string>;
   install: string;
+  /** Commande qui remplace l'installation par la version sans fenêtre. */
+  cli: string;
   update: string;
   remove: string;
 };
@@ -28,6 +30,7 @@ curl -fsSL ${URL}/bonk.gpg | sudo tee /etc/apt/keyrings/bonk.gpg > /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/bonk.gpg] ${URL}/debian stable main" | sudo tee /etc/apt/sources.list.d/bonk.list
 sudo apt update
 sudo apt install bonk`,
+    cli: "sudo apt install bonk-cli",
     update: "sudo apt update && sudo apt upgrade bonk",
     remove: "sudo apt remove bonk",
   },
@@ -37,6 +40,7 @@ sudo apt install bonk`,
     logos: ["fedora", "rhel"],
     install: `sudo curl -fsSL ${URL}/rpm/bonk.repo -o /etc/yum.repos.d/bonk.repo
 sudo dnf install bonk`,
+    cli: "sudo dnf install bonk-cli",
     update: "sudo dnf upgrade bonk",
     remove: "sudo dnf remove bonk",
   },
@@ -48,6 +52,7 @@ sudo dnf install bonk`,
 sudo zypper addrepo ${URL}/rpm/x86_64 bonk
 sudo zypper refresh
 sudo zypper install bonk`,
+    cli: "sudo zypper install bonk-cli",
     update: "sudo zypper update bonk",
     remove: "sudo zypper remove bonk",
   },
@@ -59,6 +64,7 @@ sudo zypper install bonk`,
 sudo pacman-key --lsign-key ${KEY}
 printf '\\n[bonk]\\nSigLevel = Required\\nServer = ${URL}/arch/$arch\\n' | sudo tee -a /etc/pacman.conf
 sudo pacman -Sy bonk`,
+    cli: "sudo pacman -S bonk-cli",
     update: "sudo pacman -Syu",
     remove: "sudo pacman -R bonk",
   },
@@ -68,6 +74,7 @@ sudo pacman -Sy bonk`,
     logos: ["apple"],
     note: PREVIEW,
     install: "brew install fantasmaglad/bonk/bonk",
+    cli: "brew install fantasmaglad/bonk/bonk-cli",
     update: "brew upgrade bonk",
     remove: "brew uninstall bonk",
   },
@@ -77,6 +84,7 @@ sudo pacman -Sy bonk`,
     logos: ["windows"],
     note: PREVIEW,
     install: `scoop install ${URL}/scoop/bonk.json`,
+    cli: `scoop install ${URL}/scoop/bonk-cli.json`,
     update: `scoop uninstall bonk; scoop install ${URL}/scoop/bonk.json`,
     remove: "scoop uninstall bonk",
   },
@@ -84,3 +92,5 @@ sudo pacman -Sy bonk`,
 
 export const HEADLESS_INSTALL = `curl -fsSL ${URL}/install.sh | sh`;
 export const HEADLESS_REMOVE = "rm ~/.local/bin/bonk";
+export const HEADLESS_INSTALL_WINDOWS = `irm ${URL}/install.ps1 | iex`;
+export const HEADLESS_REMOVE_WINDOWS = 'Remove-Item "$env:LOCALAPPDATA\\Programs\\Bonk" -Recurse';

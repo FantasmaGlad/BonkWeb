@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { App } from "./App";
 import commands from "./commands.json";
 import { contrastRatio } from "./contrast";
-import { downloadUrl, FAMILIES, VERSION } from "./downloads";
+import { CLI_FAMILIES, downloadUrl, FAMILIES, VERSION } from "./downloads";
 import { MANAGERS } from "./install";
 
 afterEach(cleanup);
@@ -14,7 +14,9 @@ describe("page de départ", () => {
   it("donne le téléchargement et les sources", () => {
     render(<App />);
     expect(screen.getByRole("heading", { level: 1, name: "Bonk" })).toBeTruthy();
-    expect(screen.getAllByRole("heading", { level: 3 }).length).toBe(FAMILIES.length);
+    expect(screen.getAllByRole("heading", { level: 3 }).length).toBe(
+      FAMILIES.length + CLI_FAMILIES.length,
+    );
     expect(screen.getByRole("link", { name: "All files and checksums" })).toBeTruthy();
   });
 
@@ -34,7 +36,7 @@ describe("page de départ", () => {
 
 describe("téléchargements", () => {
   it("chaque famille a son logo et des fichiers de la version annoncée", () => {
-    for (const family of FAMILIES) {
+    for (const family of [...FAMILIES, ...CLI_FAMILIES]) {
       expect(family.files.length).toBeGreaterThan(0);
       for (const logo of family.logos) {
         expect(existsSync(`public/icons/${logo}.svg`), logo).toBe(true);
@@ -48,9 +50,11 @@ describe("téléchargements", () => {
 
   it("dit que Windows et macOS sont des aperçus, et eux seuls", () => {
     render(<App />);
-    const previews = FAMILIES.filter((family) => !family.writes).map((family) => family.id);
-    expect(previews).toEqual(["windows", "macos"]);
-    expect(screen.getAllByText("Preview: cannot write to disks yet.").length).toBe(2);
+    const previews = [...FAMILIES, ...CLI_FAMILIES]
+      .filter((family) => !family.writes)
+      .map((family) => family.id);
+    expect(previews).toEqual(["windows", "macos", "cli-windows", "cli-macos"]);
+    expect(screen.getAllByText("Preview: cannot write to disks yet.").length).toBe(previews.length);
   });
 });
 
@@ -59,7 +63,8 @@ describe("installation", () => {
     render(<App page="install" />);
     expect(screen.getAllByRole("heading", { level: 2 }).length).toBe(MANAGERS.length + 1);
     for (const manager of MANAGERS) {
-      expect(manager.install && manager.update && manager.remove).toBeTruthy();
+      expect(manager.install && manager.cli && manager.update && manager.remove).toBeTruthy();
+      expect(manager.cli).toContain("bonk-cli");
     }
   });
 });
