@@ -1,9 +1,10 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import axe from "axe-core";
 import { afterEach, describe, expect, it } from "vitest";
 import { App } from "./App";
 import { contrastRatio } from "./contrast";
+import { downloadUrl, FAMILIES, VERSION } from "./downloads";
 
 afterEach(cleanup);
 
@@ -11,15 +12,14 @@ describe("page de départ", () => {
   it("donne le téléchargement et les sources", () => {
     render(<App />);
     expect(screen.getByRole("heading", { level: 1, name: "Bonk" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Download" }).getAttribute("href")).toContain(
-      "releases/latest",
-    );
+    expect(screen.getAllByRole("heading", { level: 3 }).length).toBe(FAMILIES.length);
+    expect(screen.getByRole("link", { name: "All files and checksums" })).toBeTruthy();
   });
 
   it("change de langue, et le dit au document", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: "Français" }));
-    expect(screen.getByRole("link", { name: "Télécharger" })).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 2, name: /Télécharger/ })).toBeTruthy();
     expect(document.documentElement.lang).toBe("fr");
   });
 
@@ -27,6 +27,28 @@ describe("page de départ", () => {
     const { container } = render(<App />);
     const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
     expect(result.violations.map((violation) => violation.id)).toEqual([]);
+  });
+});
+
+describe("téléchargements", () => {
+  it("chaque famille a son logo et des fichiers de la version annoncée", () => {
+    for (const family of FAMILIES) {
+      expect(family.files.length).toBeGreaterThan(0);
+      for (const logo of family.logos) {
+        expect(existsSync(`public/icons/${logo}.svg`), logo).toBe(true);
+      }
+      for (const { file } of family.files) {
+        expect(file).toContain(VERSION);
+        expect(downloadUrl(file)).toContain(`/releases/download/v${VERSION}/`);
+      }
+    }
+  });
+
+  it("dit que Windows et macOS sont des aperçus, et eux seuls", () => {
+    render(<App />);
+    const previews = FAMILIES.filter((family) => !family.writes).map((family) => family.id);
+    expect(previews).toEqual(["windows", "macos"]);
+    expect(screen.getAllByText("Preview: cannot write to disks yet.").length).toBe(2);
   });
 });
 
