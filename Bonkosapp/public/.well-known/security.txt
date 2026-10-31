@@ -1,0 +1,5 @@
+Contact: mailto:security@bonk-os.app
+Expires: 2027-10-31T00:00:00.000Z
+Preferred-Languages: en, fr
+Canonical: https://bonk-os.app/.well-known/security.txt
+Policy: https://github.com/FantasmaGlad/Bonk/blob/main/SECURITY.md
