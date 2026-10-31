@@ -1,12 +1,6 @@
 # BonkWeb
 
-Website of [Bonk](https://github.com/FantasmaGlad/Bonk), served at <https://bonk-os.app>.
+Source of the [Bonk](https://github.com/FantasmaGlad/Bonk) website, <https://bonk-os.app>.
 
-```bash
-cd Bonkosapp
-corepack enable
-pnpm install
-pnpm dev
-```
-
-Checks: `pnpm lint`, `pnpm test`, `pnpm build`. Black on white only: 21:1 contrast.
+Published for viewing only: see [LICENSE](LICENSE). Contributions: [CONTRIBUTING.md](CONTRIBUTING.md). Security
+reports: security@bonk-os.app.

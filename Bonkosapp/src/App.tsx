@@ -40,7 +40,7 @@ export function App() {
         <p>{text.preview}</p>
       </main>
       <footer>
-        <a href={`mailto:${SECURITY_MAIL}`}>{text.security}</a> · MIT
+        <a href={`mailto:${SECURITY_MAIL}`}>{text.security}</a>
       </footer>
     </>
   );
