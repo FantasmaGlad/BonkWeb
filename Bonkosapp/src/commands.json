@@ -1,0 +1,1340 @@
+{
+  "global": [
+    {
+      "flag": "-v, --verbose...",
+      "text": {
+        "en": "Detailed log (-v), then very detailed (-vv), on standard error",
+        "fr": "Journal détaillé (-v), puis très détaillé (-vv) sur la sortie d'erreur"
+      }
+    },
+    {
+      "flag": "--log-file <CHEMIN>",
+      "text": {
+        "en": "Also writes the log to this file (appends)",
+        "fr": "Écrit aussi le journal dans ce fichier (ajout en fin de fichier)"
+      }
+    },
+    {
+      "flag": "--log-format <LOG_FORMAT>",
+      "text": {
+        "en": "Log format: text, or one JSON event per line [possible values: text, json]",
+        "fr": "Format du journal : texte, ou un événement JSON par ligne [possible values: text, json]"
+      }
+    },
+    {
+      "flag": "--fixture <FICHIER>",
+      "text": {
+        "en": "Replays a captured listing (`bonk diagnose --capture`) instead of reading this system: reading, `--dry-run` and `--simulate` only, never writes to a disk",
+        "fr": "Rejoue une énumération capturée (`bonk diagnose --capture`) au lieu de lire ce système : lecture, `--dry-run` et `--simulate` seulement, jamais d'écriture sur un disque"
+      }
+    },
+    {
+      "flag": "--no-gui",
+      "text": {
+        "en": "Never opens the window: without a command, shows help and fails, for scripts",
+        "fr": "N'ouvre jamais la fenêtre : sans commande, affiche l'aide et échoue, pour les scripts"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "command": "bonk disk list",
+      "text": {
+        "en": "Lists the disks Bonk can write to (read only)",
+        "fr": "Liste les disques que Bonk peut écrire (lecture seule)"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output, for scripts",
+            "fr": "Sortie JSON, pour les scripts"
+          }
+        },
+        {
+          "flag": "--all",
+          "text": {
+            "en": "Also shows disks that are excluded or hidden, with the reason",
+            "fr": "Affiche aussi les disques écartés ou non affichés, avec la raison"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Also offers non-system internal disks (stronger warning)",
+            "fr": "Propose aussi les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks (loop, zram, virtual machine)",
+            "fr": "Mode test : autorise les disques virtuels (loop, zram, machine virtuelle)"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk disk info",
+      "text": {
+        "en": "Details of a disk (read only)",
+        "fr": "Détail d'un disque (lecture seule)"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list --all`) or its path (`/dev/sdb`)",
+            "fr": "Identifiant stable du disque (voir `bonk list --all`) ou son chemin (`/dev/sdb`)"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output, for scripts",
+            "fr": "Sortie JSON, pour les scripts"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Evaluates the disk, also offering non-system internal disks",
+            "fr": "Évalue le disque en proposant aussi les disques internes non système"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Evaluates the disk in test mode: virtual disks allowed",
+            "fr": "Évalue le disque en mode test : disques virtuels autorisés"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk disk write",
+      "text": {
+        "en": "Writes an image to a disk, then verifies it",
+        "fr": "Écrit une image sur un disque, puis la vérifie"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list`); with --simulate, path of the target image file",
+            "fr": "Identifiant stable du disque (voir `bonk list`) ; avec --simulate, chemin du fichier image cible"
+          }
+        },
+        {
+          "flag": "<SOURCE>",
+          "text": {
+            "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download, with its checksum",
+            "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger, avec son empreinte"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--simulate",
+          "text": {
+            "en": "The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware",
+            "fr": "La cible est un fichier image (créé s'il n'existe pas, avec --size) et non un disque : rejoue l'opération sans matériel"
+          }
+        },
+        {
+          "flag": "--size <OCTETS>",
+          "text": {
+            "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
+            "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Allows non-system internal disks (stronger warning)",
+            "fr": "Autorise les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks",
+            "fr": "Mode test : autorise les disques virtuels"
+          }
+        },
+        {
+          "flag": "--trace-io[=<TRACE_IO>]",
+          "text": {
+            "en": "Logs each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only",
+            "fr": "Journalise chaque accès bloc (décalage, durée, somme de contrôle) ; `=data` ajoute les premiers octets, pour un fichier image seulement"
+          }
+        },
+        {
+          "flag": "--elevate <ELEVATE>",
+          "text": {
+            "en": "Missing rights: auto (asks the system) or never (the caller's rights only)",
+            "fr": "Droits manquants : auto (demande au système) ou never (droits de l'appelant seulement)"
+          }
+        },
+        {
+          "flag": "--progress <PROGRESS>",
+          "text": {
+            "en": "Progress: auto, json (one event per line) or none",
+            "fr": "Progression : auto, json (un événement par ligne) ou none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        },
+        {
+          "flag": "--yes",
+          "text": {
+            "en": "Confirms the write: without --yes or --force, Bonk does nothing (it never asks)",
+            "fr": "Confirme l'écriture : sans --yes ni --force, Bonk ne fait rien (il ne pose jamais de question)"
+          }
+        },
+        {
+          "flag": "--dry-run",
+          "text": {
+            "en": "Describes what would be done, without writing to the drive; a URL is still downloaded to the cache, as the analysis needs the image",
+            "fr": "Décrit ce qui serait fait sans rien écrire sur le support ; une adresse est quand même téléchargée dans le cache, l'analyse ayant besoin de l'image"
+          }
+        },
+        {
+          "flag": "--sha256 <HEX>",
+          "text": {
+            "en": "Published SHA-256 checksum of this file: checked before touching the drive",
+            "fr": "Empreinte SHA-256 publiée pour ce fichier : contrôlée avant tout geste sur le support"
+          }
+        },
+        {
+          "flag": "--sha256-file <CHEMIN_OU_URL>",
+          "text": {
+            "en": "Published checksum file (SHA256SUMS), path or https:// URL: the checksum is looked up by image name",
+            "fr": "Fichier d'empreintes publié (SHA256SUMS), chemin ou adresse https:// : l'empreinte y est lue au nom de l'image"
+          }
+        },
+        {
+          "flag": "--cache-dir <DOSSIER>",
+          "text": {
+            "en": "Downloads folder; by default the user's cache folder",
+            "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
+          }
+        },
+        {
+          "flag": "--mode <MODE>",
+          "text": {
+            "en": "auto: analyzes the image, extracts a Windows ISO and refuses what would not boot; raw: writes the bytes as they are; extract: requires a Windows ISO",
+            "fr": "auto : analyse l'image, extrait une ISO Windows et refuse ce qui ne démarrerait pas ; raw : écrit les octets tels quels ; extract : exige une ISO Windows"
+          }
+        },
+        {
+          "flag": "--table <TABLE>",
+          "text": {
+            "en": "Partition table of a Windows drive; it still boots in UEFI in both cases",
+            "fr": "Table de partitions d'une clé Windows ; le démarrage reste en UEFI dans les deux cas"
+          }
+        },
+        {
+          "flag": "--no-verify",
+          "text": {
+            "en": "Does not read the drive back after writing",
+            "fr": "Ne relit pas le support après l'écriture"
+          }
+        },
+        {
+          "flag": "--no-repair-gpt",
+          "text": {
+            "en": "Does not repair the backup GPT after writing",
+            "fr": "Ne répare pas le GPT de secours après l'écriture"
+          }
+        },
+        {
+          "flag": "--force",
+          "text": {
+            "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
+            "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk disk verify",
+      "text": {
+        "en": "Compares a disk with an image, without writing anything",
+        "fr": "Compare un disque à une image, sans rien écrire"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list`); with --simulate, path of the target image file",
+            "fr": "Identifiant stable du disque (voir `bonk list`) ; avec --simulate, chemin du fichier image cible"
+          }
+        },
+        {
+          "flag": "<SOURCE>",
+          "text": {
+            "en": "Reference image",
+            "fr": "Image de référence"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--simulate",
+          "text": {
+            "en": "The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware",
+            "fr": "La cible est un fichier image (créé s'il n'existe pas, avec --size) et non un disque : rejoue l'opération sans matériel"
+          }
+        },
+        {
+          "flag": "--size <OCTETS>",
+          "text": {
+            "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
+            "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Allows non-system internal disks (stronger warning)",
+            "fr": "Autorise les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks",
+            "fr": "Mode test : autorise les disques virtuels"
+          }
+        },
+        {
+          "flag": "--trace-io[=<TRACE_IO>]",
+          "text": {
+            "en": "Logs each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only",
+            "fr": "Journalise chaque accès bloc (décalage, durée, somme de contrôle) ; `=data` ajoute les premiers octets, pour un fichier image seulement"
+          }
+        },
+        {
+          "flag": "--elevate <ELEVATE>",
+          "text": {
+            "en": "Missing rights: auto (asks the system) or never (the caller's rights only)",
+            "fr": "Droits manquants : auto (demande au système) ou never (droits de l'appelant seulement)"
+          }
+        },
+        {
+          "flag": "--progress <PROGRESS>",
+          "text": {
+            "en": "Progress: auto, json (one event per line) or none",
+            "fr": "Progression : auto, json (un événement par ligne) ou none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk disk repair-gpt",
+      "text": {
+        "en": "Repairs a disk's GPT",
+        "fr": "Répare le GPT d'un disque"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list`); with --simulate, path of the target image file",
+            "fr": "Identifiant stable du disque (voir `bonk list`) ; avec --simulate, chemin du fichier image cible"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--simulate",
+          "text": {
+            "en": "The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware",
+            "fr": "La cible est un fichier image (créé s'il n'existe pas, avec --size) et non un disque : rejoue l'opération sans matériel"
+          }
+        },
+        {
+          "flag": "--size <OCTETS>",
+          "text": {
+            "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
+            "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Allows non-system internal disks (stronger warning)",
+            "fr": "Autorise les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks",
+            "fr": "Mode test : autorise les disques virtuels"
+          }
+        },
+        {
+          "flag": "--trace-io[=<TRACE_IO>]",
+          "text": {
+            "en": "Logs each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only",
+            "fr": "Journalise chaque accès bloc (décalage, durée, somme de contrôle) ; `=data` ajoute les premiers octets, pour un fichier image seulement"
+          }
+        },
+        {
+          "flag": "--elevate <ELEVATE>",
+          "text": {
+            "en": "Missing rights: auto (asks the system) or never (the caller's rights only)",
+            "fr": "Droits manquants : auto (demande au système) ou never (droits de l'appelant seulement)"
+          }
+        },
+        {
+          "flag": "--progress <PROGRESS>",
+          "text": {
+            "en": "Progress: auto, json (one event per line) or none",
+            "fr": "Progression : auto, json (un événement par ligne) ou none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        },
+        {
+          "flag": "--yes",
+          "text": {
+            "en": "Confirms the repair",
+            "fr": "Confirme la réparation"
+          }
+        },
+        {
+          "flag": "--dry-run",
+          "text": {
+            "en": "Says whether anything needs repair, without writing anything",
+            "fr": "Dit s'il y a quelque chose à réparer, sans rien écrire"
+          }
+        },
+        {
+          "flag": "--force",
+          "text": {
+            "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
+            "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk cache list",
+      "text": {
+        "en": "Lists kept images, unfinished downloads included",
+        "fr": "Liste les images gardées, téléchargements inachevés compris"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--cache-dir <DOSSIER>",
+          "text": {
+            "en": "Downloads folder; by default the user's cache folder",
+            "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk cache clean",
+      "text": {
+        "en": "Removes kept images; a URL will be downloaded again at the next write",
+        "fr": "Supprime les images gardées ; une adresse sera retéléchargée à la prochaine écriture"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--cache-dir <DOSSIER>",
+          "text": {
+            "en": "Downloads folder; by default the user's cache folder",
+            "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
+          }
+        },
+        {
+          "flag": "--dry-run",
+          "text": {
+            "en": "Says what would be removed, without removing anything",
+            "fr": "Dit ce qui serait supprimé sans rien supprimer"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk list",
+      "text": {
+        "en": "Lists the disks Bonk can write to (shortcut for `disk list`)",
+        "fr": "Liste les disques que Bonk peut écrire (raccourci de `disk list`)"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output, for scripts",
+            "fr": "Sortie JSON, pour les scripts"
+          }
+        },
+        {
+          "flag": "--all",
+          "text": {
+            "en": "Also shows disks that are excluded or hidden, with the reason",
+            "fr": "Affiche aussi les disques écartés ou non affichés, avec la raison"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Also offers non-system internal disks (stronger warning)",
+            "fr": "Propose aussi les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks (loop, zram, virtual machine)",
+            "fr": "Mode test : autorise les disques virtuels (loop, zram, machine virtuelle)"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk info",
+      "text": {
+        "en": "Details of a disk (shortcut for `disk info`)",
+        "fr": "Détail d'un disque (raccourci de `disk info`)"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list --all`) or its path (`/dev/sdb`)",
+            "fr": "Identifiant stable du disque (voir `bonk list --all`) ou son chemin (`/dev/sdb`)"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output, for scripts",
+            "fr": "Sortie JSON, pour les scripts"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Evaluates the disk, also offering non-system internal disks",
+            "fr": "Évalue le disque en proposant aussi les disques internes non système"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Evaluates the disk in test mode: virtual disks allowed",
+            "fr": "Évalue le disque en mode test : disques virtuels autorisés"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk write",
+      "text": {
+        "en": "Writes an image to a disk, then verifies it (`--simulate`: to an image file)",
+        "fr": "Écrit une image sur un disque, puis la vérifie (`--simulate` : sur un fichier image)"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list`); with --simulate, path of the target image file",
+            "fr": "Identifiant stable du disque (voir `bonk list`) ; avec --simulate, chemin du fichier image cible"
+          }
+        },
+        {
+          "flag": "<SOURCE>",
+          "text": {
+            "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download, with its checksum",
+            "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger, avec son empreinte"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--simulate",
+          "text": {
+            "en": "The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware",
+            "fr": "La cible est un fichier image (créé s'il n'existe pas, avec --size) et non un disque : rejoue l'opération sans matériel"
+          }
+        },
+        {
+          "flag": "--size <OCTETS>",
+          "text": {
+            "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
+            "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Allows non-system internal disks (stronger warning)",
+            "fr": "Autorise les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks",
+            "fr": "Mode test : autorise les disques virtuels"
+          }
+        },
+        {
+          "flag": "--trace-io[=<TRACE_IO>]",
+          "text": {
+            "en": "Logs each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only",
+            "fr": "Journalise chaque accès bloc (décalage, durée, somme de contrôle) ; `=data` ajoute les premiers octets, pour un fichier image seulement"
+          }
+        },
+        {
+          "flag": "--elevate <ELEVATE>",
+          "text": {
+            "en": "Missing rights: auto (asks the system) or never (the caller's rights only)",
+            "fr": "Droits manquants : auto (demande au système) ou never (droits de l'appelant seulement)"
+          }
+        },
+        {
+          "flag": "--progress <PROGRESS>",
+          "text": {
+            "en": "Progress: auto, json (one event per line) or none",
+            "fr": "Progression : auto, json (un événement par ligne) ou none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        },
+        {
+          "flag": "--yes",
+          "text": {
+            "en": "Confirms the write: without --yes or --force, Bonk does nothing (it never asks)",
+            "fr": "Confirme l'écriture : sans --yes ni --force, Bonk ne fait rien (il ne pose jamais de question)"
+          }
+        },
+        {
+          "flag": "--dry-run",
+          "text": {
+            "en": "Describes what would be done, without writing to the drive; a URL is still downloaded to the cache, as the analysis needs the image",
+            "fr": "Décrit ce qui serait fait sans rien écrire sur le support ; une adresse est quand même téléchargée dans le cache, l'analyse ayant besoin de l'image"
+          }
+        },
+        {
+          "flag": "--sha256 <HEX>",
+          "text": {
+            "en": "Published SHA-256 checksum of this file: checked before touching the drive",
+            "fr": "Empreinte SHA-256 publiée pour ce fichier : contrôlée avant tout geste sur le support"
+          }
+        },
+        {
+          "flag": "--sha256-file <CHEMIN_OU_URL>",
+          "text": {
+            "en": "Published checksum file (SHA256SUMS), path or https:// URL: the checksum is looked up by image name",
+            "fr": "Fichier d'empreintes publié (SHA256SUMS), chemin ou adresse https:// : l'empreinte y est lue au nom de l'image"
+          }
+        },
+        {
+          "flag": "--cache-dir <DOSSIER>",
+          "text": {
+            "en": "Downloads folder; by default the user's cache folder",
+            "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
+          }
+        },
+        {
+          "flag": "--mode <MODE>",
+          "text": {
+            "en": "auto: analyzes the image, extracts a Windows ISO and refuses what would not boot; raw: writes the bytes as they are; extract: requires a Windows ISO",
+            "fr": "auto : analyse l'image, extrait une ISO Windows et refuse ce qui ne démarrerait pas ; raw : écrit les octets tels quels ; extract : exige une ISO Windows"
+          }
+        },
+        {
+          "flag": "--table <TABLE>",
+          "text": {
+            "en": "Partition table of a Windows drive; it still boots in UEFI in both cases",
+            "fr": "Table de partitions d'une clé Windows ; le démarrage reste en UEFI dans les deux cas"
+          }
+        },
+        {
+          "flag": "--no-verify",
+          "text": {
+            "en": "Does not read the drive back after writing",
+            "fr": "Ne relit pas le support après l'écriture"
+          }
+        },
+        {
+          "flag": "--no-repair-gpt",
+          "text": {
+            "en": "Does not repair the backup GPT after writing",
+            "fr": "Ne répare pas le GPT de secours après l'écriture"
+          }
+        },
+        {
+          "flag": "--force",
+          "text": {
+            "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
+            "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk verify",
+      "text": {
+        "en": "Compares a disk with an image, without writing anything",
+        "fr": "Compare un disque à une image, sans rien écrire"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list`); with --simulate, path of the target image file",
+            "fr": "Identifiant stable du disque (voir `bonk list`) ; avec --simulate, chemin du fichier image cible"
+          }
+        },
+        {
+          "flag": "<SOURCE>",
+          "text": {
+            "en": "Reference image",
+            "fr": "Image de référence"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--simulate",
+          "text": {
+            "en": "The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware",
+            "fr": "La cible est un fichier image (créé s'il n'existe pas, avec --size) et non un disque : rejoue l'opération sans matériel"
+          }
+        },
+        {
+          "flag": "--size <OCTETS>",
+          "text": {
+            "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
+            "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Allows non-system internal disks (stronger warning)",
+            "fr": "Autorise les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks",
+            "fr": "Mode test : autorise les disques virtuels"
+          }
+        },
+        {
+          "flag": "--trace-io[=<TRACE_IO>]",
+          "text": {
+            "en": "Logs each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only",
+            "fr": "Journalise chaque accès bloc (décalage, durée, somme de contrôle) ; `=data` ajoute les premiers octets, pour un fichier image seulement"
+          }
+        },
+        {
+          "flag": "--elevate <ELEVATE>",
+          "text": {
+            "en": "Missing rights: auto (asks the system) or never (the caller's rights only)",
+            "fr": "Droits manquants : auto (demande au système) ou never (droits de l'appelant seulement)"
+          }
+        },
+        {
+          "flag": "--progress <PROGRESS>",
+          "text": {
+            "en": "Progress: auto, json (one event per line) or none",
+            "fr": "Progression : auto, json (un événement par ligne) ou none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk repair-gpt",
+      "text": {
+        "en": "Repairs the GPT of a disk or image",
+        "fr": "Répare le GPT d'un disque ou d'une image"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list`); with --simulate, path of the target image file",
+            "fr": "Identifiant stable du disque (voir `bonk list`) ; avec --simulate, chemin du fichier image cible"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--simulate",
+          "text": {
+            "en": "The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware",
+            "fr": "La cible est un fichier image (créé s'il n'existe pas, avec --size) et non un disque : rejoue l'opération sans matériel"
+          }
+        },
+        {
+          "flag": "--size <OCTETS>",
+          "text": {
+            "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
+            "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Allows non-system internal disks (stronger warning)",
+            "fr": "Autorise les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks",
+            "fr": "Mode test : autorise les disques virtuels"
+          }
+        },
+        {
+          "flag": "--trace-io[=<TRACE_IO>]",
+          "text": {
+            "en": "Logs each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only",
+            "fr": "Journalise chaque accès bloc (décalage, durée, somme de contrôle) ; `=data` ajoute les premiers octets, pour un fichier image seulement"
+          }
+        },
+        {
+          "flag": "--elevate <ELEVATE>",
+          "text": {
+            "en": "Missing rights: auto (asks the system) or never (the caller's rights only)",
+            "fr": "Droits manquants : auto (demande au système) ou never (droits de l'appelant seulement)"
+          }
+        },
+        {
+          "flag": "--progress <PROGRESS>",
+          "text": {
+            "en": "Progress: auto, json (one event per line) or none",
+            "fr": "Progression : auto, json (un événement par ligne) ou none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        },
+        {
+          "flag": "--yes",
+          "text": {
+            "en": "Confirms the repair",
+            "fr": "Confirme la réparation"
+          }
+        },
+        {
+          "flag": "--dry-run",
+          "text": {
+            "en": "Says whether anything needs repair, without writing anything",
+            "fr": "Dit s'il y a quelque chose à réparer, sans rien écrire"
+          }
+        },
+        {
+          "flag": "--force",
+          "text": {
+            "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
+            "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk format",
+      "text": {
+        "en": "Restores a disk for storage: table, partition, file system",
+        "fr": "Remet un disque en état de stockage : table, partition, système de fichiers"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier (see `bonk list`); with --simulate, path of the target image file",
+            "fr": "Identifiant stable du disque (voir `bonk list`) ; avec --simulate, chemin du fichier image cible"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--simulate",
+          "text": {
+            "en": "The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware",
+            "fr": "La cible est un fichier image (créé s'il n'existe pas, avec --size) et non un disque : rejoue l'opération sans matériel"
+          }
+        },
+        {
+          "flag": "--size <OCTETS>",
+          "text": {
+            "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
+            "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Allows non-system internal disks (stronger warning)",
+            "fr": "Autorise les disques internes non système (avertissement renforcé)"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Test mode: allows virtual disks",
+            "fr": "Mode test : autorise les disques virtuels"
+          }
+        },
+        {
+          "flag": "--trace-io[=<TRACE_IO>]",
+          "text": {
+            "en": "Logs each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only",
+            "fr": "Journalise chaque accès bloc (décalage, durée, somme de contrôle) ; `=data` ajoute les premiers octets, pour un fichier image seulement"
+          }
+        },
+        {
+          "flag": "--elevate <ELEVATE>",
+          "text": {
+            "en": "Missing rights: auto (asks the system) or never (the caller's rights only)",
+            "fr": "Droits manquants : auto (demande au système) ou never (droits de l'appelant seulement)"
+          }
+        },
+        {
+          "flag": "--progress <PROGRESS>",
+          "text": {
+            "en": "Progress: auto, json (one event per line) or none",
+            "fr": "Progression : auto, json (un événement par ligne) ou none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        },
+        {
+          "flag": "--fs <FS>",
+          "text": {
+            "en": "File system; by default fat32 up to 32 GiB, exfat above",
+            "fr": "Système de fichiers ; par défaut fat32 jusqu'à 32 Gio, exfat au-delà"
+          }
+        },
+        {
+          "flag": "--table <TABLE>",
+          "text": {
+            "en": "Partition table",
+            "fr": "Table de partitions"
+          }
+        },
+        {
+          "flag": "--label <NOM>",
+          "text": {
+            "en": "Volume label",
+            "fr": "Étiquette du volume"
+          }
+        },
+        {
+          "flag": "--yes",
+          "text": {
+            "en": "Confirms the format: without --yes or --force, Bonk does nothing",
+            "fr": "Confirme le formatage : sans --yes ni --force, Bonk ne fait rien"
+          }
+        },
+        {
+          "flag": "--dry-run",
+          "text": {
+            "en": "Describes what would be done, without writing anything",
+            "fr": "Décrit ce qui serait fait sans rien écrire"
+          }
+        },
+        {
+          "flag": "--force",
+          "text": {
+            "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
+            "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk capabilities",
+      "text": {
+        "en": "What this host can do, and why not the rest",
+        "fr": "Ce que cet hôte permet, et pourquoi pas le reste"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "Result as JSON",
+            "fr": "Résultat en JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk diagnose",
+      "text": {
+        "en": "Support report in JSON: system, rendering, disks and verdicts, secrets hidden",
+        "fr": "Rapport de support en JSON : système, rendu, disques et verdicts, secrets masqués"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--output <FICHIER>",
+          "text": {
+            "en": "Writes the report to this file (refuses to overwrite) instead of standard output",
+            "fr": "Écrit le rapport dans ce fichier (refuse d'écraser un fichier existant) au lieu de la sortie"
+          }
+        },
+        {
+          "flag": "--include-serials",
+          "text": {
+            "en": "Keeps serial numbers and user name, hidden by default",
+            "fr": "Garde les numéros de série et le nom d'utilisateur, masqués par défaut"
+          }
+        },
+        {
+          "flag": "--capture",
+          "text": {
+            "en": "Attaches the raw, anonymized listing sources, replayable elsewhere with --fixture",
+            "fr": "Joint les sources brutes de l'énumération (anonymisées), rejouables ailleurs avec --fixture"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk debug sources",
+      "text": {
+        "en": "Each system source read while listing disks, with its duration (and content with --content)",
+        "fr": "Chaque source système lue par l'énumération, avec sa durée (et son contenu avec --content)"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output (always includes source contents)",
+            "fr": "Sortie JSON (contient toujours le contenu des sources)"
+          }
+        },
+        {
+          "flag": "--content",
+          "text": {
+            "en": "Also shows each source's content, as read",
+            "fr": "Affiche aussi le contenu de chaque source, tel que lu"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk debug filter",
+      "text": {
+        "en": "Replays the safety filter on a disk, rule by rule, with the facts read",
+        "fr": "Rejoue le filtre de sécurité sur un disque, règle par règle, avec les faits lus"
+      },
+      "args": [
+        {
+          "flag": "<TARGET>",
+          "text": {
+            "en": "Stable disk identifier or its path",
+            "fr": "Identifiant stable du disque ou son chemin"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output",
+            "fr": "Sortie JSON"
+          }
+        },
+        {
+          "flag": "--show-internal",
+          "text": {
+            "en": "Evaluates with non-system internal disks offered",
+            "fr": "Évalue avec les disques internes non système proposés"
+          }
+        },
+        {
+          "flag": "--allow-virtual",
+          "text": {
+            "en": "Evaluates in test mode: virtual disks allowed",
+            "fr": "Évalue en mode test : disques virtuels autorisés"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk debug layout",
+      "text": {
+        "en": "Decodes the MBR, primary and backup GPT of an image, and lists anomalies",
+        "fr": "Décode MBR, GPT principal et de secours d'une image, et liste les anomalies"
+      },
+      "args": [
+        {
+          "flag": "<IMAGE>",
+          "text": {
+            "en": "Image file or disk (identifier or /dev/...) to decode; a disk asks the system for permission",
+            "fr": "Fichier image ou disque (identifiant ou /dev/...) à décoder ; un disque demande l'autorisation du système"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output",
+            "fr": "Sortie JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk debug hexdump",
+      "text": {
+        "en": "Raw bytes of an image, 16 per line",
+        "fr": "Octets bruts d'une image, par lignes de 16"
+      },
+      "args": [
+        {
+          "flag": "<IMAGE>",
+          "text": {
+            "en": "Image file or disk (identifier or /dev/...) to read; a disk asks the system for permission",
+            "fr": "Fichier image ou disque (identifiant ou /dev/...) à lire ; un disque demande l'autorisation du système"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--offset <OFFSET>",
+          "text": {
+            "en": "Start offset in bytes (decimal or 0x...) [default: 0]",
+            "fr": "Décalage de départ en octets (décimal ou 0x...) [default: 0]"
+          }
+        },
+        {
+          "flag": "--len <LEN>",
+          "text": {
+            "en": "Number of bytes (decimal or 0x...), 4096 by default, 1048576 at most [default: 4096]",
+            "fr": "Nombre d'octets (décimal ou 0x...), 4096 par défaut, 1048576 au plus [default: 4096]"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk explain",
+      "text": {
+        "en": "Explains an error code (`bonk explain E1003`) or lists all codes",
+        "fr": "Explique un code d'erreur (`bonk explain E1003`) ou liste tous les codes"
+      },
+      "args": [
+        {
+          "flag": "[CODE]",
+          "text": {
+            "en": "Code to explain (`E1003`); without a code, lists all codes",
+            "fr": "Code à expliquer (`E1003`) ; sans code, liste tous les codes"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output",
+            "fr": "Sortie JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk config list",
+      "text": {
+        "en": "Lists settings with their effective value and origin",
+        "fr": "Liste les réglages avec leur valeur effective et son origine"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output",
+            "fr": "Sortie JSON"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk config get",
+      "text": {
+        "en": "Effective value of a setting",
+        "fr": "Valeur effective d'un réglage"
+      },
+      "args": [
+        {
+          "flag": "<KEY>",
+          "text": {
+            "en": "",
+            "fr": ""
+          }
+        }
+      ],
+      "options": []
+    },
+    {
+      "command": "bonk config set",
+      "text": {
+        "en": "Sets a value in the configuration file",
+        "fr": "Fixe un réglage dans le fichier de configuration"
+      },
+      "args": [
+        {
+          "flag": "<KEY>",
+          "text": {
+            "en": "",
+            "fr": ""
+          }
+        },
+        {
+          "flag": "<VALUE>",
+          "text": {
+            "en": "",
+            "fr": ""
+          }
+        }
+      ],
+      "options": []
+    },
+    {
+      "command": "bonk config reset",
+      "text": {
+        "en": "Resets a setting (or all) to its default value",
+        "fr": "Remet un réglage (ou tous) à sa valeur par défaut"
+      },
+      "args": [
+        {
+          "flag": "[KEY]",
+          "text": {
+            "en": "",
+            "fr": ""
+          }
+        }
+      ],
+      "options": []
+    },
+    {
+      "command": "bonk schema",
+      "text": {
+        "en": "JSON Schema of a command's `--json` output",
+        "fr": "JSON Schema de la sortie `--json` d'une commande"
+      },
+      "args": [
+        {
+          "flag": "[NAME]",
+          "text": {
+            "en": "Command whose schema you want; without a name, lists the commands",
+            "fr": "Commande dont on veut le schéma ; sans nom, liste les commandes"
+          }
+        }
+      ],
+      "options": []
+    },
+    {
+      "command": "bonk completions",
+      "text": {
+        "en": "Shell completions: bash, zsh, fish, powershell, elvish",
+        "fr": "Complétions de shell : bash, zsh, fish, powershell, elvish"
+      },
+      "args": [
+        {
+          "flag": "<SHELL>",
+          "text": {
+            "en": "Target shell [possible values: bash, elvish, fish, powershell, zsh]",
+            "fr": "Shell visé [possible values: bash, elvish, fish, powershell, zsh]"
+          }
+        }
+      ],
+      "options": []
+    },
+    {
+      "command": "bonk serve",
+      "text": {
+        "en": "Headless service: drives Bonk with JSON over standard input and output, without a window",
+        "fr": "Service headless : pilote Bonk en JSON sur l'entrée et la sortie standard, sans fenêtre"
+      },
+      "args": [],
+      "options": []
+    },
+    {
+      "command": "bonk gui",
+      "text": {
+        "en": "Opens the window (like `bonk` alone)",
+        "fr": "Ouvre la fenêtre (comme `bonk` seul)"
+      },
+      "args": [],
+      "options": []
+    }
+  ]
+}
