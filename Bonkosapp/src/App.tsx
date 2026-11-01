@@ -2,11 +2,17 @@ import { type ReactNode, useEffect, useState } from "react";
 import commands from "./commands.json";
 import { CLI_FAMILIES, downloadUrl, FAMILIES, type Family, VERSION } from "./downloads";
 import {
+  architecturesOf,
   CATALOG_URL,
   type Catalog,
+  type CatalogFilter,
   type CatalogImage,
-  imagesOf,
+  categoriesOf,
+  familiesIn,
   loadCatalog,
+  NO_FILTER,
+  type SortBy,
+  selectImages,
   sizeLabel,
 } from "./images";
 import {
@@ -148,35 +154,122 @@ function useCatalog() {
   return { catalog, failed };
 }
 
+function CatalogFilters({
+  catalog,
+  filter,
+  onChange,
+  language,
+}: {
+  catalog: Catalog;
+  filter: CatalogFilter;
+  onChange: (filter: CatalogFilter) => void;
+  language: Language;
+}) {
+  const text = TEXT[language];
+  const inCategory = familiesIn(catalog, { ...filter, family: "" });
+  return (
+    <form className="filters" aria-label={text.filterTitle}>
+      <label>
+        {text.filterCategory}
+        <select
+          value={filter.category}
+          onChange={(event) => onChange({ ...filter, category: event.target.value, family: "" })}
+        >
+          <option value="">{text.filterAll}</option>
+          {categoriesOf(catalog).map((category) => (
+            <option key={category}>{category}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        {text.filterSystem}
+        <select
+          value={filter.family}
+          onChange={(event) => onChange({ ...filter, family: event.target.value })}
+        >
+          <option value="">{text.filterAll}</option>
+          {inCategory.map((family) => (
+            <option key={family.id} value={family.id}>
+              {family.name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        {text.filterArch}
+        <select
+          value={filter.arch}
+          onChange={(event) => onChange({ ...filter, arch: event.target.value })}
+        >
+          <option value="">{text.filterAll}</option>
+          {architecturesOf(catalog).map((arch) => (
+            <option key={arch}>{arch}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        {text.sortBy}
+        <select
+          value={filter.sort}
+          onChange={(event) => onChange({ ...filter, sort: event.target.value as SortBy })}
+        >
+          <option value="version">{text.sortVersion}</option>
+          <option value="released">{text.sortReleased}</option>
+          <option value="size">{text.sortSize}</option>
+        </select>
+      </label>
+    </form>
+  );
+}
+
 function DirectLinks({ language }: { language: Language }) {
   const text = TEXT[language];
   const { catalog, failed } = useCatalog();
+  const [filter, setFilter] = useState(NO_FILTER);
   return (
     <>
       <h2 id="images">{text.isoTitle}</h2>
       <p>{text.isoIntro}</p>
       {failed ? <p role="alert">{text.imagesFailed}</p> : null}
+      {catalog ? (
+        <CatalogFilters
+          catalog={catalog}
+          filter={filter}
+          onChange={setFilter}
+          language={language}
+        />
+      ) : null}
       <div className="families">
-        {catalog?.families.map((family) => (
-          <section key={family.id} aria-labelledby={`iso-${family.id}`} className="family">
-            <p className="logos">
-              <img src={`${CATALOG_URL}${family.icon}`} alt="" width="32" height="32" />
-            </p>
-            <h3 id={`iso-${family.id}`}>{family.name}</h3>
-            <p className="actions">
-              {imagesOf(catalog, family.id).map((image) => (
-                <a key={image.id} href={image.url ?? image.official_page}>
-                  {[image.version, image.edition, channelLabel(image, language)]
-                    .filter(Boolean)
-                    .join(" ")}{" "}
-                  <small>
-                    {image.size_bytes ? sizeLabel(image.size_bytes) : text.officialPage}
-                  </small>
-                </a>
-              ))}
-            </p>
-          </section>
-        ))}
+        {catalog
+          ? familiesIn(catalog, filter).map((family) => {
+              const images = selectImages(catalog, family.id, filter);
+              return images.length === 0 ? null : (
+                <section key={family.id} aria-labelledby={`iso-${family.id}`} className="family">
+                  <p className="logos">
+                    <img src={`${CATALOG_URL}${family.icon}`} alt="" width="32" height="32" />
+                  </p>
+                  <h3 id={`iso-${family.id}`}>{family.name}</h3>
+                  <p className="actions">
+                    {images.map((image) => (
+                      <a key={image.id} href={image.url ?? image.official_page}>
+                        {[
+                          image.version,
+                          image.edition,
+                          armLabel(image),
+                          channelLabel(image, language),
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}{" "}
+                        <small>
+                          {image.size_bytes ? sizeLabel(image.size_bytes) : text.officialPage}
+                        </small>
+                      </a>
+                    ))}
+                  </p>
+                </section>
+              );
+            })
+          : null}
       </div>
       <p className="links">
         <a href="/images/">{text.isoAll}</a>
@@ -185,13 +278,19 @@ function DirectLinks({ language }: { language: Language }) {
   );
 }
 
+/** x86_64 is the default: only the other architectures are named. */
+const armLabel = (image: CatalogImage) => (image.arch === "x86_64" ? undefined : image.arch);
+
 function ImageRow({ image, language }: { image: CatalogImage; language: Language }) {
   const text = TEXT[language];
   const channel = channelLabel(image, language);
-  const title = [image.name, image.version, image.edition, channel].filter(Boolean).join(" ");
+  const title = [image.name, image.version, image.edition, armLabel(image), channel]
+    .filter(Boolean)
+    .join(" ");
   return (
     <li>
       <strong>{title}</strong> <small>{image.released}</small>
+      {image.note ? <p className="note">{image.note}</p> : null}
       <p className="actions">
         {image.url ? (
           <a href={image.url}>
@@ -213,25 +312,39 @@ function ImageRow({ image, language }: { image: CatalogImage; language: Language
 function Images({ language }: { language: Language }) {
   const text = TEXT[language];
   const { catalog, failed } = useCatalog();
+  const [filter, setFilter] = useState(NO_FILTER);
 
   return (
     <>
       <h1>{text.imagesTitle}</h1>
       <p>{text.imagesIntro}</p>
       {failed ? <p role="alert">{text.imagesFailed}</p> : null}
-      {catalog?.families.map((family) => (
-        <section key={family.id} aria-labelledby={family.id} className="manager">
-          <p className="logos">
-            <img src={`${CATALOG_URL}${family.icon}`} alt="" width="32" height="32" />
-          </p>
-          <h2 id={family.id}>{family.name}</h2>
-          <ul>
-            {imagesOf(catalog, family.id).map((image) => (
-              <ImageRow key={image.id} image={image} language={language} />
-            ))}
-          </ul>
-        </section>
-      ))}
+      {catalog ? (
+        <CatalogFilters
+          catalog={catalog}
+          filter={filter}
+          onChange={setFilter}
+          language={language}
+        />
+      ) : null}
+      {catalog
+        ? familiesIn(catalog, filter).map((family) => {
+            const images = selectImages(catalog, family.id, filter);
+            return images.length === 0 ? null : (
+              <section key={family.id} aria-labelledby={family.id} className="manager">
+                <p className="logos">
+                  <img src={`${CATALOG_URL}${family.icon}`} alt="" width="32" height="32" />
+                </p>
+                <h2 id={family.id}>{family.name}</h2>
+                <ul>
+                  {images.map((image) => (
+                    <ImageRow key={image.id} image={image} language={language} />
+                  ))}
+                </ul>
+              </section>
+            );
+          })
+        : null}
     </>
   );
 }

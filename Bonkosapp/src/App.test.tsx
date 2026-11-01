@@ -208,6 +208,55 @@ describe("page des images", () => {
     vi.unstubAllGlobals();
   });
 
+  it("garde une catégorie ou un seul système, et trie", async () => {
+    const image = (
+      id: string,
+      family: string,
+      version: string,
+      released: string,
+      size: number,
+    ) => ({
+      id,
+      family,
+      name: family,
+      version,
+      channel: "stable",
+      released,
+      arch: "x86_64",
+      homepage: "https://h/",
+      url: `https://h/${id}.iso`,
+      sha256: "a".repeat(64),
+      size_bytes: size,
+    });
+    const sorted = {
+      families: [
+        { id: "ubuntu", name: "Ubuntu", icon: "u.png", category: "Debian derivatives" },
+        { id: "mint", name: "Mint", icon: "m.png", category: "Debian derivatives" },
+        { id: "fedora", name: "Fedora", icon: "f.png", category: "Red Hat family" },
+      ],
+      images: [
+        image("u1", "ubuntu", "24.04", "2026-01-01", 5e9),
+        image("u2", "ubuntu", "26.04", "2025-01-01", 6e9),
+        image("m", "mint", "22", "2024-01-01", 2e9),
+        { ...image("f", "fedora", "44", "2026-04-22", 1e9), note: "Only an example" },
+      ],
+    };
+    vi.stubGlobal("fetch", async () => new Response(JSON.stringify(sorted)));
+    const { container } = render(<App page="images" />);
+    await screen.findByRole("heading", { level: 2, name: "Ubuntu" });
+    expect(screen.getByText("Only an example")).toBeTruthy();
+    fireEvent.change(screen.getByLabelText("Category"), {
+      target: { value: "Debian derivatives" },
+    });
+    expect(screen.queryByRole("heading", { level: 2, name: "Fedora" })).toBeNull();
+    expect(screen.getByRole("heading", { level: 2, name: "Mint" })).toBeTruthy();
+    fireEvent.change(screen.getByLabelText("System"), { target: { value: "ubuntu" } });
+    expect(screen.queryByRole("heading", { level: 2, name: "Mint" })).toBeNull();
+    fireEvent.change(screen.getByLabelText("Sort by"), { target: { value: "released" } });
+    expect(container.querySelector("li strong")?.textContent).toBe("ubuntu 24.04");
+    vi.unstubAllGlobals();
+  });
+
   it("dit quand le catalogue ne répond pas", async () => {
     vi.stubGlobal("fetch", async () => new Response("", { status: 503 }));
     render(<App page="images" />);
