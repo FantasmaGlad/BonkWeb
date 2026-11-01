@@ -212,3 +212,61 @@ dd {
   padding: 0;
   list-style: none;
 }
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.step {
+  margin-block: 2rem;
+  padding-block-start: 1rem;
+  border-block-start: 2px solid var(--ink);
+}
+
+.primary {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.primary small {
+  font-weight: 400;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--ink);
+  border-radius: 0.5rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.card:hover,
+.card:focus-visible {
+  outline: 2px solid var(--ink);
+}
+
+.card span {
+  display: flex;
+  flex-direction: column;
+}
+
+details {
+  margin-block: 1rem;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+}

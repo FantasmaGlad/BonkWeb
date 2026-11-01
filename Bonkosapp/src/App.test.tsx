@@ -7,6 +7,7 @@ import commands from "./commands.json";
 import { contrastRatio } from "./contrast";
 import { CLI_FAMILIES, downloadUrl, FAMILIES, VERSION } from "./downloads";
 import { MANAGERS } from "./install";
+import { detect, suggestBonk, suggestImages } from "./machine";
 
 afterEach(cleanup);
 afterEach(() => vi.unstubAllGlobals());
@@ -17,7 +18,7 @@ describe("page de départ", () => {
     render(<App />);
     expect(screen.getByRole("heading", { level: 1, name: "Bonk" })).toBeTruthy();
     expect(screen.getAllByRole("heading", { level: 3 }).length).toBe(
-      FAMILIES.length + CLI_FAMILIES.length,
+      FAMILIES.length + CLI_FAMILIES.length + 1,
     );
     expect(screen.getByRole("link", { name: "All files and checksums" })).toBeTruthy();
   });
@@ -25,7 +26,7 @@ describe("page de départ", () => {
   it("change de langue, et le dit au document", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: "Français" }));
-    expect(screen.getByRole("heading", { level: 2, name: /^Télécharger Version/ })).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 2, name: /^Obtenir Bonk/ })).toBeTruthy();
     expect(document.documentElement.lang).toBe("fr");
   });
 
@@ -262,5 +263,69 @@ describe("page des images", () => {
     render(<App page="images" />);
     expect((await screen.findByRole("alert")).textContent).toContain("cannot be read");
     vi.unstubAllGlobals();
+  });
+});
+
+describe("suggestion selon la machine", () => {
+  it("lit le système et le processeur sans inventer la distribution", () => {
+    const chrome = "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 Chrome/140 Safari/537.36";
+    expect(detect(chrome, "Linux aarch64")).toEqual({
+      os: "linux",
+      arch: "aarch64",
+      distro: undefined,
+    });
+    const firefox =
+      "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0";
+    expect(detect(firefox, "Linux x86_64").distro).toBe("debian");
+    expect(detect("Mozilla/5.0 (Windows NT 10.0; Win64; x64)", "Win32").arch).toBe("x86_64");
+    expect(
+      detect("Mozilla/5.0 (Windows NT 10.0; Win64; x64)", "Win32", {
+        architecture: "arm",
+        bitness: "64",
+      }).arch,
+    ).toBe("aarch64");
+    expect(
+      detect("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", "MacIntel").arch,
+    ).toBeUndefined();
+    expect(detect("Mozilla/5.0 (Linux; Android 15; Pixel 9)", "Linux aarch64").os).toBe("other");
+    expect(detect("Mozilla/5.0 (X11; CrOS x86_64 16000.0.0)", "Linux x86_64").os).toBe("other");
+  });
+
+  it("choisit le paquet et refuse de deviner le processeur", () => {
+    expect(suggestBonk("linux", "x86_64", "debian")?.file.format).toBe(".deb");
+    expect(suggestBonk("linux", "x86_64", "manjaro")?.file.format).toBe(".pkg.tar.zst");
+    expect(suggestBonk("macos", undefined, "other")?.file.format).toBe(".dmg");
+    expect(suggestBonk("windows", undefined, "other")).toBeUndefined();
+  });
+
+  it("propose Manjaro ARM sur une machine Manjaro ARM, jamais une image qui ne démarre pas", () => {
+    const image = (id: string, family: string, arch: string, extra = {}) => ({
+      id,
+      family,
+      name: id,
+      version: "1",
+      channel: "stable" as const,
+      released: "2026-01-01",
+      homepage: "https://h/",
+      arch,
+      url: `https://h/${id}`,
+      ...extra,
+    });
+    const catalog = {
+      families: [],
+      images: [
+        image("mx", "manjaro", "x86_64"),
+        image("marm", "manjaro", "aarch64"),
+        image("archx", "arch", "x86_64"),
+        image("cd", "endeavouros", "aarch64", { usb_boot: false }),
+      ],
+    };
+    expect(suggestImages(catalog, "linux", "aarch64", "manjaro").map((i) => i.id)).toEqual([
+      "marm",
+    ]);
+    expect(suggestImages(catalog, "linux", "x86_64", "manjaro").map((i) => i.id)).toEqual([
+      "mx",
+      "archx",
+    ]);
   });
 });
