@@ -116,6 +116,7 @@ const OS_NAMES: Record<Os, string> = {
   linux: "Linux",
   windows: "Windows",
   macos: "macOS",
+  android: "Android",
   other: "",
 };
 
@@ -148,7 +149,7 @@ function GetBonk({
       </h2>
       <p>
         {detected.os === "other" ? (
-          /android|iphone|ipad|cros/i.test(navigator.userAgent) ? (
+          /iphone|ipad|cros/i.test(navigator.userAgent) ? (
             text.machineOtherDevice
           ) : (
             text.machineUnknown
@@ -170,6 +171,7 @@ function GetBonk({
             <option value="linux">Linux</option>
             <option value="windows">Windows</option>
             <option value="macos">macOS</option>
+            <option value="android">Android</option>
           </select>
         </label>
         {os === "linux" ? (
@@ -187,7 +189,7 @@ function GetBonk({
             </select>
           </label>
         ) : null}
-        {os !== "macos" && os !== "other" ? (
+        {os !== "macos" && os !== "android" && os !== "other" ? (
           <label>
             {text.machineArch}
             <select value={arch} onChange={(event) => machine.setArch(event.target.value as Arch)}>
@@ -206,6 +208,8 @@ function GetBonk({
             {text.machineDownload} <small>{suggestion.file.format}</small>
           </a>
         </p>
+      ) : os === "android" ? (
+        <p className="note">{text.androidSoon}</p>
       ) : os === "other" ? null : (
         <p className="note">{text.machineChoose}</p>
       )}

@@ -15,11 +15,13 @@ export const TEXT = {
     home: "Home",
     installNav: "Install",
     commandsNav: "Commands",
+    androidSoon:
+      "Android 8 and later, on ARM64 phones and tablets, with a USB adapter and without root. The app arrives with the next version. Chromebooks are not supported yet.",
     machineTitle: "Get Bonk",
     machineDetected: "Detected from your browser:",
     machineUnknown: "Your browser does not say which computer this is. Choose below.",
     machineOtherDevice:
-      "Bonk runs on a computer. On a phone, tablet or Chromebook, choose the computer you will use.",
+      "Bonk runs on a computer or on Android. On an iPhone, iPad or Chromebook, choose the computer you will use.",
     machineSystem: "Computer",
     machineDistro: "Distribution",
     machineArch: "Processor",
@@ -94,12 +96,14 @@ export const TEXT = {
     home: "Accueil",
     installNav: "Installer",
     commandsNav: "Commandes",
+    androidSoon:
+      "Android 8 et plus, téléphones et tablettes ARM64, avec un adaptateur USB et sans root. L'application arrive avec la prochaine version. Les Chromebook ne sont pas encore pris en charge.",
     machineTitle: "Obtenir Bonk",
     machineDetected: "Détecté par votre navigateur :",
     machineUnknown:
       "Votre navigateur n'indique pas quel est cet ordinateur. Choisissez ci-dessous.",
     machineOtherDevice:
-      "Bonk fonctionne sur un ordinateur. Sur téléphone, tablette ou Chromebook, choisissez l'ordinateur que vous utiliserez.",
+      "Bonk fonctionne sur un ordinateur ou sous Android. Sur iPhone, iPad ou Chromebook, choisissez l'ordinateur que vous utiliserez.",
     machineSystem: "Ordinateur",
     machineDistro: "Distribution",
     machineArch: "Processeur",

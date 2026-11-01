@@ -1,7 +1,7 @@
 import { type Download, FAMILIES, type Family } from "./downloads";
 import { type Catalog, type CatalogImage, imagesOf } from "./images";
 
-export type Os = "linux" | "windows" | "macos" | "other";
+export type Os = "linux" | "windows" | "macos" | "android" | "other";
 export type Arch = "x86_64" | "aarch64" | "i686";
 export type Distro = "debian" | "fedora" | "suse" | "arch" | "manjaro" | "other";
 
@@ -44,15 +44,17 @@ const distroOf = (agent: string): Distro | undefined => {
 };
 
 export const detect = (agent: string, platform: string, hints: Hints = {}): Machine => {
-  const os: Os = /android|iphone|ipad|cros/i.test(agent)
-    ? "other"
-    : /windows/i.test(agent)
-      ? "windows"
-      : /mac os x|macintosh/i.test(agent)
-        ? "macos"
-        : /linux|x11/i.test(agent)
-          ? "linux"
-          : "other";
+  const os: Os = /android/i.test(agent)
+    ? "android"
+    : /iphone|ipad|cros/i.test(agent)
+      ? "other"
+      : /windows/i.test(agent)
+        ? "windows"
+        : /mac os x|macintosh/i.test(agent)
+          ? "macos"
+          : /linux|x11/i.test(agent)
+            ? "linux"
+            : "other";
   return {
     os,
     arch: os === "macos" ? undefined : archOf(agent, platform, hints),
