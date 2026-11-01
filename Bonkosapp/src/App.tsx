@@ -50,6 +50,7 @@ function Home({ language }: { language: Language }) {
         {text.downloads} <span className="version">{`${text.version} ${VERSION}`}</span>
       </h2>
       <Families families={FAMILIES} language={language} />
+      <DirectLinks language={language} />
       <h2 id="cli">{text.headless}</h2>
       <p>{text.headlessText}</p>
       <pre>{HEADLESS_INSTALL}</pre>
@@ -133,6 +134,57 @@ function channelLabel(image: CatalogImage, language: Language): string | null {
   return image.channel === "end_of_life" ? TEXT[language].endOfLife : null;
 }
 
+/** Reads the catalog once; `failed` when it does not answer. */
+function useCatalog() {
+  const [catalog, setCatalog] = useState<Catalog | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    loadCatalog()
+      .then(setCatalog)
+      .catch(() => setFailed(true));
+  }, []);
+
+  return { catalog, failed };
+}
+
+function DirectLinks({ language }: { language: Language }) {
+  const text = TEXT[language];
+  const { catalog, failed } = useCatalog();
+  return (
+    <>
+      <h2 id="images">{text.isoTitle}</h2>
+      <p>{text.isoIntro}</p>
+      {failed ? <p role="alert">{text.imagesFailed}</p> : null}
+      <div className="families">
+        {catalog?.families.map((family) => (
+          <section key={family.id} aria-labelledby={`iso-${family.id}`} className="family">
+            <p className="logos">
+              <img src={`${CATALOG_URL}${family.icon}`} alt="" width="32" height="32" />
+            </p>
+            <h3 id={`iso-${family.id}`}>{family.name}</h3>
+            <p className="actions">
+              {imagesOf(catalog, family.id).map((image) => (
+                <a key={image.id} href={image.url ?? image.official_page}>
+                  {[image.version, image.edition, channelLabel(image, language)]
+                    .filter(Boolean)
+                    .join(" ")}{" "}
+                  <small>
+                    {image.size_bytes ? sizeLabel(image.size_bytes) : text.officialPage}
+                  </small>
+                </a>
+              ))}
+            </p>
+          </section>
+        ))}
+      </div>
+      <p className="links">
+        <a href="/images/">{text.isoAll}</a>
+      </p>
+    </>
+  );
+}
+
 function ImageRow({ image, language }: { image: CatalogImage; language: Language }) {
   const text = TEXT[language];
   const channel = channelLabel(image, language);
@@ -160,14 +212,7 @@ function ImageRow({ image, language }: { image: CatalogImage; language: Language
 
 function Images({ language }: { language: Language }) {
   const text = TEXT[language];
-  const [catalog, setCatalog] = useState<Catalog | null>(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    loadCatalog()
-      .then(setCatalog)
-      .catch(() => setFailed(true));
-  }, []);
+  const { catalog, failed } = useCatalog();
 
   return (
     <>

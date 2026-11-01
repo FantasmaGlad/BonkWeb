@@ -19,6 +19,9 @@ export const TEXT = {
     imagesTitle: "Bootable images",
     imagesIntro:
       "Official links and hashes, read every day from each publisher. Nothing is hosted here: the image comes straight from its publisher.",
+    isoTitle: "Download an ISO",
+    isoIntro: "Direct links to each publisher's official files.",
+    isoAll: "Same list with SHA-256 hashes",
     imagesFailed: "The image list cannot be read right now.",
     officialDownload: "Download from the publisher",
     officialPage: "Publisher's download page",
@@ -59,6 +62,9 @@ export const TEXT = {
     imagesTitle: "Images amorçables",
     imagesIntro:
       "Liens officiels et empreintes, relus chaque jour chez chaque éditeur. Rien n'est hébergé ici : l'image vient directement de son éditeur.",
+    isoTitle: "Télécharger une ISO",
+    isoIntro: "Liens directs vers les fichiers officiels de chaque éditeur.",
+    isoAll: "La même liste avec les empreintes SHA-256",
     imagesFailed: "La liste des images ne peut pas être lue pour le moment.",
     officialDownload: "Télécharger chez l'éditeur",
     officialPage: "Page de téléchargement de l'éditeur",
