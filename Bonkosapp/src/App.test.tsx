@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import axe from "axe-core";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
 import commands from "./commands.json";
 import { contrastRatio } from "./contrast";
@@ -97,5 +97,73 @@ describe("contraste", () => {
     const colors = new Set(css.match(/#[0-9a-f]{6}\b/gi));
     expect(colors).toEqual(new Set(["#000000", "#ffffff"]));
     expect(contrastRatio("#000000", "#ffffff")).toBeGreaterThanOrEqual(7);
+  });
+});
+
+describe("page des images", () => {
+  const catalog = {
+    families: [{ id: "ubuntu", name: "Ubuntu", icon: "icons/ubuntu.svg" }],
+    images: [
+      {
+        id: "u24",
+        family: "ubuntu",
+        name: "Ubuntu",
+        version: "24.04.5",
+        channel: "lts",
+        released: "2026-09-09",
+        homepage: "https://u/",
+        url: "https://u/24.iso",
+        sha256: "a".repeat(64),
+        size_bytes: 4e9,
+      },
+      {
+        id: "u26",
+        family: "ubuntu",
+        name: "Ubuntu",
+        version: "26.04.1",
+        channel: "lts",
+        released: "2026-08-26",
+        homepage: "https://u/",
+        url: "https://u/26.iso",
+        sha256: "b".repeat(64),
+        size_bytes: 6e9,
+      },
+      {
+        id: "u20",
+        family: "ubuntu",
+        name: "Ubuntu",
+        version: "20.04.5",
+        channel: "end_of_life",
+        released: "2022-08-31",
+        homepage: "https://u/",
+        official_page: "https://u/page",
+      },
+    ],
+  };
+
+  it("range les versions de la plus récente à la plus ancienne, avec logo et lien officiel", async () => {
+    vi.stubGlobal("fetch", async () => new Response(JSON.stringify(catalog)));
+    const { container } = render(<App page="images" />);
+    await screen.findByRole("heading", { level: 2, name: "Ubuntu" });
+    const titles = [...container.querySelectorAll("li strong")].map((item) => item.textContent);
+    expect(titles).toEqual([
+      "Ubuntu 26.04.1 LTS",
+      "Ubuntu 24.04.5 LTS",
+      "Ubuntu 20.04.5 (end of life)",
+    ]);
+    expect(container.querySelector(".logos img")?.getAttribute("src")).toBe(
+      "https://catalog.bonk-os.app/v1/icons/ubuntu.svg",
+    );
+    expect(screen.getByRole("link", { name: "Publisher's download page" })).toBeTruthy();
+    const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
+    expect(result.violations.map((violation) => violation.id)).toEqual([]);
+    vi.unstubAllGlobals();
+  });
+
+  it("dit quand le catalogue ne répond pas", async () => {
+    vi.stubGlobal("fetch", async () => new Response("", { status: 503 }));
+    render(<App page="images" />);
+    expect((await screen.findByRole("alert")).textContent).toContain("cannot be read");
+    vi.unstubAllGlobals();
   });
 });

@@ -10,6 +10,7 @@ export default defineConfig({
         home: resolve(import.meta.dirname, "index.html"),
         install: resolve(import.meta.dirname, "install/index.html"),
         docs: resolve(import.meta.dirname, "docs/index.html"),
+        images: resolve(import.meta.dirname, "images/index.html"),
       },
     },
   },
