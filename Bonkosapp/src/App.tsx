@@ -2,6 +2,14 @@ import { type ReactNode, useEffect, useState } from "react";
 import commands from "./commands.json";
 import { CLI_FAMILIES, downloadUrl, FAMILIES, type Family, VERSION } from "./downloads";
 import {
+  CATALOG_URL,
+  type Catalog,
+  type CatalogImage,
+  imagesOf,
+  loadCatalog,
+  sizeLabel,
+} from "./images";
+import {
   HEADLESS_INSTALL,
   HEADLESS_INSTALL_WINDOWS,
   HEADLESS_REMOVE,
@@ -10,7 +18,7 @@ import {
 } from "./install";
 import { type Language, RELEASES, SECURITY_MAIL, SOURCE, TEXT } from "./text";
 
-export type Page = "home" | "install" | "docs";
+export type Page = "home" | "install" | "docs" | "images";
 
 const initialLanguage = (): Language => (navigator.language.startsWith("fr") ? "fr" : "en");
 
@@ -118,6 +126,71 @@ function Install({ language }: { language: Language }) {
   );
 }
 
+function channelLabel(image: CatalogImage, language: Language): string | null {
+  if (image.channel === "lts") {
+    return "LTS";
+  }
+  return image.channel === "end_of_life" ? TEXT[language].endOfLife : null;
+}
+
+function ImageRow({ image, language }: { image: CatalogImage; language: Language }) {
+  const text = TEXT[language];
+  const channel = channelLabel(image, language);
+  const title = [image.name, image.version, image.edition, channel].filter(Boolean).join(" ");
+  return (
+    <li>
+      <strong>{title}</strong> <small>{image.released}</small>
+      <p className="actions">
+        {image.url ? (
+          <a href={image.url}>
+            {text.officialDownload} <small>{sizeLabel(image.size_bytes ?? 0)}</small>
+          </a>
+        ) : (
+          <a href={image.official_page}>{text.officialPage}</a>
+        )}
+      </p>
+      {image.sha256 ? (
+        <p className="note">
+          SHA-256 <code>{image.sha256}</code>
+        </p>
+      ) : null}
+    </li>
+  );
+}
+
+function Images({ language }: { language: Language }) {
+  const text = TEXT[language];
+  const [catalog, setCatalog] = useState<Catalog | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    loadCatalog()
+      .then(setCatalog)
+      .catch(() => setFailed(true));
+  }, []);
+
+  return (
+    <>
+      <h1>{text.imagesTitle}</h1>
+      <p>{text.imagesIntro}</p>
+      {failed ? <p role="alert">{text.imagesFailed}</p> : null}
+      {catalog?.families.map((family) => (
+        <section key={family.id} aria-labelledby={family.id} className="manager">
+          <p className="logos">
+            <img src={`${CATALOG_URL}${family.icon}`} alt="" width="32" height="32" />
+          </p>
+          <h2 id={family.id}>{family.name}</h2>
+          <ul>
+            {imagesOf(catalog, family.id).map((image) => (
+              <ImageRow key={image.id} image={image} language={language} />
+            ))}
+          </ul>
+        </section>
+      ))}
+    </>
+  );
+}
+
 function Rows({ title, rows, language }: { title: string; rows: Row[]; language: Language }) {
   if (rows.length === 0) {
     return null;
@@ -187,6 +260,7 @@ export function App({ page = "home" }: { page?: Page }) {
     home: <Home language={language} />,
     install: <Install language={language} />,
     docs: <Docs language={language} />,
+    images: <Images language={language} />,
   };
 
   return (
@@ -198,6 +272,9 @@ export function App({ page = "home" }: { page?: Page }) {
           </a>
           <a href="/install/" aria-current={page === "install" ? "page" : undefined}>
             {text.installNav}
+          </a>
+          <a href="/images/" aria-current={page === "images" ? "page" : undefined}>
+            {text.imagesNav}
           </a>
           <a href="/docs/" aria-current={page === "docs" ? "page" : undefined}>
             {text.commandsNav}
