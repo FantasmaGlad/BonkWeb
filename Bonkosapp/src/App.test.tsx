@@ -51,13 +51,17 @@ describe("téléchargements", () => {
     }
   });
 
-  it("dit que Windows et macOS sont des aperçus, et eux seuls", () => {
+  it("dit que Windows et macOS restent à essayer sur une vraie clé, et eux seuls", () => {
     render(<App />);
     const previews = [...FAMILIES, ...CLI_FAMILIES]
       .filter((family) => !family.writes)
       .map((family) => family.id);
     expect(previews).toEqual(["windows", "macos", "cli-windows", "cli-macos"]);
-    expect(screen.getAllByText("Preview: cannot write to disks yet.").length).toBe(previews.length);
+    expect(
+      screen.getAllByText(
+        "Writes to disks; proven in continuous integration, not yet on a real drive.",
+      ).length,
+    ).toBe(previews.length);
   });
 });
 

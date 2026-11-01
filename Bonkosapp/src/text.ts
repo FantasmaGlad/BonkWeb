@@ -80,7 +80,7 @@ export const TEXT = {
     version: "Version",
     source: "Source code",
     allReleases: "All files and checksums",
-    preview: "Preview: cannot write to disks yet.",
+    preview: "Writes to disks; proven in continuous integration, not yet on a real drive.",
     security: "Security reports",
     switchLabel: "Français",
   },
@@ -160,7 +160,8 @@ export const TEXT = {
     version: "Version",
     source: "Code source",
     allReleases: "Tous les fichiers et empreintes",
-    preview: "Aperçu : n'écrit pas encore sur les disques.",
+    preview:
+      "Écrit sur les disques ; éprouvé en intégration continue, pas encore sur une vraie clé.",
     security: "Signaler une faille",
     switchLabel: "English",
   },
