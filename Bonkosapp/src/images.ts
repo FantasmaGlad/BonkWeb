@@ -55,6 +55,17 @@ export const categoriesOf = (catalog: Catalog): string[] =>
 export const architecturesOf = (catalog: Catalog): string[] =>
   distinct(catalog.images.map((image) => image.arch));
 
+/** Filter given in the address, so a category can be linked from elsewhere. */
+export const filterFromAddress = (search: string): CatalogFilter => {
+  const query = new URLSearchParams(search);
+  return {
+    ...NO_FILTER,
+    category: query.get("category") ?? "",
+    family: query.get("system") ?? "",
+    arch: query.get("arch") ?? "",
+  };
+};
+
 export const familiesIn = (catalog: Catalog, filter: CatalogFilter): CatalogFamily[] =>
   catalog.families.filter(
     (family) =>

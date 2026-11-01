@@ -9,6 +9,7 @@ import {
   type CatalogImage,
   categoriesOf,
   familiesIn,
+  filterFromAddress,
   loadCatalog,
   NO_FILTER,
   type SortBy,
@@ -22,6 +23,16 @@ import {
   HEADLESS_REMOVE_WINDOWS,
   MANAGERS,
 } from "./install";
+import {
+  type Arch,
+  type Distro,
+  detect,
+  MANAGER_OF,
+  type Os,
+  readHints,
+  suggestBonk,
+  suggestImages,
+} from "./machine";
 import { type Language, RELEASES, SECURITY_MAIL, SOURCE, TEXT } from "./text";
 
 export type Page = "home" | "install" | "docs" | "images";
@@ -40,33 +51,271 @@ function Logos({ names }: { names: readonly string[] }) {
   );
 }
 
+const DISTROS = [
+  ["debian", "distroDebian"],
+  ["fedora", "distroFedora"],
+  ["suse", "distroSuse"],
+  ["arch", "distroArch"],
+  ["manjaro", "distroManjaro"],
+  ["other", "distroOther"],
+] as const;
+
+const SAVED_DISTRO = "bonk-distro";
+
+const savedDistro = (): Distro | undefined => {
+  try {
+    const value = localStorage.getItem(SAVED_DISTRO);
+    return DISTROS.some(([id]) => id === value) ? (value as Distro) : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+const saveDistro = (distro: Distro) => {
+  try {
+    localStorage.setItem(SAVED_DISTRO, distro);
+  } catch {
+    // Sans stockage, le choix vaut pour cette visite.
+  }
+};
+
+/** What the page knows of this computer, and the choices that correct it. */
+function useMachine() {
+  const [detected, setDetected] = useState(() => detect(navigator.userAgent, navigator.platform));
+  const [os, setOs] = useState<Os | null>(null);
+  const [arch, setArch] = useState<Arch | "" | null>(null);
+  const [distro, setDistro] = useState<Distro | null>(savedDistro() ?? null);
+
+  useEffect(() => {
+    let current = true;
+    readHints().then((hints) => {
+      if (current) {
+        setDetected(detect(navigator.userAgent, navigator.platform, hints));
+      }
+    });
+    return () => {
+      current = false;
+    };
+  }, []);
+
+  return {
+    detected,
+    os: os ?? detected.os,
+    arch: (arch ?? detected.arch ?? "") as Arch | "",
+    distro: distro ?? detected.distro ?? ("debian" as Distro),
+    setOs,
+    setArch,
+    setDistro: (value: Distro) => {
+      saveDistro(value);
+      setDistro(value);
+    },
+  };
+}
+
+const OS_NAMES: Record<Os, string> = {
+  linux: "Linux",
+  windows: "Windows",
+  macos: "macOS",
+  other: "",
+};
+
+function GetBonk({
+  machine,
+  language,
+}: {
+  machine: ReturnType<typeof useMachine>;
+  language: Language;
+}) {
+  const text = TEXT[language];
+  const { detected, os, arch, distro } = machine;
+  const suggestion = suggestBonk(os, arch || undefined, distro);
+  const manager = MANAGERS.find(
+    (candidate) =>
+      candidate.id ===
+      (os === "linux"
+        ? MANAGER_OF[distro]
+        : os === "macos"
+          ? "brew"
+          : os === "windows"
+            ? "scoop"
+            : ""),
+  );
+  const named = [OS_NAMES[detected.os], detected.arch].filter(Boolean).join(" ");
+  return (
+    <section aria-labelledby="get-bonk" className="step">
+      <h2 id="get-bonk">
+        {text.machineTitle} <span className="version">{`${text.version} ${VERSION}`}</span>
+      </h2>
+      <p>
+        {detected.os === "other" ? (
+          /android|iphone|ipad|cros/i.test(navigator.userAgent) ? (
+            text.machineOtherDevice
+          ) : (
+            text.machineUnknown
+          )
+        ) : (
+          <>
+            {text.machineDetected} <strong>{named}</strong>
+          </>
+        )}
+      </p>
+      <form className="filters" aria-label={text.machineTitle}>
+        <label>
+          {text.machineSystem}
+          <select
+            value={os === "other" ? "" : os}
+            onChange={(event) => machine.setOs(event.target.value as Os)}
+          >
+            {os === "other" ? <option value="">{text.choiceUnknown}</option> : null}
+            <option value="linux">Linux</option>
+            <option value="windows">Windows</option>
+            <option value="macos">macOS</option>
+          </select>
+        </label>
+        {os === "linux" ? (
+          <label>
+            {text.machineDistro}
+            <select
+              value={distro}
+              onChange={(event) => machine.setDistro(event.target.value as Distro)}
+            >
+              {DISTROS.map(([id, label]) => (
+                <option key={id} value={id}>
+                  {text[label]}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
+        {os !== "macos" && os !== "other" ? (
+          <label>
+            {text.machineArch}
+            <select value={arch} onChange={(event) => machine.setArch(event.target.value as Arch)}>
+              {arch ? null : <option value="">{text.choiceUnknown}</option>}
+              <option value="x86_64">Intel, AMD 64 bits</option>
+              <option value="aarch64">ARM 64 bits</option>
+              <option value="i686">Intel, AMD 32 bits</option>
+            </select>
+          </label>
+        ) : null}
+      </form>
+      {os === "linux" && !detected.distro ? <p className="note">{text.machineDistroHint}</p> : null}
+      {suggestion ? (
+        <p>
+          <a className="primary" href={downloadUrl(suggestion.file.file)}>
+            {text.machineDownload} <small>{suggestion.file.format}</small>
+          </a>
+        </p>
+      ) : os === "other" ? null : (
+        <p className="note">{text.machineChoose}</p>
+      )}
+      {suggestion && !suggestion.family.writes ? <p className="note">{text.preview}</p> : null}
+      {manager ? (
+        <>
+          <p>{text.machineCommand}</p>
+          <pre>{manager.install}</pre>
+        </>
+      ) : null}
+      <details>
+        <summary>{text.otherDownloads}</summary>
+        <Families families={FAMILIES} language={language} />
+        <h3 id="cli">{text.headless}</h3>
+        <p>{text.headlessText}</p>
+        <pre>{HEADLESS_INSTALL}</pre>
+        <pre>{HEADLESS_INSTALL_WINDOWS}</pre>
+        <Families families={CLI_FAMILIES} language={language} />
+        <p className="links">
+          <a href="/install/#headless">{text.cliCommands}</a>
+          <a href={RELEASES}>{text.allReleases}</a>
+        </p>
+      </details>
+    </section>
+  );
+}
+
+function SuggestedImages({
+  machine,
+  language,
+}: {
+  machine: ReturnType<typeof useMachine>;
+  language: Language;
+}) {
+  const text = TEXT[language];
+  const { catalog, failed } = useCatalog();
+  const suggested = catalog
+    ? suggestImages(catalog, machine.os, machine.arch || undefined, machine.distro)
+    : [];
+  return (
+    <section aria-labelledby="images" className="step">
+      <h2 id="images">{text.suggestTitle}</h2>
+      {failed ? <p role="alert">{text.imagesFailed}</p> : null}
+      {catalog ? <p>{suggested.length ? text.suggestIntro : text.suggestNone}</p> : null}
+      <div className="families">
+        {catalog
+          ? suggested.map((image) => {
+              const family = catalog.families.find((candidate) => candidate.id === image.family);
+              return (
+                <a key={image.id} className="card" href={image.url}>
+                  {family ? (
+                    <img src={`${CATALOG_URL}${family.icon}`} alt="" width="40" height="40" />
+                  ) : null}
+                  <span>
+                    <strong>{`${image.name} ${image.version}`}</strong>{" "}
+                    {[image.edition, armLabel(image), channelLabel(image, language)]
+                      .filter(Boolean)
+                      .join(" ")}
+                    <small>{image.size_bytes ? sizeLabel(image.size_bytes) : null}</small>
+                  </span>
+                </a>
+              );
+            })
+          : null}
+      </div>
+      {catalog ? (
+        <>
+          <p className="links">
+            <a href={machine.arch ? `/images/?arch=${machine.arch}` : "/images/"}>
+              {text.browseAll}
+            </a>
+          </p>
+          <h3>{text.browseCategories}</h3>
+          <p className="actions">
+            {categoriesOf(catalog).map((category) => (
+              <a key={category} href={`/images/?category=${encodeURIComponent(category)}`}>
+                {category}
+              </a>
+            ))}
+          </p>
+        </>
+      ) : null}
+      <details>
+        <summary>{text.allIsos}</summary>
+        <DirectLinks catalog={catalog} language={language} />
+      </details>
+    </section>
+  );
+}
+
 function Home({ language }: { language: Language }) {
   const text = TEXT[language];
+  const machine = useMachine();
   return (
     <>
-      <img src="/logo.png" alt="" width="160" height="160" />
-      <h1>Bonk</h1>
-      <p className="tagline">{text.tagline}</p>
+      <div className="hero">
+        <img src="/logo.png" alt="" width="96" height="96" />
+        <div>
+          <h1>Bonk</h1>
+          <p className="tagline">{text.tagline}</p>
+        </div>
+      </div>
+      <GetBonk machine={machine} language={language} />
+      <SuggestedImages machine={machine} language={language} />
       <ul>
         {text.points.map((point) => (
           <li key={point}>{point}</li>
         ))}
       </ul>
-      <h2>
-        {text.downloads} <span className="version">{`${text.version} ${VERSION}`}</span>
-      </h2>
-      <Families families={FAMILIES} language={language} />
-      <DirectLinks language={language} />
-      <h2 id="cli">{text.headless}</h2>
-      <p>{text.headlessText}</p>
-      <pre>{HEADLESS_INSTALL}</pre>
-      <pre>{HEADLESS_INSTALL_WINDOWS}</pre>
-      <Families families={CLI_FAMILIES} language={language} />
       <p className="links">
-        <a href="/install/#headless">{text.cliCommands}</a>
-      </p>
-      <p className="links">
-        <a href={RELEASES}>{text.allReleases}</a>
         <a href={SOURCE}>{text.source}</a>
       </p>
     </>
@@ -222,15 +471,12 @@ function CatalogFilters({
   );
 }
 
-function DirectLinks({ language }: { language: Language }) {
+function DirectLinks({ catalog, language }: { catalog: Catalog | null; language: Language }) {
   const text = TEXT[language];
-  const { catalog, failed } = useCatalog();
   const [filter, setFilter] = useState(NO_FILTER);
   return (
     <>
-      <h2 id="images">{text.isoTitle}</h2>
       <p>{text.isoIntro}</p>
-      {failed ? <p role="alert">{text.imagesFailed}</p> : null}
       {catalog ? (
         <CatalogFilters
           catalog={catalog}
@@ -312,7 +558,7 @@ function ImageRow({ image, language }: { image: CatalogImage; language: Language
 function Images({ language }: { language: Language }) {
   const text = TEXT[language];
   const { catalog, failed } = useCatalog();
-  const [filter, setFilter] = useState(NO_FILTER);
+  const [filter, setFilter] = useState(() => filterFromAddress(location.search));
 
   return (
     <>
