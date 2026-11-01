@@ -16,8 +16,8 @@ export type Manager = {
 };
 
 const PREVIEW = {
-  en: "Preview: cannot write to disks yet.",
-  fr: "Aperçu : n'écrit pas encore sur les disques.",
+  en: "Writes to disks; proven in continuous integration, not yet on a real drive.",
+  fr: "Écrit sur les disques ; éprouvé en intégration continue, pas encore sur une vraie clé.",
 };
 
 export const MANAGERS: readonly Manager[] = [

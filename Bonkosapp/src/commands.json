@@ -8,6 +8,13 @@
       }
     },
     {
+      "flag": "-q, --quiet",
+      "text": {
+        "en": "Keeps only the result: no progress line, and only errors in the log",
+        "fr": "Ne garde que le résultat : aucune ligne de progression, et seules les erreurs au journal"
+      }
+    },
+    {
       "flag": "--log-file <CHEMIN>",
       "text": {
         "en": "Also writes the log to this file (appends)",
@@ -33,6 +40,20 @@
       "text": {
         "en": "Never opens the window: without a command, shows help and fails, for scripts",
         "fr": "N'ouvre jamais la fenêtre : sans commande, affiche l'aide et échoue, pour les scripts"
+      }
+    },
+    {
+      "flag": "--proxy <URL>",
+      "text": {
+        "en": "Sends all network traffic through this proxy (BONK_PROXY); socks5h:// for Tor. Never falls back to a direct connection",
+        "fr": "Fait passer tout le trafic réseau par ce proxy (BONK_PROXY) ; socks5h:// pour Tor. Jamais de repli vers une connexion directe"
+      }
+    },
+    {
+      "flag": "--no-color",
+      "text": {
+        "en": "No color in the help and usage errors",
+        "fr": "Pas de couleur dans l'aide et les erreurs d'usage"
       }
     }
   ],
@@ -262,6 +283,20 @@
             "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
             "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
           }
+        },
+        {
+          "flag": "--image <ID>",
+          "text": {
+            "en": "Writes an image of the signed catalog (bonk catalog list): link and hash come from it",
+            "fr": "Écrit une image du catalogue signé (bonk catalog list) : le lien et l'empreinte en viennent"
+          }
+        },
+        {
+          "flag": "--catalog-url <URL>",
+          "text": {
+            "en": "Catalog address; its signature is checked wherever it comes from",
+            "fr": "Adresse du catalogue ; sa signature est contrôlée d'où qu'il vienne"
+          }
         }
       ]
     },
@@ -437,6 +472,72 @@
           "text": {
             "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
             "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
+          }
+        }
+      ]
+    },
+    {
+      "command": "bonk catalog list",
+      "text": {
+        "en": "Lists the images of the signed catalog",
+        "fr": "Liste les images du catalogue signé"
+      },
+      "args": [],
+      "options": [
+        {
+          "flag": "--family <ID>",
+          "text": {
+            "en": "Keeps one system (ubuntu)",
+            "fr": "Garde un seul système (ubuntu)"
+          }
+        },
+        {
+          "flag": "--category <NAME>",
+          "text": {
+            "en": "Keeps one category (Debian derivatives)",
+            "fr": "Garde une catégorie (Debian derivatives)"
+          }
+        },
+        {
+          "flag": "--arch <ARCH>",
+          "text": {
+            "en": "Keeps one architecture (x86_64, aarch64)",
+            "fr": "Garde une architecture (x86_64, aarch64)"
+          }
+        },
+        {
+          "flag": "--channel <CHANNEL>",
+          "text": {
+            "en": "Keeps one life cycle: lts, stable, end_of_life",
+            "fr": "Garde un cycle de vie : lts, stable, end_of_life"
+          }
+        },
+        {
+          "flag": "--sort <ORDER>",
+          "text": {
+            "en": "Order: system, released, name, size",
+            "fr": "Ordre : system, released, name, size"
+          }
+        },
+        {
+          "flag": "--catalog-url <URL>",
+          "text": {
+            "en": "Catalog address; its signature is checked wherever it comes from",
+            "fr": "Adresse du catalogue ; sa signature est contrôlée d'où qu'il vienne"
+          }
+        },
+        {
+          "flag": "--cache-dir <DIR>",
+          "text": {
+            "en": "Download directory",
+            "fr": "Dossier de téléchargement"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output, for scripts",
+            "fr": "Sortie JSON, pour les scripts"
           }
         }
       ]
@@ -720,6 +821,20 @@
           "text": {
             "en": "Confirms like --yes, and allows an internal disk admitted by --show-internal, without asking. Never a system disk: the safety filter always wins",
             "fr": "Confirme comme --yes, et autorise un disque interne admis par --show-internal, sans question. Jamais un disque système : le filtre de sécurité reste souverain"
+          }
+        },
+        {
+          "flag": "--image <ID>",
+          "text": {
+            "en": "Writes an image of the signed catalog (bonk catalog list): link and hash come from it",
+            "fr": "Écrit une image du catalogue signé (bonk catalog list) : le lien et l'empreinte en viennent"
+          }
+        },
+        {
+          "flag": "--catalog-url <URL>",
+          "text": {
+            "en": "Catalog address; its signature is checked wherever it comes from",
+            "fr": "Adresse du catalogue ; sa signature est contrôlée d'où qu'il vienne"
           }
         }
       ]

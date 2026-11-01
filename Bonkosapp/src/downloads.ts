@@ -1,4 +1,4 @@
-export const VERSION = "0.0.3";
+export const VERSION = "0.0.4";
 
 const BASE = `https://github.com/FantasmaGlad/Bonk/releases/download/v${VERSION}`;
 
@@ -7,7 +7,7 @@ export type Family = {
   id: string;
   name: string;
   logos: readonly string[];
-  /** Le système écrit-il déjà sur un disque ? Sinon, aperçu. */
+  /** Écriture déjà essayée sur une vraie clé ? Sinon, le site le signale. */
   writes: boolean;
   files: readonly Download[];
 };
@@ -82,14 +82,14 @@ export const FAMILIES: readonly Family[] = [
   },
 ];
 
-/** Version sans fenêtre. À partir de la prochaine version, l'archive Linux s'appellera aussi bonk-cli-*. */
+/** Version sans fenêtre. */
 export const CLI_FAMILIES: readonly Family[] = [
   {
     id: "cli-linux",
     name: "Linux CLI",
     logos: ["linux"],
     writes: true,
-    files: [tar("x86_64", "linux-x86_64-musl"), tar("ARM64", "linux-aarch64-musl")],
+    files: [cli("x86_64", "linux-x86_64", ".tar.gz"), cli("ARM64", "linux-aarch64", ".tar.gz")],
   },
   {
     id: "cli-windows",
