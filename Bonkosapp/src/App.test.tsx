@@ -9,9 +9,11 @@ import { CLI_FAMILIES, downloadUrl, FAMILIES, VERSION } from "./downloads";
 import { MANAGERS } from "./install";
 
 afterEach(cleanup);
+afterEach(() => vi.unstubAllGlobals());
 
 describe("page de départ", () => {
   it("donne le téléchargement et les sources", () => {
+    vi.stubGlobal("fetch", async () => new Response("", { status: 503 }));
     render(<App />);
     expect(screen.getByRole("heading", { level: 1, name: "Bonk" })).toBeTruthy();
     expect(screen.getAllByRole("heading", { level: 3 }).length).toBe(
@@ -23,7 +25,7 @@ describe("page de départ", () => {
   it("change de langue, et le dit au document", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: "Français" }));
-    expect(screen.getByRole("heading", { level: 2, name: /Télécharger/ })).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 2, name: /^Télécharger Version/ })).toBeTruthy();
     expect(document.documentElement.lang).toBe("fr");
   });
 
@@ -97,6 +99,52 @@ describe("contraste", () => {
     const colors = new Set(css.match(/#[0-9a-f]{6}\b/gi));
     expect(colors).toEqual(new Set(["#000000", "#ffffff"]));
     expect(contrastRatio("#000000", "#ffffff")).toBeGreaterThanOrEqual(7);
+  });
+});
+
+describe("liens directs de l'accueil", () => {
+  it("donne les fichiers officiels de chaque système, la version récente d'abord", async () => {
+    const catalog = {
+      families: [{ id: "ubuntu", name: "Ubuntu", icon: "icons/ubuntu.png" }],
+      images: [
+        {
+          id: "u24",
+          family: "ubuntu",
+          name: "Ubuntu",
+          version: "24.04.5",
+          channel: "lts",
+          released: "2026-09-09",
+          homepage: "https://u/",
+          url: "https://u/24.iso",
+          size_bytes: 4e9,
+        },
+        {
+          id: "u26",
+          family: "ubuntu",
+          name: "Ubuntu",
+          version: "26.04.1",
+          edition: "desktop",
+          channel: "lts",
+          released: "2026-08-26",
+          homepage: "https://u/",
+          url: "https://u/26.iso",
+          size_bytes: 6e9,
+        },
+      ],
+    };
+    vi.stubGlobal("fetch", async () => new Response(JSON.stringify(catalog)));
+    const { container } = render(<App />);
+    const titre = await screen.findByRole("heading", { level: 3, name: "Ubuntu" });
+    const section = titre.closest("section");
+    const liens = [...(section?.querySelectorAll("a") ?? [])];
+    expect(liens.map((lien) => lien.getAttribute("href"))).toEqual([
+      "https://u/26.iso",
+      "https://u/24.iso",
+    ]);
+    expect(liens[0]?.textContent).toBe("26.04.1 desktop LTS 6.0 GB");
+    const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
+    expect(result.violations.map((violation) => violation.id)).toEqual([]);
+    vi.unstubAllGlobals();
   });
 });
 
