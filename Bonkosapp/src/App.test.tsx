@@ -291,7 +291,8 @@ describe("suggestion selon la machine", () => {
     expect(
       detect("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", "MacIntel").arch,
     ).toBeUndefined();
-    expect(detect("Mozilla/5.0 (Linux; Android 15; Pixel 9)", "Linux aarch64").os).toBe("other");
+    expect(detect("Mozilla/5.0 (Linux; Android 15; Pixel 9)", "Linux aarch64").os).toBe("android");
+    expect(detect("Mozilla/5.0 (iPhone; CPU iPhone OS 18_0)", "iPhone").os).toBe("other");
     expect(detect("Mozilla/5.0 (X11; CrOS x86_64 16000.0.0)", "Linux x86_64").os).toBe("other");
   });
 
