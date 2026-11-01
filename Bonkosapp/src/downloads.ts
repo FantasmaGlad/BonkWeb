@@ -13,7 +13,7 @@ export type Family = {
 };
 
 const cli = (arch: string, target: string, format: ".tar.gz" | ".zip"): Download => ({
-  arch: `${arch} CLI`,
+  arch,
   format,
   file: `bonk-cli-${VERSION}-${target}${format}`,
 });
@@ -60,13 +60,7 @@ export const FAMILIES: readonly Family[] = [
     name: "Linux",
     logos: ["linux"],
     writes: true,
-    files: [
-      tar("x86_64", "linux-x86_64"),
-      tar("ARM64", "linux-aarch64"),
-      tar("x86", "linux-i686"),
-      tar("x86_64 CLI", "linux-x86_64-musl"),
-      tar("ARM64 CLI", "linux-aarch64-musl"),
-    ],
+    files: [tar("x86_64", "linux-x86_64"), tar("ARM64", "linux-aarch64"), tar("x86", "linux-i686")],
   },
   {
     id: "windows",
@@ -77,9 +71,6 @@ export const FAMILIES: readonly Family[] = [
       { arch: "x86_64", format: ".exe", file: `bonk-${VERSION}-windows-x86_64-setup.exe` },
       { arch: "ARM64", format: ".exe", file: `bonk-${VERSION}-windows-aarch64-setup.exe` },
       { arch: "x86", format: ".exe", file: `bonk-${VERSION}-windows-i686-setup.exe` },
-      cli("x86_64", "windows-x86_64", ".zip"),
-      cli("ARM64", "windows-aarch64", ".zip"),
-      cli("x86", "windows-i686", ".zip"),
     ],
   },
   {
@@ -87,11 +78,36 @@ export const FAMILIES: readonly Family[] = [
     name: "macOS 12+",
     logos: ["apple"],
     writes: false,
+    files: [{ arch: "Universal", format: ".dmg", file: `bonk-${VERSION}-macos-universal.dmg` }],
+  },
+];
+
+/** Version sans fenêtre. À partir de la prochaine version, l'archive Linux s'appellera aussi bonk-cli-*. */
+export const CLI_FAMILIES: readonly Family[] = [
+  {
+    id: "cli-linux",
+    name: "Linux CLI",
+    logos: ["linux"],
+    writes: true,
+    files: [tar("x86_64", "linux-x86_64-musl"), tar("ARM64", "linux-aarch64-musl")],
+  },
+  {
+    id: "cli-windows",
+    name: "Windows 10+ CLI",
+    logos: ["windows"],
+    writes: false,
     files: [
-      { arch: "Universal", format: ".dmg", file: `bonk-${VERSION}-macos-universal.dmg` },
-      cli("x86_64", "macos-x86_64", ".tar.gz"),
-      cli("ARM64", "macos-aarch64", ".tar.gz"),
+      cli("x86_64", "windows-x86_64", ".zip"),
+      cli("ARM64", "windows-aarch64", ".zip"),
+      cli("x86", "windows-i686", ".zip"),
     ],
+  },
+  {
+    id: "cli-macos",
+    name: "macOS 12+ CLI",
+    logos: ["apple"],
+    writes: false,
+    files: [cli("x86_64", "macos-x86_64", ".tar.gz"), cli("ARM64", "macos-aarch64", ".tar.gz")],
   },
 ];
 
