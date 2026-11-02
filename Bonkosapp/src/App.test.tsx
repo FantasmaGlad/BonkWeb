@@ -6,6 +6,7 @@ import { App } from "./App";
 import commands from "./commands.json";
 import { contrastRatio } from "./contrast";
 import { CLI_FAMILIES, downloadUrl, FAMILIES, VERSION } from "./downloads";
+import { categoryLabel, sizeLabel } from "./images";
 import { MANAGERS } from "./install";
 import { detect, suggestBonk, suggestImages } from "./machine";
 
@@ -345,5 +346,21 @@ describe("suggestion selon la machine", () => {
       "mx",
       "archx",
     ]);
+  });
+});
+
+describe("libellés du catalogue", () => {
+  it("traduit les catégories en français et garde l'anglais tel quel", () => {
+    expect(categoryLabel("Debian derivatives", "fr")).toBe("Dérivées de Debian");
+    expect(categoryLabel("Servers", "fr")).toBe("Serveurs");
+    expect(categoryLabel("Servers", "en")).toBe("Servers");
+    expect(categoryLabel("Une catégorie nouvelle", "fr")).toBe("Une catégorie nouvelle");
+  });
+
+  it("écrit les tailles à la française et ne montre jamais 0.0 pour une petite image", () => {
+    expect(sizeLabel(5_100_000_000, "en")).toBe("5.1 GB");
+    expect(sizeLabel(5_100_000_000, "fr")).toBe("5,1 Go");
+    expect(sizeLabel(17_350_656, "en")).toBe("17 MB");
+    expect(sizeLabel(17_350_656, "fr")).toBe("17 Mo");
   });
 });

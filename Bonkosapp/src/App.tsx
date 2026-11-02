@@ -8,6 +8,7 @@ import {
   type CatalogFilter,
   type CatalogImage,
   categoriesOf,
+  categoryLabel,
   familiesIn,
   filterFromAddress,
   loadCatalog,
@@ -270,7 +271,7 @@ function SuggestedImages({
                     {[image.edition, armLabel(image), channelLabel(image, language)]
                       .filter(Boolean)
                       .join(" ")}
-                    <small>{image.size_bytes ? sizeLabel(image.size_bytes) : null}</small>
+                    <small>{image.size_bytes ? sizeLabel(image.size_bytes, language) : null}</small>
                   </span>
                 </a>
               );
@@ -288,7 +289,7 @@ function SuggestedImages({
           <p className="actions">
             {categoriesOf(catalog).map((category) => (
               <a key={category} href={`/images/?category=${encodeURIComponent(category)}`}>
-                {category}
+                {categoryLabel(category, language)}
               </a>
             ))}
           </p>
@@ -434,7 +435,9 @@ function CatalogFilters({
         >
           <option value="">{text.filterAll}</option>
           {categoriesOf(catalog).map((category) => (
-            <option key={category}>{category}</option>
+            <option key={category} value={category}>
+              {categoryLabel(category, language)}
+            </option>
           ))}
         </select>
       </label>
@@ -444,7 +447,7 @@ function CatalogFilters({
           value={filter.family}
           onChange={(event) => onChange({ ...filter, family: event.target.value })}
         >
-          <option value="">{text.filterAll}</option>
+          <option value="">{text.filterAllSystems}</option>
           {inCategory.map((family) => (
             <option key={family.id} value={family.id}>
               {family.name}
@@ -515,7 +518,9 @@ function DirectLinks({ catalog, language }: { catalog: Catalog | null; language:
                           .filter(Boolean)
                           .join(" ")}{" "}
                         <small>
-                          {image.size_bytes ? sizeLabel(image.size_bytes) : text.officialPage}
+                          {image.size_bytes
+                            ? sizeLabel(image.size_bytes, language)
+                            : text.officialPage}
                         </small>
                       </a>
                     ))}
@@ -548,7 +553,7 @@ function ImageRow({ image, language }: { image: CatalogImage; language: Language
       <p className="actions">
         {image.url ? (
           <a href={image.url}>
-            {text.officialDownload} <small>{sizeLabel(image.size_bytes ?? 0)}</small>
+            {text.officialDownload} <small>{sizeLabel(image.size_bytes ?? 0, language)}</small>
           </a>
         ) : (
           <a href={image.official_page}>{text.officialPage}</a>

@@ -1,3 +1,5 @@
+import type { Language } from "./text";
+
 export const CATALOG_URL = "https://catalog.bonk-os.app/v1/";
 
 export type CatalogFamily = { id: string; name: string; icon: string; category?: string };
@@ -91,7 +93,28 @@ export const selectImages = (
   return images;
 };
 
-export const sizeLabel = (bytes: number): string => `${(bytes / 1e9).toFixed(1)} GB`;
+/** Decimal units, as the publishers print them; below 0.1 GB, megabytes, so a small image never reads "0.0". */
+export const sizeLabel = (bytes: number, language: Language): string => {
+  const [value, unit] =
+    bytes < 1e8 ? [String(Math.round(bytes / 1e6)), "MB"] : [(bytes / 1e9).toFixed(1), "GB"];
+  return language === "fr"
+    ? `${value.replace(".", ",")} ${unit === "GB" ? "Go" : "Mo"}`
+    : `${value} ${unit}`;
+};
+
+/** The catalog names its categories in English; unknown ones stay as published. */
+const CATEGORY_FR: Record<string, string> = {
+  "Arch family": "Famille Arch",
+  "Debian derivatives": "Dérivées de Debian",
+  "Independent Linux": "Linux indépendants",
+  "Other systems": "Autres systèmes",
+  "Red Hat family": "Famille Red Hat",
+  "SUSE family": "Famille SUSE",
+  Servers: "Serveurs",
+};
+
+export const categoryLabel = (category: string, language: Language): string =>
+  language === "fr" ? (CATEGORY_FR[category] ?? category) : category;
 
 export const loadCatalog = async (): Promise<Catalog> => {
   const response = await fetch(`${CATALOG_URL}catalog.json`);
