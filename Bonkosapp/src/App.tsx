@@ -208,7 +208,9 @@ function GetBonk({
             {text.machineDownload} <small>{suggestion.file.format}</small>
           </a>
         </p>
-      ) : os === "other" ? null : (
+      ) : os === "other" ? null : os === "android" ? (
+        <p className="note">{text.androidUnsupported}</p>
+      ) : (
         <p className="note">{text.machineChoose}</p>
       )}
       {suggestion && !suggestion.family.writes ? (
