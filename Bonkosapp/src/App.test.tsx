@@ -56,12 +56,12 @@ describe("téléchargements", () => {
     const previews = [...FAMILIES, ...CLI_FAMILIES]
       .filter((family) => !family.writes)
       .map((family) => family.id);
-    expect(previews).toEqual(["windows", "macos", "cli-windows", "cli-macos"]);
+    expect(previews).toEqual(["windows", "macos", "android", "cli-windows", "cli-macos"]);
     expect(
       screen.getAllByText(
         "Writes to disks; proven in continuous integration, not yet on a real drive.",
       ).length,
-    ).toBe(previews.length);
+    ).toBe(previews.length - 1);
   });
 });
 

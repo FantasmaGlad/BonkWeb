@@ -208,12 +208,12 @@ function GetBonk({
             {text.machineDownload} <small>{suggestion.file.format}</small>
           </a>
         </p>
-      ) : os === "android" ? (
-        <p className="note">{text.androidSoon}</p>
       ) : os === "other" ? null : (
         <p className="note">{text.machineChoose}</p>
       )}
-      {suggestion && !suggestion.family.writes ? <p className="note">{text.preview}</p> : null}
+      {suggestion && !suggestion.family.writes ? (
+        <p className="note">{os === "android" ? text.androidBeta : text.preview}</p>
+      ) : null}
       {manager ? (
         <>
           <p>{text.machineCommand}</p>
@@ -334,7 +334,9 @@ function Families({ families, language }: { families: readonly Family[]; languag
         <section key={family.id} aria-labelledby={family.id} className="family">
           <Logos names={family.logos} />
           <h3 id={family.id}>{family.name}</h3>
-          {family.writes ? null : <p className="note">{text.preview}</p>}
+          {family.writes ? null : (
+            <p className="note">{family.id === "android" ? text.androidBeta : text.preview}</p>
+          )}
           <p className="actions">
             {family.files.map(({ arch, format, file }) => (
               <a key={file} href={downloadUrl(file)}>

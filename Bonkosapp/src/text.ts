@@ -8,15 +8,15 @@ export const TEXT = {
   en: {
     tagline: "Write bootable images to USB drives.",
     points: [
-      "Linux, or a Windows 10 and 11 install drive, from a URL or a file.",
+      "On Linux, Windows, macOS and Android: Linux systems and Windows 10 and 11 install drives, from a catalog, a URL or a file.",
       "Every write is checked and read back. A system disk is never offered.",
       "Open source, one binary, no telemetry.",
     ],
     home: "Home",
     installNav: "Install",
     commandsNav: "Commands",
-    androidSoon:
-      "Android 8 and later, on ARM64 phones and tablets, with a USB adapter and without root. The app arrives with the next version. Chromebooks are not supported yet.",
+    androidBeta:
+      "Beta. ARM64 phones and tablets, with a USB adapter and without root. Full writes are still being validated; check the drive afterwards. Chromebooks are not supported yet.",
     machineTitle: "Get Bonk",
     machineDetected: "Detected from your browser:",
     machineUnknown: "Your browser does not say which computer this is. Choose below.",
@@ -89,15 +89,15 @@ export const TEXT = {
   fr: {
     tagline: "Écrit des images amorçables sur clé USB.",
     points: [
-      "Linux, ou une clé d'installation Windows 10 et 11, depuis une adresse ou un fichier.",
+      "Sous Linux, Windows, macOS et Android : systèmes Linux et clés d'installation Windows 10 et 11, depuis un catalogue, une adresse ou un fichier.",
       "Chaque écriture est contrôlée et relue. Un disque système n'est jamais proposé.",
       "Open source, un seul binaire, aucune télémétrie.",
     ],
     home: "Accueil",
     installNav: "Installer",
     commandsNav: "Commandes",
-    androidSoon:
-      "Android 8 et plus, téléphones et tablettes ARM64, avec un adaptateur USB et sans root. L'application arrive avec la prochaine version. Les Chromebook ne sont pas encore pris en charge.",
+    androidBeta:
+      "Bêta. Téléphones et tablettes ARM64, avec un adaptateur USB et sans root. L'écriture complète est encore en validation : contrôlez le support après coup. Les Chromebook ne sont pas encore pris en charge.",
     machineTitle: "Obtenir Bonk",
     machineDetected: "Détecté par votre navigateur :",
     machineUnknown:
