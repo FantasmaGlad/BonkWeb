@@ -104,10 +104,14 @@ export const suggestBonk = (
 ): Suggestion | undefined => {
   const id = os === "linux" ? LINUX_FAMILY[distro] : os;
   const family = FAMILIES.find((candidate) => candidate.id === id);
+  // The Android app is built for ARM64 only: an x86 tablet or emulator would install it and crash on start.
+  // An unknown processor still gets it, since most phones do not say.
   const file =
-    os === "macos" || os === "android"
+    os === "macos" || (os === "android" && (!arch || arch === "aarch64"))
       ? family?.files[0]
-      : family?.files.find((candidate) => arch && candidate.arch === LABEL[arch]);
+      : os === "android"
+        ? undefined
+        : family?.files.find((candidate) => arch && candidate.arch === LABEL[arch]);
   return family && file ? { family, file } : undefined;
 };
 

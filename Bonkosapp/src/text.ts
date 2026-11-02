@@ -30,6 +30,8 @@ export const TEXT = {
     machineDownload: "Download Bonk",
     machineCommand: "Or from the command line:",
     machineChoose: "Choose your processor to get the right file.",
+    androidUnsupported:
+      "The Bonk app exists for ARM64 phones and tablets only: this processor is not supported yet.",
     distroDebian: "Ubuntu, Debian, Mint",
     distroFedora: "Fedora, RHEL, Rocky, Alma",
     distroSuse: "openSUSE",
@@ -112,6 +114,8 @@ export const TEXT = {
     machineDownload: "Télécharger Bonk",
     machineCommand: "Ou en ligne de commande :",
     machineChoose: "Choisissez votre processeur pour obtenir le bon fichier.",
+    androidUnsupported:
+      "L'application Bonk n'existe que pour les téléphones et tablettes ARM64 : ce processeur n'est pas encore pris en charge.",
     distroDebian: "Ubuntu, Debian, Mint",
     distroFedora: "Fedora, RHEL, Rocky, Alma",
     distroSuse: "openSUSE",

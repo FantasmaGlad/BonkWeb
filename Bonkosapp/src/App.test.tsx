@@ -303,6 +303,19 @@ describe("suggestion selon la machine", () => {
     expect(suggestBonk("windows", undefined, "other")).toBeUndefined();
   });
 
+  it("ne propose l'application Android qu'à un processeur ARM64", () => {
+    expect(suggestBonk("android", "aarch64", "other")?.file.format).toBe(".apk");
+    expect(suggestBonk("android", undefined, "other")?.file.format).toBe(".apk");
+    expect(suggestBonk("android", "x86_64", "other")).toBeUndefined();
+    expect(suggestBonk("android", "i686", "other")).toBeUndefined();
+  });
+
+  it("donne à Zypper le dépôt du processeur de la machine, jamais un dépôt x86_64 écrit en dur", () => {
+    const zypper = MANAGERS.find((manager) => manager.id === "zypper");
+    expect(zypper?.install).toContain("/rpm/bonk.repo");
+    expect(zypper?.install).not.toContain("/rpm/x86_64");
+  });
+
   it("propose Manjaro ARM sur une machine Manjaro ARM, jamais une image qui ne démarre pas", () => {
     const image = (id: string, family: string, arch: string, extra = {}) => ({
       id,

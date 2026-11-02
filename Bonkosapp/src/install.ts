@@ -49,7 +49,7 @@ sudo dnf install bonk`,
     name: "Zypper: openSUSE, SLES",
     logos: ["opensuse"],
     install: `sudo rpm --import ${URL}/bonk.asc
-sudo zypper addrepo ${URL}/rpm/x86_64 bonk
+sudo zypper addrepo ${URL}/rpm/bonk.repo
 sudo zypper refresh
 sudo zypper install bonk`,
     cli: "sudo zypper install bonk-cli",
