@@ -15,7 +15,7 @@
       }
     },
     {
-      "flag": "--log-file <CHEMIN>",
+      "flag": "--log-file <PATH>",
       "text": {
         "en": "Also writes the log to this file (appends)",
         "fr": "Écrit aussi le journal dans ce fichier (ajout en fin de fichier)"
@@ -29,7 +29,7 @@
       }
     },
     {
-      "flag": "--fixture <FICHIER>",
+      "flag": "--fixture <FILE>",
       "text": {
         "en": "Replays a captured listing (`bonk diagnose --capture`) instead of reading this system: reading, `--dry-run` and `--simulate` only, never writes to a disk",
         "fr": "Rejoue une énumération capturée (`bonk diagnose --capture`) au lieu de lire ce système : lecture, `--dry-run` et `--simulate` seulement, jamais d'écriture sur un disque"
@@ -150,7 +150,7 @@
           }
         },
         {
-          "flag": "<SOURCE>",
+          "flag": "[SOURCE]",
           "text": {
             "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download, with its checksum",
             "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger, avec son empreinte"
@@ -166,7 +166,7 @@
           }
         },
         {
-          "flag": "--size <OCTETS>",
+          "flag": "--size <BYTES>",
           "text": {
             "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
             "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
@@ -236,14 +236,14 @@
           }
         },
         {
-          "flag": "--sha256-file <CHEMIN_OU_URL>",
+          "flag": "--sha256-file <PATH_OR_URL>",
           "text": {
             "en": "Published checksum file (SHA256SUMS), path or https:// URL: the checksum is looked up by image name",
             "fr": "Fichier d'empreintes publié (SHA256SUMS), chemin ou adresse https:// : l'empreinte y est lue au nom de l'image"
           }
         },
         {
-          "flag": "--cache-dir <DOSSIER>",
+          "flag": "--cache-dir <DIR>",
           "text": {
             "en": "Downloads folder; by default the user's cache folder",
             "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
@@ -315,7 +315,7 @@
           }
         },
         {
-          "flag": "<SOURCE>",
+          "flag": "[SOURCE]",
           "text": {
             "en": "Reference image",
             "fr": "Image de référence"
@@ -331,7 +331,7 @@
           }
         },
         {
-          "flag": "--size <OCTETS>",
+          "flag": "--size <BYTES>",
           "text": {
             "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
             "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
@@ -405,7 +405,7 @@
           }
         },
         {
-          "flag": "--size <OCTETS>",
+          "flag": "--size <BYTES>",
           "text": {
             "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
             "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
@@ -513,7 +513,7 @@
           }
         },
         {
-          "flag": "--sort <ORDER>",
+          "flag": "--sort <SORT>",
           "text": {
             "en": "Order: system, released, name, size",
             "fr": "Ordre : system, released, name, size"
@@ -551,7 +551,7 @@
       "args": [],
       "options": [
         {
-          "flag": "--cache-dir <DOSSIER>",
+          "flag": "--cache-dir <DIR>",
           "text": {
             "en": "Downloads folder; by default the user's cache folder",
             "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
@@ -575,7 +575,7 @@
       "args": [],
       "options": [
         {
-          "flag": "--cache-dir <DOSSIER>",
+          "flag": "--cache-dir <DIR>",
           "text": {
             "en": "Downloads folder; by default the user's cache folder",
             "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
@@ -689,7 +689,7 @@
           }
         },
         {
-          "flag": "<SOURCE>",
+          "flag": "[SOURCE]",
           "text": {
             "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download, with its checksum",
             "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger, avec son empreinte"
@@ -705,7 +705,7 @@
           }
         },
         {
-          "flag": "--size <OCTETS>",
+          "flag": "--size <BYTES>",
           "text": {
             "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
             "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
@@ -775,14 +775,14 @@
           }
         },
         {
-          "flag": "--sha256-file <CHEMIN_OU_URL>",
+          "flag": "--sha256-file <PATH_OR_URL>",
           "text": {
             "en": "Published checksum file (SHA256SUMS), path or https:// URL: the checksum is looked up by image name",
             "fr": "Fichier d'empreintes publié (SHA256SUMS), chemin ou adresse https:// : l'empreinte y est lue au nom de l'image"
           }
         },
         {
-          "flag": "--cache-dir <DOSSIER>",
+          "flag": "--cache-dir <DIR>",
           "text": {
             "en": "Downloads folder; by default the user's cache folder",
             "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
@@ -854,7 +854,7 @@
           }
         },
         {
-          "flag": "<SOURCE>",
+          "flag": "[SOURCE]",
           "text": {
             "en": "Reference image",
             "fr": "Image de référence"
@@ -870,7 +870,7 @@
           }
         },
         {
-          "flag": "--size <OCTETS>",
+          "flag": "--size <BYTES>",
           "text": {
             "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
             "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
@@ -944,7 +944,7 @@
           }
         },
         {
-          "flag": "--size <OCTETS>",
+          "flag": "--size <BYTES>",
           "text": {
             "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
             "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
@@ -1039,7 +1039,7 @@
           }
         },
         {
-          "flag": "--size <OCTETS>",
+          "flag": "--size <BYTES>",
           "text": {
             "en": "Size of the target image created by --simulate (decimal or 0x...); by default the source image's size when raw",
             "fr": "Taille de l'image cible créée par --simulate (décimal ou 0x...) ; par défaut celle de l'image source quand elle est brute"
@@ -1102,7 +1102,7 @@
           }
         },
         {
-          "flag": "--label <NOM>",
+          "flag": "--label <NAME>",
           "text": {
             "en": "Volume label",
             "fr": "Étiquette du volume"
@@ -1157,7 +1157,7 @@
       "args": [],
       "options": [
         {
-          "flag": "--output <FICHIER>",
+          "flag": "--output <FILE>",
           "text": {
             "en": "Writes the report to this file (refuses to overwrite) instead of standard output",
             "fr": "Écrit le rapport dans ce fichier (refuse d'écraser un fichier existant) au lieu de la sortie"

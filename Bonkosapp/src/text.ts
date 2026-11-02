@@ -8,7 +8,7 @@ export const TEXT = {
   en: {
     tagline: "Write bootable images to USB drives.",
     points: [
-      "On Linux, Windows, macOS and Android: Linux systems and Windows 10 and 11 install drives, from a catalog, a URL or a file.",
+      "On Linux, Windows and macOS: Linux systems and Windows 10 and 11 install drives, from a catalog, a URL or a file. On Android, in beta: Linux systems.",
       "Every write is checked and read back. A system disk is never offered.",
       "Open source, one binary, no telemetry.",
     ],
@@ -16,7 +16,7 @@ export const TEXT = {
     installNav: "Install",
     commandsNav: "Commands",
     androidBeta:
-      "Beta. ARM64 phones and tablets, with a USB adapter and without root. Full writes are still being validated; check the drive afterwards. Chromebooks are not supported yet.",
+      "Beta, for ARM64 phones with a USB adapter, without root. Tried so far on one phone (Android 16) with Linux images: check the drive afterwards. Tablets, older Android versions, Windows install drives and Chromebooks have not been tried yet.",
     machineTitle: "Get Bonk",
     machineDetected: "Detected from your browser:",
     machineUnknown: "Your browser does not say which computer this is. Choose below.",
@@ -92,7 +92,7 @@ export const TEXT = {
   fr: {
     tagline: "Écrit des images amorçables sur clé USB.",
     points: [
-      "Sous Linux, Windows, macOS et Android : systèmes Linux et clés d'installation Windows 10 et 11, depuis un catalogue, une adresse ou un fichier.",
+      "Sous Linux, Windows et macOS : systèmes Linux et clés d'installation Windows 10 et 11, depuis un catalogue, une adresse ou un fichier. Sous Android, en bêta : systèmes Linux.",
       "Chaque écriture est contrôlée et relue. Un disque système n'est jamais proposé.",
       "Open source, un seul binaire, aucune télémétrie.",
     ],
@@ -100,7 +100,7 @@ export const TEXT = {
     installNav: "Installer",
     commandsNav: "Commandes",
     androidBeta:
-      "Bêta. Téléphones et tablettes ARM64, avec un adaptateur USB et sans root. L'écriture complète est encore en validation : contrôlez le support après coup. Les Chromebook ne sont pas encore pris en charge.",
+      "Bêta, pour les téléphones ARM64 avec un adaptateur USB, sans root. Essayée pour l'instant sur un téléphone (Android 16) avec des images Linux : contrôlez le support après coup. Tablettes, versions plus anciennes d'Android, clés d'installation Windows et Chromebook n'ont pas encore été essayés.",
     machineTitle: "Obtenir Bonk",
     machineDetected: "Détecté par votre navigateur :",
     machineUnknown:
