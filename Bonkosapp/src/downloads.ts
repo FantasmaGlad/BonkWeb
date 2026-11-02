@@ -1,4 +1,4 @@
-export const VERSION = "0.0.4";
+export const VERSION = "0.0.5";
 
 const BASE = `https://github.com/FantasmaGlad/Bonk/releases/download/v${VERSION}`;
 
@@ -79,6 +79,13 @@ export const FAMILIES: readonly Family[] = [
     logos: ["apple"],
     writes: false,
     files: [{ arch: "Universal", format: ".dmg", file: `bonk-${VERSION}-macos-universal.dmg` }],
+  },
+  {
+    id: "android",
+    name: "Android 8+",
+    logos: ["android"],
+    writes: false,
+    files: [{ arch: "ARM64", format: ".apk", file: `bonk-${VERSION}-android-arm64.apk` }],
   },
 ];
 

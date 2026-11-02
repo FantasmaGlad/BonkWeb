@@ -105,7 +105,7 @@ export const suggestBonk = (
   const id = os === "linux" ? LINUX_FAMILY[distro] : os;
   const family = FAMILIES.find((candidate) => candidate.id === id);
   const file =
-    os === "macos"
+    os === "macos" || os === "android"
       ? family?.files[0]
       : family?.files.find((candidate) => arch && candidate.arch === LABEL[arch]);
   return family && file ? { family, file } : undefined;
