@@ -74,6 +74,26 @@ const CATEGORY_FR: Record<string, string> = {
 export const categoryLabel = (category: string, language: Language): string =>
   language === "fr" ? (CATEGORY_FR[category] ?? category) : category;
 
+/** The catalog writes its notes in English; a note not listed here stays as published. */
+const NOTE_FR: Record<string, string> = {
+  "DVD or virtual machine only: this file has no USB disk boot.":
+    "DVD ou machine virtuelle seulement : ce fichier ne démarre pas depuis une clé USB.",
+  "90-day evaluation; hash computed from Microsoft's file, none is published":
+    "Évaluation de 90 jours ; empreinte calculée sur le fichier de Microsoft, qui n'en publie pas",
+  "Last image published in 2023. Hash computed from the publisher's file and checked against its SHA-1.":
+    "Dernière image publiée en 2023. Empreinte calculée sur le fichier de l'éditeur et contrôlée avec son SHA-1.",
+  "Hash computed from the publisher's file and checked against its SHA-512.":
+    "Empreinte calculée sur le fichier de l'éditeur et contrôlée avec son SHA-512.",
+  "Hash computed from the publisher's mirror file.":
+    "Empreinte calculée sur le fichier du miroir de l'éditeur.",
+  "CD or virtual machine only: the file has no USB boot sector. Hash computed from the publisher's file; it matches the MD5 the publisher lists.":
+    "CD ou machine virtuelle seulement : le fichier n'a pas de secteur de démarrage USB. Empreinte calculée sur le fichier de l'éditeur ; elle correspond au MD5 qu'il publie.",
+  "Hash computed from the publisher's file.": "Empreinte calculée sur le fichier de l'éditeur.",
+};
+
+export const noteLabel = (note: string, language: Language): string =>
+  language === "fr" ? (NOTE_FR[note] ?? note) : note;
+
 /** Higher-resolution logos shipped with the site; the other systems keep the catalog's icon. */
 const LOCAL_LOGOS = new Set([
   "almalinux",

@@ -10,6 +10,7 @@ import {
   type Catalog,
   categoryLabel,
   NO_STORE_FILTER,
+  noteLabel,
   recentReleases,
   sizeLabel,
   storeFromAddress,
@@ -71,7 +72,7 @@ const CATALOG: Catalog = {
     image("f44", "fedora", "44", "2026-10-20", {
       edition: "workstation",
       usb_boot: false,
-      note: "DVD or virtual machine only.",
+      note: "DVD or virtual machine only: this file has no USB disk boot.",
     }),
     image("haiku", "haiku", "r1beta5", "2024-09-13"),
   ],
@@ -397,6 +398,25 @@ describe("libellés du catalogue", () => {
     expect(categoryLabel("Servers", "fr")).toBe("Serveurs");
     expect(categoryLabel("Servers", "en")).toBe("Servers");
     expect(categoryLabel("Une catégorie nouvelle", "fr")).toBe("Une catégorie nouvelle");
+  });
+
+  it("traduit les notes connues du catalogue et garde les autres telles quelles", async () => {
+    expect(noteLabel("Hash computed from the publisher's file.", "fr")).toBe(
+      "Empreinte calculée sur le fichier de l'éditeur.",
+    );
+    expect(noteLabel("Hash computed from the publisher's file.", "en")).toBe(
+      "Hash computed from the publisher's file.",
+    );
+    expect(noteLabel("A new note", "fr")).toBe("A new note");
+    serve();
+    history.replaceState(null, "", "/images/?system=fedora");
+    render(<App page="images" language="fr" />);
+    await screen.findByRole("heading", { level: 1, name: "Fedora" });
+    expect(
+      screen.getByText(
+        "DVD ou machine virtuelle seulement : ce fichier ne démarre pas depuis une clé USB.",
+      ),
+    ).toBeTruthy();
   });
 
   it("écrit les tailles à la française et ne montre jamais 0.0 pour une petite image", () => {
