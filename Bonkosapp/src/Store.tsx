@@ -9,6 +9,7 @@ import {
   imagesOf,
   logoOf,
   NO_STORE_FILTER,
+  noteLabel,
   type StoreFilter,
   type SystemSummary,
   sizeLabel,
@@ -261,7 +262,7 @@ function ImageRow({ image }: { image: CatalogImage }) {
         <strong>{image.edition ?? text.standard}</strong>
         <span className="badge">{image.arch}</span>
         {image.usb_boot === false ? <span className="badge warn">{text.dvdOnly}</span> : null}
-        {image.note ? <p className="hint">{image.note}</p> : null}
+        {image.note ? <p className="hint">{noteLabel(image.note, language)}</p> : null}
       </div>
       <div className="image-row-actions">
         {image.url ? (
