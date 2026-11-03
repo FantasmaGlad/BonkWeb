@@ -1,40 +1,239 @@
 import { existsSync, readFileSync } from "node:fs";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import axe from "axe-core";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
 import commands from "./commands.json";
 import { contrastRatio } from "./contrast";
 import { CLI_FAMILIES, downloadUrl, FAMILIES, VERSION } from "./downloads";
-import { categoryLabel, sizeLabel } from "./images";
+import {
+  type Catalog,
+  categoryLabel,
+  NO_STORE_FILTER,
+  recentReleases,
+  sizeLabel,
+  storeFromAddress,
+  summarize,
+} from "./images";
 import { MANAGERS } from "./install";
+import { languageFrom, localHref } from "./language";
 import { detect, suggestBonk, suggestImages } from "./machine";
 
 afterEach(cleanup);
 afterEach(() => vi.unstubAllGlobals());
+beforeEach(() => history.replaceState(null, "", "/"));
 
-describe("page de départ", () => {
-  it("donne le téléchargement et les sources", () => {
-    vi.stubGlobal("fetch", async () => new Response("", { status: 503 }));
-    render(<App />);
-    expect(screen.getByRole("heading", { level: 1, name: "Bonk" })).toBeTruthy();
-    expect(screen.getAllByRole("heading", { level: 3 }).length).toBe(
-      FAMILIES.length + CLI_FAMILIES.length + 1,
-    );
-    expect(screen.getByRole("link", { name: "All files and checksums" })).toBeTruthy();
+const violations = async (container: HTMLElement) =>
+  (await axe.run(container, { rules: { "color-contrast": { enabled: false } } })).violations.map(
+    (violation) => violation.id,
+  );
+
+const image = (
+  id: string,
+  family: string,
+  version: string,
+  released: string,
+  extra: Record<string, unknown> = {},
+) => ({
+  id,
+  family,
+  name: family,
+  version,
+  channel: "stable" as const,
+  released,
+  arch: "x86_64",
+  homepage: `https://${family}.example/`,
+  url: `https://${family}.example/${id}.iso`,
+  sha256: "a".repeat(64),
+  size_bytes: 2e9,
+  ...extra,
+});
+
+const CATALOG: Catalog = {
+  families: [
+    { id: "ubuntu", name: "Ubuntu", icon: "icons/ubuntu.png", category: "Debian derivatives" },
+    { id: "linuxmint", name: "Linux Mint", icon: "icons/mint.png", category: "Debian derivatives" },
+    { id: "fedora", name: "Fedora", icon: "icons/fedora.png", category: "Red Hat family" },
+    { id: "haiku", name: "Haiku", icon: "icons/haiku.png", category: "Other systems" },
+  ],
+  images: [
+    image("u24", "ubuntu", "24.04.5", "2026-09-09", { channel: "lts", edition: "desktop" }),
+    image("u26", "ubuntu", "26.04.1", "2026-08-26", { channel: "lts", edition: "desktop" }),
+    image("u26arm", "ubuntu", "26.04.1", "2026-08-26", { channel: "lts", arch: "aarch64" }),
+    image("u20", "ubuntu", "20.04.5", "2022-08-31", {
+      channel: "end_of_life",
+      url: undefined,
+      sha256: undefined,
+      size_bytes: undefined,
+      official_page: "https://ubuntu.example/old",
+    }),
+    image("mint", "linuxmint", "22.3", "2026-01-10", { edition: "cinnamon" }),
+    image("f44", "fedora", "44", "2026-10-20", {
+      edition: "workstation",
+      usb_boot: false,
+      note: "DVD or virtual machine only.",
+    }),
+    image("haiku", "haiku", "r1beta5", "2024-09-13"),
+  ],
+};
+
+const serve = (catalog: unknown = CATALOG) =>
+  vi.stubGlobal("fetch", async () => new Response(JSON.stringify(catalog)));
+
+describe("langue", () => {
+  it("suit le navigateur, l'anglais par défaut, et l'adresse avant tout", () => {
+    expect(languageFrom("", "fr-FR")).toBe("fr");
+    expect(languageFrom("", "en-GB")).toBe("en");
+    expect(languageFrom("", "de-DE")).toBe("en");
+    expect(languageFrom("", undefined)).toBe("en");
+    expect(languageFrom("?lang=en", "fr-FR")).toBe("en");
+    expect(languageFrom("?lang=fr", "en-US")).toBe("fr");
+    expect(languageFrom("?lang=de", "fr-CA")).toBe("fr");
   });
 
-  it("change de langue, et le dit au document", () => {
-    render(<App />);
-    fireEvent.click(screen.getByRole("button", { name: "Français" }));
-    expect(screen.getByRole("heading", { level: 2, name: /^Obtenir Bonk/ })).toBeTruthy();
+  it("garde dans les liens la langue de l'adresse, et elle seule", () => {
+    expect(localHref("/images/", "")).toBe("/images/");
+    expect(localHref("/images/", "?lang=fr&q=x", { system: "ubuntu" })).toBe(
+      "/images/?system=ubuntu&lang=fr",
+    );
+    expect(localHref("/install/#cli", "?lang=en")).toBe("/install/?lang=en#cli");
+    expect(localHref("/", "?lang=xx")).toBe("/");
+  });
+
+  it("n'affiche aucun bouton de langue, et le dit au document", () => {
+    serve();
+    render(<App language="fr" />);
+    expect(screen.queryByRole("button", { name: /English|Français/ })).toBeNull();
+    expect(screen.getByRole("link", { name: "Systèmes" })).toBeTruthy();
     expect(document.documentElement.lang).toBe("fr");
   });
 
-  it("ne viole aucune règle d'accessibilité vérifiable sans rendu", async () => {
-    const { container } = render(<App />);
-    const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
-    expect(result.violations.map((violation) => violation.id)).toEqual([]);
+  it("lit la langue dans l'adresse quand rien n'est imposé", () => {
+    serve();
+    history.replaceState(null, "", "/?lang=fr");
+    render(<App />);
+    expect(screen.getByRole("link", { name: "Systèmes" }).getAttribute("href")).toBe(
+      "/images/?lang=fr",
+    );
+  });
+});
+
+describe("accueil", () => {
+  it("ouvre sur le téléchargement de Bonk, puis les systèmes, accessible", async () => {
+    serve();
+    history.replaceState(null, "", "/");
+    vi.stubGlobal("navigator", {
+      ...navigator,
+      userAgent: "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0",
+      platform: "Linux x86_64",
+      language: "en-US",
+    });
+    const { container } = render(<App language="en" />);
+    const hero = screen.getByRole("heading", { level: 1 }).closest("section") as HTMLElement;
+    const actions = within(hero).getAllByRole("link");
+    expect(actions[0]?.textContent).toBe("Download Bonk .deb");
+    expect(actions[0]?.getAttribute("href")).toBe(downloadUrl(`bonk_${VERSION}-1_amd64.deb`));
+    expect(actions[1]?.textContent).toBe("Explore systems");
+    await screen.findByRole("heading", { level: 2, name: "Just released" });
+    expect(screen.getByText("4 systems, 7 images")).toBeTruthy();
+    expect(await violations(container)).toEqual([]);
+  });
+
+  it("dit quand le catalogue ne répond pas, et garde le téléchargement de Bonk", async () => {
+    vi.stubGlobal("fetch", async () => new Response("", { status: 503 }));
+    render(<App language="en" />);
+    expect((await screen.findByRole("alert")).textContent).toContain("cannot be read");
+    expect(screen.getByRole("heading", { level: 1 })).toBeTruthy();
+  });
+
+  it("montre une sortie récente par système, jamais une version en fin de vie", () => {
+    expect(recentReleases(CATALOG, 6).map((i) => i.id)).toEqual(["f44", "u24", "mint", "haiku"]);
+  });
+});
+
+describe("systèmes", () => {
+  it("résume chaque système par sa dernière version maintenue, triée par nom", () => {
+    const all = summarize(CATALOG, NO_STORE_FILTER, "en");
+    expect(all.map((s) => s.family.id)).toEqual(["fedora", "haiku", "linuxmint", "ubuntu"]);
+    const ubuntu = all.find((s) => s.family.id === "ubuntu");
+    expect(ubuntu?.latest.version).toBe("26.04.1");
+    expect(ubuntu?.count).toBe(4);
+    expect(ubuntu?.architectures).toEqual(["aarch64", "x86_64"]);
+  });
+
+  it("cherche sans accent ni casse, aussi dans la famille traduite", () => {
+    const find = (query: string, language: "en" | "fr" = "en") =>
+      summarize(CATALOG, { ...NO_STORE_FILTER, query }, language).map((s) => s.family.id);
+    expect(find("MINT")).toEqual(["linuxmint"]);
+    expect(find("dérivées", "fr")).toEqual(["linuxmint", "ubuntu"]);
+    expect(find("red hat")).toEqual(["fedora"]);
+    expect(find("nothing")).toEqual([]);
+  });
+
+  it("filtre par processeur et trie par dernière sortie", () => {
+    const arm = summarize(CATALOG, { ...NO_STORE_FILTER, arch: "aarch64" }, "en");
+    expect(arm.map((s) => s.family.id)).toEqual(["ubuntu"]);
+    const recent = summarize(CATALOG, { ...NO_STORE_FILTER, sort: "recent" }, "en");
+    expect(recent.map((s) => s.family.id)).toEqual(["fedora", "ubuntu", "linuxmint", "haiku"]);
+  });
+
+  it("lit l'état de la vitrine dans l'adresse", () => {
+    expect(storeFromAddress("?category=Servers&arch=aarch64&q=pro&sort=recent&system=x")).toEqual({
+      filter: { query: "pro", category: "Servers", arch: "aarch64", sort: "recent" },
+      system: "x",
+    });
+    expect(storeFromAddress("?sort=nope").filter.sort).toBe("name");
+  });
+
+  it("filtre par le menu des familles, écrit l'adresse et propose d'effacer quand rien ne reste", async () => {
+    serve();
+    const { container } = render(<App page="images" language="en" />);
+    await screen.findByRole("link", { name: /Ubuntu/ });
+    expect(await violations(container)).toEqual([]);
+    fireEvent.click(screen.getByRole("link", { name: /^Red Hat family/ }));
+    expect(screen.getByRole("link", { name: /^Red Hat family/ }).getAttribute("aria-current")).toBe(
+      "true",
+    );
+    expect(screen.queryByRole("link", { name: /Ubuntu/ })).toBeNull();
+    expect(location.search).toBe("?category=Red+Hat+family");
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "ubuntu" } });
+    expect(screen.getByText("No system matches these filters.")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Clear filters" }));
+    expect(container.querySelectorAll(".system-card").length).toBe(4);
+  });
+
+  it("ouvre un système : versions récentes d'abord, fin de vie à part, aucun disque deviné", async () => {
+    serve();
+    history.replaceState(null, "", "/images/?system=ubuntu");
+    const { container } = render(<App page="images" language="en" />);
+    await screen.findByRole("heading", { level: 1, name: "Ubuntu" });
+    const versions = screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent);
+    expect(versions.slice(0, 2)).toEqual([
+      "ubuntu 26.04.1LTS2026-08-26",
+      "ubuntu 24.04.5LTS2026-09-09",
+    ]);
+    const ended = container.querySelector(".ended");
+    expect(ended && within(ended as HTMLElement).getByText("Publisher's page")).toBeTruthy();
+    expect(screen.getAllByRole("button", { name: "Copy the Bonk command" }).length).toBe(3);
+    expect(await violations(container)).toEqual([]);
+    fireEvent.click(screen.getByRole("button", { name: "aarch64" }));
+    expect(screen.getAllByRole("link", { name: /^Download/ }).length).toBe(1);
+  });
+
+  it("signale une image qui ne démarre pas sur clé et ne donne pas de commande pour elle", async () => {
+    serve();
+    history.replaceState(null, "", "/images/?system=fedora");
+    render(<App page="images" language="fr" />);
+    await screen.findByRole("heading", { level: 1, name: "Fedora" });
+    expect(screen.getByText("DVD ou VM seulement")).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Copier la commande Bonk" })).toBeNull();
+  });
+
+  it("dit quand le système demandé n'existe pas", async () => {
+    serve();
+    history.replaceState(null, "", "/images/?system=absent");
+    render(<App page="images" language="en" />);
+    expect(await screen.findByText("This system is not in the catalog.")).toBeTruthy();
   });
 });
 
@@ -43,7 +242,7 @@ describe("téléchargements", () => {
     for (const family of [...FAMILIES, ...CLI_FAMILIES]) {
       expect(family.files.length).toBeGreaterThan(0);
       for (const logo of family.logos) {
-        expect(existsSync(`public/icons/${logo}.svg`), logo).toBe(true);
+        expect(existsSync(`public/logos/${logo}.png`), logo).toBe(true);
       }
       for (const { file } of family.files) {
         expect(file).toContain(VERSION);
@@ -52,8 +251,8 @@ describe("téléchargements", () => {
     }
   });
 
-  it("dit que Windows et macOS restent à essayer sur une vraie clé, et eux seuls", () => {
-    render(<App />);
+  it("dit que Windows, macOS et Android restent à essayer sur une vraie clé, et eux seuls", () => {
+    render(<App page="install" language="en" />);
     const previews = [...FAMILIES, ...CLI_FAMILIES]
       .filter((family) => !family.writes)
       .map((family) => family.id);
@@ -67,30 +266,32 @@ describe("téléchargements", () => {
 });
 
 describe("installation", () => {
-  it("donne installer, mettre à jour et retirer pour chaque gestionnaire", () => {
-    render(<App page="install" />);
-    expect(screen.getAllByRole("heading", { level: 2 }).length).toBe(MANAGERS.length + 1);
+  it("donne installer, sans fenêtre, mettre à jour et retirer pour chaque gestionnaire", async () => {
+    const { container } = render(<App page="install" language="en" />);
+    const tabs = screen.getAllByRole("tab");
+    expect(tabs.length).toBe(MANAGERS.length);
     for (const manager of MANAGERS) {
       expect(manager.install && manager.cli && manager.update && manager.remove).toBeTruthy();
       expect(manager.cli).toContain("bonk-cli");
     }
+    fireEvent.click(screen.getByRole("tab", { name: "pacman" }));
+    const panel = screen.getByRole("tabpanel");
+    expect(panel.textContent).toContain("sudo pacman -R bonk");
+    fireEvent.keyDown(screen.getByRole("tab", { name: "pacman" }), { key: "ArrowRight" });
+    expect(screen.getByRole("tab", { selected: true }).textContent).toBe("Homebrew");
+    expect(await violations(container)).toEqual([]);
   });
 });
 
 describe("commandes", () => {
-  it("liste chaque commande, sans texte vide, dans les deux langues", () => {
-    render(<App page="docs" />);
+  it("liste chaque commande, sans texte vide, dans les deux langues", async () => {
+    const { container } = render(<App page="docs" language="en" />);
     expect(commands.commands.length).toBeGreaterThan(20);
     for (const command of commands.commands) {
       expect(command.text.en && command.text.fr, command.command).toBeTruthy();
       expect(document.getElementById(command.command.replaceAll(" ", "-"))).toBeTruthy();
     }
-  });
-
-  it("reste accessible", async () => {
-    const { container } = render(<App page="docs" />);
-    const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
-    expect(result.violations.map((violation) => violation.id)).toEqual([]);
+    expect(await violations(container)).toEqual([]);
   });
 });
 
@@ -100,174 +301,27 @@ describe("contraste", () => {
     expect(contrastRatio("#777777", "#ffffff")).toBeCloseTo(4.48, 1);
   });
 
-  it("n'emploie que le noir et le blanc, au niveau AAA", () => {
+  it("chaque couleur de texte atteint 4,5:1 sur chaque fond, et le corps 7:1", () => {
     const css = readFileSync("src/styles.css", "utf8");
-    const colors = new Set(css.match(/#[0-9a-f]{6}\b/gi));
-    expect(colors).toEqual(new Set(["#000000", "#ffffff"]));
-    expect(contrastRatio("#000000", "#ffffff")).toBeGreaterThanOrEqual(7);
-  });
-});
-
-describe("liens directs de l'accueil", () => {
-  it("donne les fichiers officiels de chaque système, la version récente d'abord", async () => {
-    const catalog = {
-      families: [{ id: "ubuntu", name: "Ubuntu", icon: "icons/ubuntu.png" }],
-      images: [
-        {
-          id: "u24",
-          family: "ubuntu",
-          name: "Ubuntu",
-          version: "24.04.5",
-          channel: "lts",
-          released: "2026-09-09",
-          homepage: "https://u/",
-          url: "https://u/24.iso",
-          size_bytes: 4e9,
-        },
-        {
-          id: "u26",
-          family: "ubuntu",
-          name: "Ubuntu",
-          version: "26.04.1",
-          edition: "desktop",
-          channel: "lts",
-          released: "2026-08-26",
-          homepage: "https://u/",
-          url: "https://u/26.iso",
-          size_bytes: 6e9,
-        },
-      ],
+    const token = (name: string) => {
+      const value = css.match(new RegExp(`--${name}:\\s*(#[0-9a-f]{6})`, "i"))?.[1];
+      expect(value, name).toBeTruthy();
+      return value as string;
     };
-    vi.stubGlobal("fetch", async () => new Response(JSON.stringify(catalog)));
-    const { container } = render(<App />);
-    const titre = await screen.findByRole("heading", { level: 3, name: "Ubuntu" });
-    const section = titre.closest("section");
-    const liens = [...(section?.querySelectorAll("a") ?? [])];
-    expect(liens.map((lien) => lien.getAttribute("href"))).toEqual([
-      "https://u/26.iso",
-      "https://u/24.iso",
-    ]);
-    expect(liens[0]?.textContent).toBe("26.04.1 desktop LTS 6.0 GB");
-    const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
-    expect(result.violations.map((violation) => violation.id)).toEqual([]);
-    vi.unstubAllGlobals();
-  });
-});
-
-describe("page des images", () => {
-  const catalog = {
-    families: [{ id: "ubuntu", name: "Ubuntu", icon: "icons/ubuntu.svg" }],
-    images: [
-      {
-        id: "u24",
-        family: "ubuntu",
-        name: "Ubuntu",
-        version: "24.04.5",
-        channel: "lts",
-        released: "2026-09-09",
-        homepage: "https://u/",
-        url: "https://u/24.iso",
-        sha256: "a".repeat(64),
-        size_bytes: 4e9,
-      },
-      {
-        id: "u26",
-        family: "ubuntu",
-        name: "Ubuntu",
-        version: "26.04.1",
-        channel: "lts",
-        released: "2026-08-26",
-        homepage: "https://u/",
-        url: "https://u/26.iso",
-        sha256: "b".repeat(64),
-        size_bytes: 6e9,
-      },
-      {
-        id: "u20",
-        family: "ubuntu",
-        name: "Ubuntu",
-        version: "20.04.5",
-        channel: "end_of_life",
-        released: "2022-08-31",
-        homepage: "https://u/",
-        official_page: "https://u/page",
-      },
-    ],
-  };
-
-  it("range les versions de la plus récente à la plus ancienne, avec logo et lien officiel", async () => {
-    vi.stubGlobal("fetch", async () => new Response(JSON.stringify(catalog)));
-    const { container } = render(<App page="images" />);
-    await screen.findByRole("heading", { level: 2, name: "Ubuntu" });
-    const titles = [...container.querySelectorAll("li strong")].map((item) => item.textContent);
-    expect(titles).toEqual([
-      "Ubuntu 26.04.1 LTS",
-      "Ubuntu 24.04.5 LTS",
-      "Ubuntu 20.04.5 (end of life)",
-    ]);
-    expect(container.querySelector(".logos img")?.getAttribute("src")).toBe(
-      "https://catalog.bonk-os.app/v1/icons/ubuntu.svg",
-    );
-    expect(screen.getByRole("link", { name: "Publisher's download page" })).toBeTruthy();
-    const result = await axe.run(container, { rules: { "color-contrast": { enabled: false } } });
-    expect(result.violations.map((violation) => violation.id)).toEqual([]);
-    vi.unstubAllGlobals();
-  });
-
-  it("garde une catégorie ou un seul système, et trie", async () => {
-    const image = (
-      id: string,
-      family: string,
-      version: string,
-      released: string,
-      size: number,
-    ) => ({
-      id,
-      family,
-      name: family,
-      version,
-      channel: "stable",
-      released,
-      arch: "x86_64",
-      homepage: "https://h/",
-      url: `https://h/${id}.iso`,
-      sha256: "a".repeat(64),
-      size_bytes: size,
-    });
-    const sorted = {
-      families: [
-        { id: "ubuntu", name: "Ubuntu", icon: "u.png", category: "Debian derivatives" },
-        { id: "mint", name: "Mint", icon: "m.png", category: "Debian derivatives" },
-        { id: "fedora", name: "Fedora", icon: "f.png", category: "Red Hat family" },
-      ],
-      images: [
-        image("u1", "ubuntu", "24.04", "2026-01-01", 5e9),
-        image("u2", "ubuntu", "26.04", "2025-01-01", 6e9),
-        image("m", "mint", "22", "2024-01-01", 2e9),
-        { ...image("f", "fedora", "44", "2026-04-22", 1e9), note: "Only an example" },
-      ],
-    };
-    vi.stubGlobal("fetch", async () => new Response(JSON.stringify(sorted)));
-    const { container } = render(<App page="images" />);
-    await screen.findByRole("heading", { level: 2, name: "Ubuntu" });
-    expect(screen.getByText("Only an example")).toBeTruthy();
-    fireEvent.change(screen.getByLabelText("Category"), {
-      target: { value: "Debian derivatives" },
-    });
-    expect(screen.queryByRole("heading", { level: 2, name: "Fedora" })).toBeNull();
-    expect(screen.getByRole("heading", { level: 2, name: "Mint" })).toBeTruthy();
-    fireEvent.change(screen.getByLabelText("System"), { target: { value: "ubuntu" } });
-    expect(screen.queryByRole("heading", { level: 2, name: "Mint" })).toBeNull();
-    fireEvent.change(screen.getByLabelText("Sort by"), { target: { value: "released" } });
-    expect(container.querySelector("li strong")?.textContent).toBe("ubuntu 24.04");
-    vi.unstubAllGlobals();
-  });
-
-  it("dit quand le catalogue ne répond pas", async () => {
-    vi.stubGlobal("fetch", async () => new Response("", { status: 503 }));
-    render(<App page="images" />);
-    expect((await screen.findByRole("alert")).textContent).toContain("cannot be read");
-    vi.unstubAllGlobals();
+    const backgrounds = ["paper", "surface", "sunk", "accent-soft", "warn-soft"].map(token);
+    for (const text of ["ink", "muted", "accent", "warn"].map(token)) {
+      for (const background of backgrounds) {
+        expect(contrastRatio(text, background), `${text} / ${background}`).toBeGreaterThanOrEqual(
+          4.5,
+        );
+      }
+    }
+    for (const background of backgrounds) {
+      expect(contrastRatio(token("ink"), background)).toBeGreaterThanOrEqual(7);
+    }
+    for (const background of ["accent", "accent-strong"].map(token)) {
+      expect(contrastRatio(token("on-accent"), background)).toBeGreaterThanOrEqual(7);
+    }
   });
 });
 
@@ -318,25 +372,13 @@ describe("suggestion selon la machine", () => {
   });
 
   it("propose Manjaro ARM sur une machine Manjaro ARM, jamais une image qui ne démarre pas", () => {
-    const image = (id: string, family: string, arch: string, extra = {}) => ({
-      id,
-      family,
-      name: id,
-      version: "1",
-      channel: "stable" as const,
-      released: "2026-01-01",
-      homepage: "https://h/",
-      arch,
-      url: `https://h/${id}`,
-      ...extra,
-    });
     const catalog = {
       families: [],
       images: [
-        image("mx", "manjaro", "x86_64"),
-        image("marm", "manjaro", "aarch64"),
-        image("archx", "arch", "x86_64"),
-        image("cd", "endeavouros", "aarch64", { usb_boot: false }),
+        image("mx", "manjaro", "1", "2026-01-01"),
+        image("marm", "manjaro", "1", "2026-01-01", { arch: "aarch64" }),
+        image("archx", "arch", "1", "2026-01-01"),
+        image("cd", "endeavouros", "1", "2026-01-01", { arch: "aarch64", usb_boot: false }),
       ],
     };
     expect(suggestImages(catalog, "linux", "aarch64", "manjaro").map((i) => i.id)).toEqual([
