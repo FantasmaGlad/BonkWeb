@@ -42,12 +42,6 @@ export const imagesOf = (catalog: Catalog, family: string): CatalogImage[] =>
     .filter((image) => image.family === family)
     .sort((a, b) => compareVersions(a.version, b.version) || a.id.localeCompare(b.id));
 
-export type SortBy = "version" | "released" | "size";
-
-export type CatalogFilter = { category: string; family: string; arch: string; sort: SortBy };
-
-export const NO_FILTER: CatalogFilter = { category: "", family: "", arch: "", sort: "version" };
-
 const distinct = (values: (string | undefined)[]): string[] =>
   [...new Set(values.filter((value): value is string => Boolean(value)))].sort();
 
@@ -56,42 +50,6 @@ export const categoriesOf = (catalog: Catalog): string[] =>
 
 export const architecturesOf = (catalog: Catalog): string[] =>
   distinct(catalog.images.map((image) => image.arch));
-
-/** Filter given in the address, so a category can be linked from elsewhere. */
-export const filterFromAddress = (search: string): CatalogFilter => {
-  const query = new URLSearchParams(search);
-  return {
-    ...NO_FILTER,
-    category: query.get("category") ?? "",
-    family: query.get("system") ?? "",
-    arch: query.get("arch") ?? "",
-  };
-};
-
-export const familiesIn = (catalog: Catalog, filter: CatalogFilter): CatalogFamily[] =>
-  catalog.families.filter(
-    (family) =>
-      (!filter.category || family.category === filter.category) &&
-      (!filter.family || family.id === filter.family),
-  );
-
-/** One system's images once filtered; a system left without any is not shown. */
-export const selectImages = (
-  catalog: Catalog,
-  family: string,
-  filter: CatalogFilter,
-): CatalogImage[] => {
-  const images = imagesOf(catalog, family).filter(
-    (image) => !filter.arch || image.arch === filter.arch,
-  );
-  if (filter.sort === "released") {
-    return images.sort((a, b) => b.released.localeCompare(a.released));
-  }
-  if (filter.sort === "size") {
-    return images.sort((a, b) => (a.size_bytes ?? Infinity) - (b.size_bytes ?? Infinity));
-  }
-  return images;
-};
 
 /** Decimal units, as the publishers print them; below 0.1 GB, megabytes, so a small image never reads "0.0". */
 export const sizeLabel = (bytes: number, language: Language): string => {
@@ -115,6 +73,146 @@ const CATEGORY_FR: Record<string, string> = {
 
 export const categoryLabel = (category: string, language: Language): string =>
   language === "fr" ? (CATEGORY_FR[category] ?? category) : category;
+
+/** Higher-resolution logos shipped with the site; the other systems keep the catalog's icon. */
+const LOCAL_LOGOS = new Set([
+  "almalinux",
+  "arch",
+  "debian",
+  "fedora",
+  "gentoo",
+  "kali",
+  "linuxmint",
+  "manjaro",
+  "nixos",
+  "opensuse",
+  "rockylinux",
+  "ubuntu",
+  "windows",
+  "zorin",
+]);
+
+export const logoOf = (family: CatalogFamily): string =>
+  LOCAL_LOGOS.has(family.id) ? `/logos/${family.id}.png` : `${CATALOG_URL}${family.icon}`;
+
+/** What a system's card shows: its newest supported image stands for it. */
+export type SystemSummary = {
+  family: CatalogFamily;
+  latest: CatalogImage;
+  count: number;
+  architectures: string[];
+};
+
+const supportedFirst = (images: CatalogImage[]): CatalogImage | undefined =>
+  images.find((image) => image.channel !== "end_of_life") ?? images[0];
+
+export type StoreFilter = {
+  query: string;
+  category: string;
+  arch: string;
+  sort: "name" | "recent";
+};
+
+export const NO_STORE_FILTER: StoreFilter = { query: "", category: "", arch: "", sort: "name" };
+
+/** Accents and case ignored, so "elementary" finds "Elementary" and "debian" finds "Dérivées de Debian". */
+const fold = (text: string): string =>
+  text
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase();
+
+export const summarize = (
+  catalog: Catalog,
+  filter: StoreFilter,
+  language: Language,
+): SystemSummary[] => {
+  const words = fold(filter.query).split(/\s+/).filter(Boolean);
+  const summaries = catalog.families.flatMap((family): SystemSummary[] => {
+    if (filter.category && family.category !== filter.category) {
+      return [];
+    }
+    const haystack = fold(
+      [
+        family.name,
+        family.id,
+        family.category ?? "",
+        categoryLabel(family.category ?? "", language),
+      ]
+        .concat(catalog.images.filter((image) => image.family === family.id).map((i) => i.name))
+        .join(" "),
+    );
+    if (!words.every((word) => haystack.includes(word))) {
+      return [];
+    }
+    const images = imagesOf(catalog, family.id).filter(
+      (image) => !filter.arch || image.arch === filter.arch,
+    );
+    const latest = supportedFirst(images);
+    return latest
+      ? [
+          {
+            family,
+            latest,
+            count: images.length,
+            architectures: distinct(images.map((i) => i.arch)),
+          },
+        ]
+      : [];
+  });
+  return filter.sort === "recent"
+    ? summaries.sort(
+        (a, b) =>
+          b.latest.released.localeCompare(a.latest.released) ||
+          a.family.name.localeCompare(b.family.name),
+      )
+    : summaries.sort((a, b) => a.family.name.localeCompare(b.family.name));
+};
+
+/** Newest releases, one per system, so a single publisher's batch does not fill the row. */
+export const recentReleases = (catalog: Catalog, count: number): CatalogImage[] => {
+  const seen = new Set<string>();
+  return [...catalog.images]
+    .filter((image) => image.channel !== "end_of_life" && image.url)
+    .sort((a, b) => b.released.localeCompare(a.released) || a.id.localeCompare(b.id))
+    .filter((image) => {
+      const first = !seen.has(image.family);
+      seen.add(image.family);
+      return first;
+    })
+    .slice(0, count);
+};
+
+export const countByCategory = (catalog: Catalog): [string, number][] =>
+  categoriesOf(catalog).map((category) => [
+    category,
+    catalog.families.filter((family) => family.category === category).length,
+  ]);
+
+/** Store state carried in the address, so a filter or a system can be linked and the back button works. */
+export const storeFromAddress = (search: string): { filter: StoreFilter; system: string } => {
+  const query = new URLSearchParams(search);
+  const sort = query.get("sort");
+  return {
+    filter: {
+      query: query.get("q") ?? "",
+      category: query.get("category") ?? "",
+      arch: query.get("arch") ?? "",
+      sort: sort === "recent" ? "recent" : "name",
+    },
+    system: query.get("system") ?? "",
+  };
+};
+
+/** Versions of one system, newest first, each with its editions. */
+export const versionsOf = (images: CatalogImage[]): [string, CatalogImage[]][] => {
+  const groups = new Map<string, CatalogImage[]>();
+  for (const image of images) {
+    const key = `${image.name} ${image.version}`;
+    groups.set(key, [...(groups.get(key) ?? []), image]);
+  }
+  return [...groups.entries()];
+};
 
 export const loadCatalog = async (): Promise<Catalog> => {
   const response = await fetch(`${CATALOG_URL}catalog.json`);
