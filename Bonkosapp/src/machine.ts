@@ -96,7 +96,6 @@ const LABEL: Record<Arch, string> = { x86_64: "x86_64", aarch64: "ARM64", i686: 
 
 export type Suggestion = { family: Family; file: Download };
 
-/** The Bonk package for this machine, once its system and architecture are known. */
 export const suggestBonk = (
   os: Os,
   arch: Arch | undefined,
@@ -104,8 +103,7 @@ export const suggestBonk = (
 ): Suggestion | undefined => {
   const id = os === "linux" ? LINUX_FAMILY[distro] : os;
   const family = FAMILIES.find((candidate) => candidate.id === id);
-  // The Android app is built for ARM64 only: an x86 tablet or emulator would install it and crash on start.
-  // An unknown processor still gets it, since most phones do not say.
+  // The published APK is ARM64 only; an unknown processor still gets it, since most phones do not say.
   const file =
     os === "macos" || (os === "android" && (!arch || arch === "aarch64"))
       ? family?.files[0]

@@ -89,7 +89,6 @@ export const FAMILIES: readonly Family[] = [
   },
 ];
 
-/** Version sans fenêtre. */
 export const CLI_FAMILIES: readonly Family[] = [
   {
     id: "cli-linux",

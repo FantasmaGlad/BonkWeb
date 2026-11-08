@@ -1,4 +1,3 @@
-/** Rapport de contraste WCAG 2.2 entre deux couleurs `#rrggbb`. */
 export function contrastRatio(first: string, second: string): number {
   const [light, dark] = [luminance(first), luminance(second)].sort((a, b) => b - a) as [
     number,

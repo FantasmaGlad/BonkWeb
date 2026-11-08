@@ -224,7 +224,6 @@ export const storeFromAddress = (search: string): { filter: StoreFilter; system:
   };
 };
 
-/** Versions of one system, newest first, each with its editions. */
 export const versionsOf = (images: CatalogImage[]): [string, CatalogImage[]][] => {
   const groups = new Map<string, CatalogImage[]>();
   for (const image of images) {

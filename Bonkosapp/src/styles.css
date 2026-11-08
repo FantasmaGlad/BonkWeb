@@ -1,5 +1,4 @@
-/* Warm paper, plum ink taken from the mascot's eyes. Every text colour reaches 4.5:1 on every
-   background below; the test suite recomputes the ratios from this block. */
+/* The test suite recomputes the contrast ratios from this block. */
 :root {
   --paper: #faf7f2;
   --surface: #ffffff;
@@ -167,8 +166,6 @@ code {
   top: 1rem;
 }
 
-/* Header and footer */
-
 .bar {
   display: flex;
   flex-wrap: wrap;
@@ -253,8 +250,6 @@ code {
   gap: 0.5rem 1.5rem;
   margin: 0;
 }
-
-/* Buttons */
 
 .button,
 .copy {
@@ -386,8 +381,6 @@ code {
   height: 128px;
   border-radius: var(--radius);
 }
-
-/* Home */
 
 .hero {
   display: grid;
@@ -585,8 +578,6 @@ a.family-tile:hover {
   margin-bottom: 0.4rem;
 }
 
-/* Forms */
-
 .fields {
   display: flex;
   flex-wrap: wrap;
@@ -624,8 +615,6 @@ input[type="search"]:hover {
   border-color: var(--muted);
 }
 
-/* Commands */
-
 .command {
   display: flex;
   align-items: flex-start;
@@ -646,8 +635,6 @@ input[type="search"]:hover {
   line-height: 1.6;
 }
 
-/* Store */
-
 .page-head {
   padding: 3rem 0 0.5rem;
 }
@@ -660,7 +647,6 @@ input[type="search"]:hover {
   font-size: 1.0625rem;
 }
 
-/* Store: families in a side menu, the systems beside it. */
 .store {
   display: grid;
   grid-template-columns: 14rem minmax(0, 1fr);
@@ -916,8 +902,6 @@ input[type="search"]:hover {
   margin-top: 2rem;
 }
 
-/* Install */
-
 .download-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
@@ -960,8 +944,6 @@ input[type="search"]:hover {
   align-items: center;
   gap: 0.75rem;
 }
-
-/* Docs */
 
 .docs {
   display: grid;
@@ -1025,8 +1007,6 @@ input[type="search"]:hover {
   margin: 0;
   color: var(--muted);
 }
-
-/* Narrow screens */
 
 @media (max-width: 48rem) {
   .hero {

@@ -1,8 +1,3 @@
-// Writes public/reference/index.html from the published bonk-cli binary: the help of every command and the
-// error catalog, verbatim. The page is the application's own text, never a copy written by hand.
-// Usage: node scripts/reference.mjs [path to a bonk binary]. Without a path, the Linux x86_64 release named
-// by VERSION in src/downloads.ts is downloaded and checked against its SHA256SUMS.
-
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
@@ -43,7 +38,6 @@ function run(args) {
   return result.stdout.toString().trimEnd();
 }
 
-/** Each command, depth first, as its path from the root: [], ["disk"], ["disk", "list"], ... */
 function commands(path) {
   const help = run([...path, "--help"]);
   const block = help.split("\n\nCommands:\n")[1]?.split("\n\n")[0] ?? "";

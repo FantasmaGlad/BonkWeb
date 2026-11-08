@@ -1,5 +1,3 @@
-# Contrôle le site à chaque PR et le publie sur GitHub Pages depuis main. Aucun secret : le jeton de Pages est
-# fourni par GitHub à chaque exécution.
 name: site
 
 on:

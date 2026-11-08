@@ -37,7 +37,6 @@ export const OS_NAMES: Record<Os, string> = {
   other: "",
 };
 
-/** What the page knows of this computer, and the choices that correct it. */
 export function useMachine() {
   const [detected, setDetected] = useState(() => detect(navigator.userAgent, navigator.platform));
   const [os, setOs] = useState<Os | null>(null);

@@ -8,11 +8,9 @@ export const LanguageContext = createContext<Language>("en");
 export const useText = () => TEXT[useContext(LanguageContext)];
 export const useLanguage = () => useContext(LanguageContext);
 
-/** A link inside the site that keeps the language named in the address, if any. */
 export const href = (path: string, params: Record<string, string | undefined> = {}) =>
   localHref(path, location.search, params);
 
-/** Reads the catalog once; `failed` when it does not answer. */
 export function useCatalog() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
   const [failed, setFailed] = useState(false);
