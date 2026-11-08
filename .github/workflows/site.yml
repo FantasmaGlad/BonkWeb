@@ -32,6 +32,10 @@ jobs:
           node-version: "24"
       - run: corepack enable
       - run: pnpm install --frozen-lockfile
+      - name: Référence des commandes identique à la version publiée
+        run: |
+          node scripts/reference.mjs
+          git diff --exit-code public/reference/index.html
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build

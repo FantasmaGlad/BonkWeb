@@ -1,0 +1,1379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bonk command reference</title>
+<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.0.5.">
+<link rel="canonical" href="https://bonk-os.app/reference/">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/reference/site.css">
+</head>
+<body>
+<main>
+<header>
+<h1>Bonk command reference</h1>
+<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.0.5: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
+</header>
+<section>
+<h2>Commands</h2>
+<p><a href="#bonk">bonk</a> · <a href="#disk">bonk disk</a> · <a href="#disk-list">bonk disk list</a> · <a href="#disk-info">bonk disk info</a> · <a href="#disk-write">bonk disk write</a> · <a href="#disk-verify">bonk disk verify</a> · <a href="#disk-repair-gpt">bonk disk repair-gpt</a> · <a href="#catalog">bonk catalog</a> · <a href="#catalog-list">bonk catalog list</a> · <a href="#cache">bonk cache</a> · <a href="#cache-list">bonk cache list</a> · <a href="#cache-clean">bonk cache clean</a> · <a href="#list">bonk list</a> · <a href="#info">bonk info</a> · <a href="#write">bonk write</a> · <a href="#verify">bonk verify</a> · <a href="#repair-gpt">bonk repair-gpt</a> · <a href="#format">bonk format</a> · <a href="#capabilities">bonk capabilities</a> · <a href="#diagnose">bonk diagnose</a> · <a href="#debug">bonk debug</a> · <a href="#debug-sources">bonk debug sources</a> · <a href="#debug-filter">bonk debug filter</a> · <a href="#debug-layout">bonk debug layout</a> · <a href="#debug-hexdump">bonk debug hexdump</a> · <a href="#explain">bonk explain</a> · <a href="#config">bonk config</a> · <a href="#config-list">bonk config list</a> · <a href="#config-get">bonk config get</a> · <a href="#config-set">bonk config set</a> · <a href="#config-reset">bonk config reset</a> · <a href="#schema">bonk schema</a> · <a href="#completions">bonk completions</a> · <a href="#serve">bonk serve</a> · <a href="#gui">bonk gui</a></p>
+</section>
+<section id="bonk">
+<h2>bonk</h2>
+<pre><code>Create bootable media (USB drives and external disks)
+
+Usage: bonk [OPTIONS] [COMMAND]
+
+Commands:
+  disk          Disks: list and detail
+  catalog       Images offered by the signed catalog
+  cache         Downloaded images: list and cleanup
+  list          List the disks Bonk can write (shortcut for `disk list`)
+  info          Detail of a disk (shortcut for `disk info`)
+  write         Write an image to a disk, then verify it (`--simulate`: to an image file)
+  verify        Compare a disk to an image, writing nothing
+  repair-gpt    Repair the GPT of a disk or an image
+  format        Return a disk to storage use: table, partition, filesystem
+  capabilities  What this host allows, and why not the rest
+  diagnose      Support report as JSON: system, rendering, disks and verdicts, secrets masked
+  debug         Low-level disk view, read-only: system sources, step-by-step filter, partition tables
+  explain       Explain an error code (`bonk explain E1003`) or list all codes
+  config        Persistent settings: list, get, set, reset
+  schema        JSON Schema of a command's `--json` output
+  completions   Shell completions: bash, zsh, fish, powershell, elvish
+  serve         Headless service: drive Bonk with JSON on standard input and output, without a window
+  gui           Open the window (like `bonk` alone)
+  help          Print this message or the help of the given subcommand(s)
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-gui                   Never open the window: without a command, print the help and fail, for scripts
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help
+  -V, --version                  Print version</code></pre>
+</section>
+<section id="disk">
+<h2>bonk disk</h2>
+<pre><code>Disks: list and detail
+
+Usage: bonk disk [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  list        List the disks Bonk can write (read-only)
+  info        Detail of a disk (read-only)
+  write       Write an image to a disk, then verify it
+  verify      Compare a disk to an image, writing nothing
+  repair-gpt  Repair the GPT of a disk
+  help        Print this message or the help of the given subcommand(s)
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="disk-list">
+<h2>bonk disk list</h2>
+<pre><code>List the disks Bonk can write (read-only)
+
+Usage: bonk disk list [OPTIONS]
+
+Options:
+      --json                     JSON output, for scripts
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+      --all                      Also show excluded or hidden disks, with the reason
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --show-internal            Also offer internal non-system disks (stronger warning)
+      --allow-virtual            Test mode: allow virtual disks (loop, zram, virtual machine)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="disk-info">
+<h2>bonk disk info</h2>
+<pre><code>Detail of a disk (read-only)
+
+Usage: bonk disk info [OPTIONS] &lt;TARGET&gt;
+
+Arguments:
+  &lt;TARGET&gt;  Stable identifier of the disk (see `bonk list --all`) or its path (`/dev/sdb`)
+
+Options:
+      --json                     JSON output, for scripts
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --show-internal            Evaluate the disk also offering internal non-system disks
+      --allow-virtual            Evaluate the disk in test mode: virtual disks allowed
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="disk-write">
+<h2>bonk disk write</h2>
+<pre><code>Write an image to a disk, then verify it
+
+Usage: bonk disk write [OPTIONS] &lt;TARGET&gt; [SOURCE]
+
+Arguments:
+  &lt;TARGET&gt;
+          Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
+
+  [SOURCE]
+          Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is recognized by its content) or an https:// address to download, with its hash
+
+Options:
+      --simulate
+          The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --size &lt;BYTES&gt;
+          Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --show-internal
+          Allow internal non-system disks (stronger warning)
+
+      --allow-virtual
+          Test mode: allow virtual disks
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --trace-io[=&lt;TRACE_IO&gt;]
+          Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
+
+          Possible values:
+          - metadata: Offset, length, duration and checksum of each access
+          - data:     With the first 16 bytes: for image files only
+
+      --elevate &lt;ELEVATE&gt;
+          Missing rights: auto (ask the system) or never (the caller's rights only)
+
+          Possible values:
+          - auto:  Ask for system authorization when opening the disk
+          - never: The caller's rights only
+          
+          [default: auto]
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --progress &lt;PROGRESS&gt;
+          Progress: auto, json (one event per line) or none
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --image &lt;ID&gt;
+          Image of the signed catalog (`bonk catalog list`): its official link and hash are used
+
+      --catalog-url &lt;URL&gt;
+          Catalog address (`BONK_CATALOG_URL`); its signature is checked wherever it comes from
+
+      --yes
+          Confirm the write: without --yes or --force, Bonk does nothing (it never asks a question)
+
+      --dry-run
+          Describe what would be done without writing to the drive; an address is still downloaded into the cache, since the analysis needs the image
+
+      --sha256 &lt;HEX&gt;
+          Published SHA-256 hash of this file: checked before touching the drive
+
+      --sha256-file &lt;PATH_OR_URL&gt;
+          Published hash file (SHA256SUMS), path or https:// address: the hash is read under the name of the image
+
+      --cache-dir &lt;DIR&gt;
+          Download directory; by default the user's cache directory
+
+      --mode &lt;MODE&gt;
+          auto: analyze the image, extract a Windows ISO and refuse what would not boot; raw: write the bytes as they are; extract: require a Windows ISO
+
+          Possible values:
+          - auto:    Extract a Windows ISO; refuse a truncated image or one that would not boot as written
+          - raw:     Write the bytes as they are, whatever the analysis says
+          - extract: Copy the files of a Windows installation ISO to a FAT32 partition; auto chooses it by itself
+          
+          [default: auto]
+
+      --table &lt;TABLE&gt;
+          Partition table of a Windows drive; boot stays UEFI in both cases
+          
+          [default: gpt]
+          [possible values: gpt, mbr]
+
+      --no-verify
+          Do not read the drive back after writing
+
+      --no-repair-gpt
+          Do not repair the backup GPT after writing
+
+      --force
+          Confirm like --yes, and allow an internal disk admitted by --show-internal, without a question. Never a system disk: the safety filter stays in charge
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="disk-verify">
+<h2>bonk disk verify</h2>
+<pre><code>Compare a disk to an image, writing nothing
+
+Usage: bonk disk verify [OPTIONS] &lt;TARGET&gt; &lt;SOURCE&gt;
+
+Arguments:
+  &lt;TARGET&gt;
+          Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
+
+  &lt;SOURCE&gt;
+          Reference image
+
+Options:
+      --simulate
+          The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --size &lt;BYTES&gt;
+          Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --show-internal
+          Allow internal non-system disks (stronger warning)
+
+      --allow-virtual
+          Test mode: allow virtual disks
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --trace-io[=&lt;TRACE_IO&gt;]
+          Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
+
+          Possible values:
+          - metadata: Offset, length, duration and checksum of each access
+          - data:     With the first 16 bytes: for image files only
+
+      --elevate &lt;ELEVATE&gt;
+          Missing rights: auto (ask the system) or never (the caller's rights only)
+
+          Possible values:
+          - auto:  Ask for system authorization when opening the disk
+          - never: The caller's rights only
+          
+          [default: auto]
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --progress &lt;PROGRESS&gt;
+          Progress: auto, json (one event per line) or none
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="disk-repair-gpt">
+<h2>bonk disk repair-gpt</h2>
+<pre><code>Repair the GPT of a disk
+
+Usage: bonk disk repair-gpt [OPTIONS] &lt;TARGET&gt;
+
+Arguments:
+  &lt;TARGET&gt;
+          Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
+
+Options:
+      --simulate
+          The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --size &lt;BYTES&gt;
+          Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --show-internal
+          Allow internal non-system disks (stronger warning)
+
+      --allow-virtual
+          Test mode: allow virtual disks
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --trace-io[=&lt;TRACE_IO&gt;]
+          Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
+
+          Possible values:
+          - metadata: Offset, length, duration and checksum of each access
+          - data:     With the first 16 bytes: for image files only
+
+      --elevate &lt;ELEVATE&gt;
+          Missing rights: auto (ask the system) or never (the caller's rights only)
+
+          Possible values:
+          - auto:  Ask for system authorization when opening the disk
+          - never: The caller's rights only
+          
+          [default: auto]
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --progress &lt;PROGRESS&gt;
+          Progress: auto, json (one event per line) or none
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --yes
+          Confirm the repair
+
+      --dry-run
+          Say whether there is anything to repair, writing nothing
+
+      --force
+          Confirm like --yes, and allow an internal disk admitted by --show-internal, without a question. Never a system disk: the safety filter stays in charge
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="catalog">
+<h2>bonk catalog</h2>
+<pre><code>Images offered by the signed catalog
+
+Usage: bonk catalog [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  list  List the images offered, newest version of each system first
+  help  Print this message or the help of the given subcommand(s)
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="catalog-list">
+<h2>bonk catalog list</h2>
+<pre><code>List the images offered, newest version of each system first
+
+Usage: bonk catalog list [OPTIONS]
+
+Options:
+      --family &lt;ID&gt;
+          Keep one system only (`ubuntu`)
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+      --category &lt;NAME&gt;
+          Keep one category (`Debian derivatives`); the families list gives them
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --arch &lt;ARCH&gt;
+          Keep one architecture (`x86_64`, `aarch64`)
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --channel &lt;CHANNEL&gt;
+          Keep one life cycle
+          
+          [possible values: lts, stable, end_of_life]
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --sort &lt;SORT&gt;
+          Order of the list
+
+          Possible values:
+          - system:   By system, newest version first
+          - released: Most recently released first
+          - name:     Alphabetical
+          - size:     Smallest download first
+          
+          [default: system]
+
+      --catalog-url &lt;URL&gt;
+          Catalog address (`BONK_CATALOG_URL`); its signature is checked wherever it comes from
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --cache-dir &lt;DIR&gt;
+          Download directory; by default the user's cache directory
+
+      --json
+          Result as JSON
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="cache">
+<h2>bonk cache</h2>
+<pre><code>Downloaded images: list and cleanup
+
+Usage: bonk cache [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  list   List the kept images, incomplete downloads included
+  clean  Remove the kept images; an address is downloaded again on the next write
+  help   Print this message or the help of the given subcommand(s)
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="cache-list">
+<h2>bonk cache list</h2>
+<pre><code>List the kept images, incomplete downloads included
+
+Usage: bonk cache list [OPTIONS]
+
+Options:
+      --cache-dir &lt;DIR&gt;          Download directory; by default the user's cache directory
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+      --json                     Result as JSON
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="cache-clean">
+<h2>bonk cache clean</h2>
+<pre><code>Remove the kept images; an address is downloaded again on the next write
+
+Usage: bonk cache clean [OPTIONS]
+
+Options:
+      --cache-dir &lt;DIR&gt;          Download directory; by default the user's cache directory
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+      --dry-run                  Say what would be removed without removing anything
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --json                     Result as JSON
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="list">
+<h2>bonk list</h2>
+<pre><code>List the disks Bonk can write (shortcut for `disk list`)
+
+Usage: bonk list [OPTIONS]
+
+Options:
+      --json                     JSON output, for scripts
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+      --all                      Also show excluded or hidden disks, with the reason
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --show-internal            Also offer internal non-system disks (stronger warning)
+      --allow-virtual            Test mode: allow virtual disks (loop, zram, virtual machine)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="info">
+<h2>bonk info</h2>
+<pre><code>Detail of a disk (shortcut for `disk info`)
+
+Usage: bonk info [OPTIONS] &lt;TARGET&gt;
+
+Arguments:
+  &lt;TARGET&gt;  Stable identifier of the disk (see `bonk list --all`) or its path (`/dev/sdb`)
+
+Options:
+      --json                     JSON output, for scripts
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --show-internal            Evaluate the disk also offering internal non-system disks
+      --allow-virtual            Evaluate the disk in test mode: virtual disks allowed
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="write">
+<h2>bonk write</h2>
+<pre><code>Write an image to a disk, then verify it (`--simulate`: to an image file)
+
+Usage: bonk write [OPTIONS] &lt;TARGET&gt; [SOURCE]
+
+Arguments:
+  &lt;TARGET&gt;
+          Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
+
+  [SOURCE]
+          Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is recognized by its content) or an https:// address to download, with its hash
+
+Options:
+      --simulate
+          The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --size &lt;BYTES&gt;
+          Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --show-internal
+          Allow internal non-system disks (stronger warning)
+
+      --allow-virtual
+          Test mode: allow virtual disks
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --trace-io[=&lt;TRACE_IO&gt;]
+          Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
+
+          Possible values:
+          - metadata: Offset, length, duration and checksum of each access
+          - data:     With the first 16 bytes: for image files only
+
+      --elevate &lt;ELEVATE&gt;
+          Missing rights: auto (ask the system) or never (the caller's rights only)
+
+          Possible values:
+          - auto:  Ask for system authorization when opening the disk
+          - never: The caller's rights only
+          
+          [default: auto]
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --progress &lt;PROGRESS&gt;
+          Progress: auto, json (one event per line) or none
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --image &lt;ID&gt;
+          Image of the signed catalog (`bonk catalog list`): its official link and hash are used
+
+      --catalog-url &lt;URL&gt;
+          Catalog address (`BONK_CATALOG_URL`); its signature is checked wherever it comes from
+
+      --yes
+          Confirm the write: without --yes or --force, Bonk does nothing (it never asks a question)
+
+      --dry-run
+          Describe what would be done without writing to the drive; an address is still downloaded into the cache, since the analysis needs the image
+
+      --sha256 &lt;HEX&gt;
+          Published SHA-256 hash of this file: checked before touching the drive
+
+      --sha256-file &lt;PATH_OR_URL&gt;
+          Published hash file (SHA256SUMS), path or https:// address: the hash is read under the name of the image
+
+      --cache-dir &lt;DIR&gt;
+          Download directory; by default the user's cache directory
+
+      --mode &lt;MODE&gt;
+          auto: analyze the image, extract a Windows ISO and refuse what would not boot; raw: write the bytes as they are; extract: require a Windows ISO
+
+          Possible values:
+          - auto:    Extract a Windows ISO; refuse a truncated image or one that would not boot as written
+          - raw:     Write the bytes as they are, whatever the analysis says
+          - extract: Copy the files of a Windows installation ISO to a FAT32 partition; auto chooses it by itself
+          
+          [default: auto]
+
+      --table &lt;TABLE&gt;
+          Partition table of a Windows drive; boot stays UEFI in both cases
+          
+          [default: gpt]
+          [possible values: gpt, mbr]
+
+      --no-verify
+          Do not read the drive back after writing
+
+      --no-repair-gpt
+          Do not repair the backup GPT after writing
+
+      --force
+          Confirm like --yes, and allow an internal disk admitted by --show-internal, without a question. Never a system disk: the safety filter stays in charge
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="verify">
+<h2>bonk verify</h2>
+<pre><code>Compare a disk to an image, writing nothing
+
+Usage: bonk verify [OPTIONS] &lt;TARGET&gt; &lt;SOURCE&gt;
+
+Arguments:
+  &lt;TARGET&gt;
+          Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
+
+  &lt;SOURCE&gt;
+          Reference image
+
+Options:
+      --simulate
+          The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --size &lt;BYTES&gt;
+          Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --show-internal
+          Allow internal non-system disks (stronger warning)
+
+      --allow-virtual
+          Test mode: allow virtual disks
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --trace-io[=&lt;TRACE_IO&gt;]
+          Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
+
+          Possible values:
+          - metadata: Offset, length, duration and checksum of each access
+          - data:     With the first 16 bytes: for image files only
+
+      --elevate &lt;ELEVATE&gt;
+          Missing rights: auto (ask the system) or never (the caller's rights only)
+
+          Possible values:
+          - auto:  Ask for system authorization when opening the disk
+          - never: The caller's rights only
+          
+          [default: auto]
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --progress &lt;PROGRESS&gt;
+          Progress: auto, json (one event per line) or none
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="repair-gpt">
+<h2>bonk repair-gpt</h2>
+<pre><code>Repair the GPT of a disk or an image
+
+Usage: bonk repair-gpt [OPTIONS] &lt;TARGET&gt;
+
+Arguments:
+  &lt;TARGET&gt;
+          Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
+
+Options:
+      --simulate
+          The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --size &lt;BYTES&gt;
+          Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --show-internal
+          Allow internal non-system disks (stronger warning)
+
+      --allow-virtual
+          Test mode: allow virtual disks
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --trace-io[=&lt;TRACE_IO&gt;]
+          Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
+
+          Possible values:
+          - metadata: Offset, length, duration and checksum of each access
+          - data:     With the first 16 bytes: for image files only
+
+      --elevate &lt;ELEVATE&gt;
+          Missing rights: auto (ask the system) or never (the caller's rights only)
+
+          Possible values:
+          - auto:  Ask for system authorization when opening the disk
+          - never: The caller's rights only
+          
+          [default: auto]
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --progress &lt;PROGRESS&gt;
+          Progress: auto, json (one event per line) or none
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --yes
+          Confirm the repair
+
+      --dry-run
+          Say whether there is anything to repair, writing nothing
+
+      --force
+          Confirm like --yes, and allow an internal disk admitted by --show-internal, without a question. Never a system disk: the safety filter stays in charge
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="format">
+<h2>bonk format</h2>
+<pre><code>Return a disk to storage use: table, partition, filesystem
+
+Usage: bonk format [OPTIONS] &lt;TARGET&gt;
+
+Arguments:
+  &lt;TARGET&gt;
+          Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
+
+Options:
+      --simulate
+          The target is an image file (created if missing, with --size), not a disk: replays the operation without hardware
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --size &lt;BYTES&gt;
+          Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --show-internal
+          Allow internal non-system disks (stronger warning)
+
+      --allow-virtual
+          Test mode: allow virtual disks
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --trace-io[=&lt;TRACE_IO&gt;]
+          Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
+
+          Possible values:
+          - metadata: Offset, length, duration and checksum of each access
+          - data:     With the first 16 bytes: for image files only
+
+      --elevate &lt;ELEVATE&gt;
+          Missing rights: auto (ask the system) or never (the caller's rights only)
+
+          Possible values:
+          - auto:  Ask for system authorization when opening the disk
+          - never: The caller's rights only
+          
+          [default: auto]
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+
+      --progress &lt;PROGRESS&gt;
+          Progress: auto, json (one event per line) or none
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --fs &lt;FS&gt;
+          Filesystem; by default fat32 up to 32 GiB, exfat above
+          
+          [possible values: fat32, exfat, ntfs, ext4]
+
+      --table &lt;TABLE&gt;
+          Partition table
+          
+          [default: gpt]
+          [possible values: gpt, mbr]
+
+      --label &lt;NAME&gt;
+          Volume label
+
+      --yes
+          Confirm the format: without --yes or --force, Bonk does nothing
+
+      --dry-run
+          Describe what would be done without writing anything
+
+      --force
+          Confirm like --yes, and allow an internal disk admitted by --show-internal, without a question. Never a system disk: the safety filter stays in charge
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="capabilities">
+<h2>bonk capabilities</h2>
+<pre><code>What this host allows, and why not the rest
+
+Usage: bonk capabilities [OPTIONS]
+
+Options:
+      --json                     Result as JSON
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="diagnose">
+<h2>bonk diagnose</h2>
+<pre><code>Support report as JSON: system, rendering, disks and verdicts, secrets masked
+
+Usage: bonk diagnose [OPTIONS]
+
+Options:
+      --output &lt;FILE&gt;            Write the report to this file (refuses to overwrite an existing file) instead of the output
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+      --include-serials          Keep serial numbers and the user name, masked by default
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --capture                  Attach the raw enumeration sources (anonymized), replayable elsewhere with --fixture
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="debug">
+<h2>bonk debug</h2>
+<pre><code>Low-level disk view, read-only: system sources, step-by-step filter, partition tables
+
+Usage: bonk debug [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  sources  Each system source read by the enumeration, with its duration (and its content with --content)
+  filter   Replay the safety filter on a disk, rule by rule, with the facts read
+  layout   Decode the MBR, primary and backup GPT of an image, and list the anomalies
+  hexdump  Raw bytes of an image, in lines of 16
+  help     Print this message or the help of the given subcommand(s)
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="debug-sources">
+<h2>bonk debug sources</h2>
+<pre><code>Each system source read by the enumeration, with its duration (and its content with --content)
+
+Usage: bonk debug sources [OPTIONS]
+
+Options:
+      --json                     JSON output (always contains the source content)
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+      --content                  Also show the content of each source, as read
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="debug-filter">
+<h2>bonk debug filter</h2>
+<pre><code>Replay the safety filter on a disk, rule by rule, with the facts read
+
+Usage: bonk debug filter [OPTIONS] &lt;TARGET&gt;
+
+Arguments:
+  &lt;TARGET&gt;  Stable identifier of the disk or its path
+
+Options:
+      --json                     JSON output
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --show-internal            Evaluate with internal non-system disks offered
+      --allow-virtual            Evaluate in test mode: virtual disks allowed
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="debug-layout">
+<h2>bonk debug layout</h2>
+<pre><code>Decode the MBR, primary and backup GPT of an image, and list the anomalies
+
+Usage: bonk debug layout [OPTIONS] &lt;IMAGE&gt;
+
+Arguments:
+  &lt;IMAGE&gt;  Image file or disk (identifier or /dev/...) to decode; a disk asks for system authorization
+
+Options:
+      --json                     JSON output
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="debug-hexdump">
+<h2>bonk debug hexdump</h2>
+<pre><code>Raw bytes of an image, in lines of 16
+
+Usage: bonk debug hexdump [OPTIONS] &lt;IMAGE&gt;
+
+Arguments:
+  &lt;IMAGE&gt;  Image file or disk (identifier or /dev/...) to read; a disk asks for system authorization
+
+Options:
+      --offset &lt;OFFSET&gt;          Start offset in bytes (decimal or 0x...) [default: 0]
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+      --len &lt;LEN&gt;                Number of bytes (decimal or 0x...), 4096 by default, at most 1048576 [default: 4096]
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="explain">
+<h2>bonk explain</h2>
+<pre><code>Explain an error code (`bonk explain E1003`) or list all codes
+
+Usage: bonk explain [OPTIONS] [CODE]
+
+Arguments:
+  [CODE]  Code to explain (`E1003`); without a code, list all codes
+
+Options:
+      --json                     JSON output
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="config">
+<h2>bonk config</h2>
+<pre><code>Persistent settings: list, get, set, reset
+
+Usage: bonk config [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  list   List the settings with their effective value and its origin
+  get    Effective value of a setting
+  set    Set a value in the configuration file
+  reset  Restore a setting (or all) to its default value
+  help   Print this message or the help of the given subcommand(s)
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="config-list">
+<h2>bonk config list</h2>
+<pre><code>List the settings with their effective value and its origin
+
+Usage: bonk config list [OPTIONS]
+
+Options:
+      --json                     JSON output
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="config-get">
+<h2>bonk config get</h2>
+<pre><code>Effective value of a setting
+
+Usage: bonk config get [OPTIONS] &lt;KEY&gt;
+
+Arguments:
+  &lt;KEY&gt;  
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="config-set">
+<h2>bonk config set</h2>
+<pre><code>Set a value in the configuration file
+
+Usage: bonk config set [OPTIONS] &lt;KEY&gt; &lt;VALUE&gt;
+
+Arguments:
+  &lt;KEY&gt;    
+  &lt;VALUE&gt;  
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="config-reset">
+<h2>bonk config reset</h2>
+<pre><code>Restore a setting (or all) to its default value
+
+Usage: bonk config reset [OPTIONS] [KEY]
+
+Arguments:
+  [KEY]  
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="schema">
+<h2>bonk schema</h2>
+<pre><code>JSON Schema of a command's `--json` output
+
+Usage: bonk schema [OPTIONS] [NAME]
+
+Arguments:
+  [NAME]  Command whose schema is wanted; without a name, list the commands
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="completions">
+<h2>bonk completions</h2>
+<pre><code>Shell completions: bash, zsh, fish, powershell, elvish
+
+Usage: bonk completions [OPTIONS] &lt;SHELL&gt;
+
+Arguments:
+  &lt;SHELL&gt;  Target shell [possible values: bash, elvish, fish, powershell, zsh]
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="serve">
+<h2>bonk serve</h2>
+<pre><code>Headless service: drive Bonk with JSON on standard input and output, without a window
+
+Usage: bonk serve [OPTIONS]
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="gui">
+<h2>bonk gui</h2>
+<pre><code>Open the window (like `bonk` alone)
+
+Usage: bonk gui [OPTIONS]
+
+Options:
+  -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
+      --log-file &lt;PATH&gt;          Also write the log to this file (appended)
+      --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
+      --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+      --proxy &lt;URL&gt;              Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
+      --no-color                 No color in the help and usage errors (`NO_COLOR` has the same effect)
+  -h, --help                     Print help</code></pre>
+</section>
+<section id="errors">
+<h2>Error codes</h2>
+<table>
+<thead><tr><th>Code</th><th>Exit</th><th>Error</th><th>Causes</th><th>Remedy</th></tr></thead>
+<tbody>
+<tr><td><code>E0001</code></td><td>2</td><td>Invalid argument value</td><td>a number, offset or length outside the accepted limits</td><td>Read the command help (`bonk &lt;command&gt; --help`) and correct the value.</td></tr>
+<tr><td><code>E1001</code></td><td>1</td><td>Disk detection failed</td><td>a system source is unreadable (mount points, udev database, disk list)<br>udev database missing (minimal container, system without udev)</td><td>Run `bonk debug sources` to see which read fails, then `bonk diagnose` for a full report. Bonk offers nothing rather than guess.</td></tr>
+<tr><td><code>E1002</code></td><td>1</td><td>Disk detection is not available on this system</td><td>enumeration does not exist on this system in this version</td><td>Use a Linux, Windows or macOS host, or replay a capture with `--fixture`.</td></tr>
+<tr><td><code>E1003</code></td><td>1</td><td>Disk not found</td><td>the identifier or path matches no detected disk<br>the disk was unplugged, or its identifier changed</td><td>List the identifiers with `bonk list --all` and try again.</td></tr>
+<tr><td><code>E1004</code></td><td>1</td><td>Raw disk read failed</td><td>the path is neither an image nor a disk<br>permission denied, or a system without raw access</td><td>Check the target with `bonk list --all`, accept the system authorization, or copy the start of the disk into an image.</td></tr>
+<tr><td><code>E2001</code></td><td>3</td><td>Target refused by the safety filter</td><td>the disk holds the system, the active ESP, a swap space or a mount outside user paths<br>the disk is a RAID, LVM or ZFS member, or holds a stacked volume<br>the disk is internal or virtual and the matching option is not set</td><td>See the reasons with `bonk debug filter &lt;disk&gt;`. A forbidden disk can never be written; unmount a manual mount or choose another disk.</td></tr>
+<tr><td><code>E2002</code></td><td>3</td><td>The disk identity changed before writing</td><td>the disk was unplugged and another plugged in at the same location<br>the serial number or the size no longer match</td><td>List the disks again with `bonk list`, check the target and run again.</td></tr>
+<tr><td><code>E2003</code></td><td>1</td><td>Could not unmount the target partitions</td><td>a program is still using the volume<br>insufficient rights to unmount</td><td>Close the programs using the drive, unmount it by hand, then run again.</td></tr>
+<tr><td><code>E2004</code></td><td>2</td><td>Confirmation required</td><td>a write without `--yes` or `--force`: Bonk never asks a question</td><td>First describe the operation with `--dry-run`, then run again with `--yes` or `--force`.</td></tr>
+<tr><td><code>E2005</code></td><td>2</td><td>Confirmation required for an internal disk</td><td>a write to an internal disk without `--force`: `--yes` is not enough</td><td>Check the target with `bonk info &lt;disk&gt;`: all its data will be lost. Run again with `--force` to confirm.</td></tr>
+<tr><td><code>E3001</code></td><td>6</td><td>Image unreadable</td><td>file missing, insufficient rights, or not a regular file</td><td>Check the path and the file permissions.</td></tr>
+<tr><td><code>E3002</code></td><td>6</td><td>Image format not supported</td><td>compressed format recognized but not supported (bzip2, zip...)</td><td>Decompress the image with a system tool, or provide it as .img, .iso, .gz, .xz or .zst.</td></tr>
+<tr><td><code>E3003</code></td><td>6</td><td>The image is larger than the target</td><td>the decompressed image exceeds the size of the target disk or image</td><td>Choose a larger drive. Nothing is written past the end of the drive.</td></tr>
+<tr><td><code>E3004</code></td><td>6</td><td>Decompression failed</td><td>truncated or corrupt compressed file</td><td>Download the image again and check its hash before retrying.</td></tr>
+<tr><td><code>E3005</code></td><td>6</td><td>The image hash does not match</td><td>corrupt or incomplete download<br>modified image, or a hash from another version</td><td>Download the image again from the publisher's site and take its official hash again. Nothing was written.</td></tr>
+<tr><td><code>E3006</code></td><td>6</td><td>The image would not boot if written as is</td><td>ISO without disk boot, like Windows installation ISOs<br>the file is not a disk image</td><td>Use an image intended for a USB drive. To write these bytes anyway: --mode raw. Nothing was written.</td></tr>
+<tr><td><code>E3007</code></td><td>6</td><td>The image is shorter than it declares</td><td>interrupted download</td><td>Download the image again and check its hash (--sha256). To write these bytes anyway: --mode raw. Nothing was written.</td></tr>
+<tr><td><code>E3008</code></td><td>6</td><td>The image download failed</td><td>network down or server unavailable<br>wrong address, or not https://<br>cache directory full or not writable</td><td>Run the same command again: the download resumes where it stopped. Nothing was written to the drive.</td></tr>
+<tr><td><code>E3009</code></td><td>6</td><td>The image catalog is unavailable or refused</td><td>network down, and no saved copy<br>signature that does not match: altered file, or wrong address<br>expired catalog: publishing has stopped<br>catalog older than the one already seen, or format newer than this version of Bonk</td><td>Try again later, or update Bonk. A local file or an address with --sha256 still works without the catalog.</td></tr>
+<tr><td><code>E4001</code></td><td>1</td><td>Write failed</td><td>drive I/O error (faulty drive, unplugged during the write)</td><td>The drive is in an undetermined state: write it again entirely, on another drive if the error returns.</td></tr>
+<tr><td><code>E4002</code></td><td>4</td><td>Verification after writing failed</td><td>the bytes read back do not match the image: faulty drive or partial write</td><td>Write the image again; if the error persists, replace the drive.</td></tr>
+<tr><td><code>E4003</code></td><td>5</td><td>Operation cancelled</td><td>cancellation requested (Ctrl+C or a cancel request)</td><td>The drive is partially written and not bootable: run the full write again.</td></tr>
+<tr><td><code>E4004</code></td><td>1</td><td>Opening the disk was refused</td><td>system authorization refused or cancelled<br>no polkit agent in the session, or UDisks2 service missing</td><td>Accept the system authorization when it appears. Without a polkit agent (SSH) or without UDisks2: run the command again with `sudo`.</td></tr>
+<tr><td><code>E4005</code></td><td>1</td><td>GPT repair failed</td><td>no valid GPT header can serve as a model<br>the drive is too small for the table</td><td>Inspect the drive with `bonk debug layout` and write the image again if needed.</td></tr>
+<tr><td><code>E5001</code></td><td>2</td><td>Invalid log setting</td><td>malformed `BONK_LOG` value (unknown component or level)</td><td>Use `component=level` with a component among cli, gui, hal, io, write, net, render and a level among off, error, warn, info, debug, trace.</td></tr>
+<tr><td><code>E5002</code></td><td>2</td><td>Invalid configuration</td><td>unknown key, refused value, or unreadable configuration file</td><td>List the keys with `bonk config list`; `bonk config reset` restores the defaults.</td></tr>
+<tr><td><code>E5003</code></td><td>1</td><td>The window could not be opened</td><td>no graphical display (SSH, server)<br>no usable renderer, not even software</td><td>Use the command line or the service (`bonk serve`), which need no display.</td></tr>
+<tr><td><code>E5004</code></td><td>1</td><td>Could not write the output</td><td>output closed (broken pipe), disk full, output file already exists</td><td>Check the output destination; `--output` never overwrites an existing file.</td></tr>
+<tr><td><code>E5005</code></td><td>2</td><td>Invalid enumeration capture</td><td>the file given to `--fixture` is not a capture produced by `diagnose --capture`</td><td>Produce the capture with `bonk diagnose --capture` on the machine to analyze.</td></tr>
+<tr><td><code>E5006</code></td><td>1</td><td>Log file unusable</td><td>`--log-file` names a path that cannot be written</td><td>Choose a path in a writable directory.</td></tr>
+<tr><td><code>E6001</code></td><td>1</td><td>Invalid service request</td><td>a line that is not JSON, an unknown method or invalid parameters</td><td>See `bonk schema serve` for the request and response format.</td></tr>
+<tr><td><code>E7001</code></td><td>1</td><td>Format failed</td><td>drive too small or too large for the requested table or filesystem<br>write error, or read-back different from what was written<br>system tool failure</td><td>See `bonk format --dry-run`: it says what would be done, writing nothing. Another `--fs` or `--table` may fit.</td></tr>
+<tr><td><code>E7002</code></td><td>1</td><td>Filesystem unavailable on this host</td><td>exFAT, NTFS and ext4 go through system tools: the tool or service is missing<br>`--simulate`: only FAT32 can be written to an image file</td><td>See `bonk capabilities`. Install the named tool, or choose `--fs fat32`, written by Bonk itself.</td></tr>
+</tbody>
+</table>
+</section>
+</main>
+<footer>
+<p><a href="https://bonk-os.app">bonk-os.app</a> · <a href="https://bonk-os.app/docs/">Commands</a> · <a href="https://catalog.bonk-os.app">catalog</a> · <a href="https://packages.bonk-os.app">packages</a> · <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a></p>
+</footer>
+</body>
+</html>
