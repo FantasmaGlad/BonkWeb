@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/FantasmaGlad/Bonk/main/crates/bonk/assets/icons/128x128/bonk.png" width="96" height="96" alt="Bonk">
+  <img src="docs/icons/bonk.png" width="96" height="96" alt="Bonk">
 </p>
 
 <h1 align="center">BonkWeb</h1>
@@ -25,7 +25,7 @@
 | Site | Address |
 | :--- | :--- |
 | Website | <https://bonk-os.app> |
-| <img src="https://raw.githubusercontent.com/FantasmaGlad/Bonk/main/docs/icons/linux.svg" width="20" height="20" valign="middle" alt="Linux"> Package repositories | <https://packages.bonk-os.app> |
+| <img src="docs/icons/linux.svg" width="20" height="20" valign="middle" alt="Linux"> Package repositories | <https://packages.bonk-os.app> |
 | Image catalog | <https://catalog.bonk-os.app/v1/catalog.json> |
 | Security policy | <https://security.bonk-os.app> |
 
