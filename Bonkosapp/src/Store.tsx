@@ -114,7 +114,6 @@ function SystemCard({
   );
 }
 
-/** Families as a side menu; processor and order below it, as on any store. */
 function SideMenu({
   catalog,
   filter,

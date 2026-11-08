@@ -54,7 +54,6 @@ export function ImageCard({ image, catalog }: { image: CatalogImage; catalog: Ca
   );
 }
 
-/** The first screen is Bonk itself: the file for this computer, then the way to the systems. */
 function Hero({ machine }: { machine: MachineState }) {
   const text = useText();
   const { detected, os, arch, distro } = machine;
@@ -109,7 +108,6 @@ function Hero({ machine }: { machine: MachineState }) {
   );
 }
 
-/** The same install from a terminal, for the machine chosen above. */
 function Terminal({ machine }: { machine: MachineState }) {
   const text = useText();
   const { os, distro } = machine;
