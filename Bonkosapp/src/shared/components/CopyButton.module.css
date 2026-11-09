@@ -1,0 +1,18 @@
+.copy {
+  flex: none;
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.copy:hover {
+  text-decoration-thickness: 2px;
+}

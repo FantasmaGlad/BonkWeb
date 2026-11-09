@@ -1,13 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { App, type Page } from "./App";
-import "./styles.css";
+import { App } from "./app/App";
+import "./styles/tokens.css";
+import "./styles/base.css";
 
 const root = document.getElementById("root");
 if (root) {
   createRoot(root).render(
     <StrictMode>
-      <App page={document.body.dataset.page as Page} />
+      <App />
     </StrictMode>,
   );
 }

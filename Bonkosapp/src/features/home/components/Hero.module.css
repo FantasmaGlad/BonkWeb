@@ -1,0 +1,63 @@
+/* Header and hero fill the first screen exactly, so the next section starts below the fold. */
+.hero {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--header));
+}
+
+.body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  align-items: center;
+  gap: 2rem 3rem;
+  padding: 1.5rem 0;
+}
+
+.text h1 {
+  margin-bottom: 1rem;
+}
+
+.art {
+  justify-self: center;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: min(29.5rem, 60svh);
+}
+
+.scroll {
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.scroll::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: translateY(-0.2rem) rotate(45deg);
+}
+
+.scroll:hover::before {
+  border-color: var(--accent);
+}
+
+@media (max-width: 48rem) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 1.25rem;
+    padding: 1rem 0 0.5rem;
+  }
+
+  .art {
+    order: -1;
+    max-height: 24svh;
+  }
+}

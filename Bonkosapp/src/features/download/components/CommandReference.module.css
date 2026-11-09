@@ -1,0 +1,86 @@
+.flow {
+  margin: 1rem 0 0;
+  padding-left: 1.5rem;
+}
+
+.flow li {
+  padding-left: 0.25rem;
+}
+
+.flow li::marker {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.flow p {
+  margin: 0;
+}
+
+.title {
+  margin-top: 2.5rem;
+}
+
+.list {
+  margin-top: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.entry {
+  border-top: 1px solid var(--line);
+}
+
+.entry > summary {
+  display: grid;
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  gap: 0.125rem 1.5rem;
+  padding: 0.875rem 0;
+  cursor: pointer;
+  list-style-position: outside;
+}
+
+.entry > summary code {
+  font-weight: 600;
+}
+
+.entry > summary span {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.entry > summary:hover code,
+.entry > summary:hover span:only-child {
+  color: var(--accent);
+}
+
+.body {
+  padding: 0 0 1.25rem;
+}
+
+.body h4 {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.advanced {
+  margin-top: 1rem;
+}
+
+.advanced > summary {
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.more {
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 40rem) {
+  .entry > summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

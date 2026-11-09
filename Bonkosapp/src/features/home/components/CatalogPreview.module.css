@@ -1,0 +1,48 @@
+.section {
+  padding: 4rem 0 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+
+.head h2 {
+  margin-bottom: 0.375rem;
+}
+
+.head p {
+  margin: 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 0 2rem;
+  min-height: 4.5rem;
+  align-items: start;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.system {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.system span {
+  display: grid;
+}
+
+.system:hover strong {
+  color: var(--accent);
+}

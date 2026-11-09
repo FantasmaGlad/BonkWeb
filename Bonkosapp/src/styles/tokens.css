@@ -1,0 +1,20 @@
+/* The test suite recomputes the contrast ratios from this block. */
+:root {
+  --paper: #faf7f2;
+  --surface: #ffffff;
+  --sunk: #f2ede5;
+  --ink: #1d1b22;
+  --muted: #5e5966;
+  --accent: #4b2e6f;
+  --accent-strong: #3c2459;
+  --accent-soft: #efe8f6;
+  --warn: #8a3f12;
+  --warn-soft: #fcebdc;
+  --line: #e6e0d6;
+  --on-accent: #ffffff;
+  --radius-small: 8px;
+  --width: 72rem;
+  --header: 4rem;
+  --motion: 0.15s;
+  color-scheme: light;
+}

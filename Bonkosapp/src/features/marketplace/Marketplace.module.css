@@ -1,0 +1,70 @@
+.head {
+  padding: 3rem 0 2rem;
+}
+
+.head h1 {
+  margin-bottom: 0.75rem;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.search {
+  flex: 1 1 18rem;
+  max-width: 28rem;
+}
+
+.search input {
+  width: 100%;
+  padding: 0.625rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--muted);
+  border-radius: 0;
+  background: none;
+  font-size: 1.0625rem;
+}
+
+.search input:focus-visible {
+  border-bottom-color: var(--accent);
+}
+
+.count {
+  margin: 1.25rem 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+  gap: 0 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.empty {
+  padding: 2rem 0;
+  color: var(--muted);
+}
+
+.empty button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.loading {
+  min-height: 60vh;
+}

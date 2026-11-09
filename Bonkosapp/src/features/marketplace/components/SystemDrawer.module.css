@@ -1,0 +1,76 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgb(29 27 34 / 35%);
+  cursor: default;
+}
+
+.drawer {
+  position: relative;
+  width: min(34rem, 100%);
+  height: 100%;
+  padding: 1.5rem 1.75rem 3rem;
+  overflow-y: auto;
+  background: var(--paper);
+  box-shadow: -1px 0 0 var(--line);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.head div {
+  flex: 1;
+  min-width: 0;
+}
+
+.head a {
+  font-size: 0.875rem;
+}
+
+.close {
+  align-self: flex-start;
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--accent);
+}
+
+.spec {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .drawer {
+    animation: slide var(--motion) ease-out;
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(1.5rem);
+  }
+}

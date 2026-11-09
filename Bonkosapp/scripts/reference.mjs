@@ -4,8 +4,8 @@ import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const VERSION = readFileSync("src/downloads.ts", "utf8").match(/VERSION = "([^"]+)"/)?.[1];
-if (!VERSION) throw new Error("VERSION not found in src/downloads.ts");
+const { version: VERSION } = JSON.parse(readFileSync("src/data/releases.json", "utf8"));
+if (!VERSION) throw new Error("version not found in src/data/releases.json");
 
 async function download() {
   const base = `https://github.com/FantasmaGlad/Bonk/releases/download/v${VERSION}`;

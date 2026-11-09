@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    - cron: "17 5 * * *"
   workflow_dispatch:
 
 permissions:
@@ -30,10 +32,17 @@ jobs:
           node-version: "24"
       - run: corepack enable
       - run: pnpm install --frozen-lockfile
-      - name: Référence des commandes identique à la version publiée
-        run: |
-          node scripts/reference.mjs
-          git diff --exit-code public/reference/index.html
+      # A pull request builds from the committed snapshot, so its checks do not depend on release timing.
+      - name: Dernière version publiée
+        if: github.event_name != 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/releases.mjs
+      - name: Référence des commandes de cette version
+        run: node scripts/reference.mjs
+      - name: Référence identique à celle du dépôt
+        if: github.event_name == 'pull_request'
+        run: git diff --exit-code public/reference/index.html
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build

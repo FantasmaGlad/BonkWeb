@@ -1,0 +1,32 @@
+.list {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+}
+
+.list button {
+  flex: none;
+  padding: 0.625rem 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.list button:hover {
+  color: var(--ink);
+}
+
+.list button[aria-selected="true"] {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+
+.panel {
+  padding-top: 1.25rem;
+}

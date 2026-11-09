@@ -1,0 +1,45 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.125rem;
+  border: 0;
+  border-radius: var(--radius-small);
+  font: inherit;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button small {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.primary:hover {
+  background: var(--accent-strong);
+}
+
+.secondary {
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink);
+}
+
+.secondary:hover {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.large {
+  min-height: 3.375rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.0625rem;
+}
