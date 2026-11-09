@@ -1,0 +1,13 @@
+.scope {
+  max-width: 44rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.step {
+  margin: 1.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}

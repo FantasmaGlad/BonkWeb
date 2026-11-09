@@ -1,0 +1,42 @@
+.head {
+  padding: 3rem 0 0;
+}
+
+.head h1 {
+  margin-bottom: 0.75rem;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin-top: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.nav a {
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.section {
+  padding-top: 3.5rem;
+}
+
+.section > h2 {
+  margin-bottom: 0.5rem;
+}
+
+.section > p {
+  max-width: 44rem;
+}
+
+.sub {
+  margin: 2.5rem 0 0.75rem;
+}

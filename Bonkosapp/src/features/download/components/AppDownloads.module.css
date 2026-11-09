@@ -1,0 +1,16 @@
+.group {
+  margin-top: 2rem;
+}
+
+.status {
+  max-width: 44rem;
+  margin: 0.25rem 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
