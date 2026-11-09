@@ -25,7 +25,7 @@ const saveDistro = (distro: Distro) => {
   try {
     localStorage.setItem(SAVED_DISTRO, distro);
   } catch {
-    // Sans stockage, le choix vaut pour cette visite.
+    // Without storage the choice lasts for this visit.
   }
 };
 
