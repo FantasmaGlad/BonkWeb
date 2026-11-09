@@ -7,7 +7,7 @@ export type Family = {
   id: string;
   name: string;
   logos: readonly string[];
-  /** Écriture déjà essayée sur une vraie clé ? Sinon, le site le signale. */
+  /** Writing already tried on a real drive? If not, the site says so. */
   writes: boolean;
   files: readonly Download[];
 };

@@ -9,7 +9,7 @@ export type Manager = {
   logos: readonly string[];
   note?: Record<Language, string>;
   install: string;
-  /** Commande qui remplace l'installation par la version sans fenêtre. */
+  /** Command that replaces the install with the windowless build. */
   cli: string;
   update: string;
   remove: string;
