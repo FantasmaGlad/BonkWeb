@@ -18,7 +18,8 @@ import { APPS, CLIS, RELEASE } from "./releases";
 import { SYSTEM_PROFILES } from "./systems";
 
 describe("dernière version", () => {
-  it("chaque famille de fichiers existe dans la release, sous son nom publié", () => {
+  // A declared file missing from the release is hidden until published (the next version's builds).
+  it("chaque plateforme déclarée a au moins un fichier publié, sous son nom publié", () => {
     expect(APPS.map((platform) => platform.id)).toEqual(APP_PLATFORMS.map(({ id }) => id));
     expect(CLIS.map((platform) => platform.id)).toEqual(CLI_PLATFORMS.map(({ id }) => id));
     for (const { builds } of [...APPS, ...CLIS]) {
