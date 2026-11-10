@@ -219,6 +219,8 @@ export const fr: Dictionary = {
     unix: "Linux, macOS",
     windows: "Windows (PowerShell)",
     cliPackages: "Paquet bonk-cli",
+    cliSwitch:
+      "bonk et bonk-cli installent la même commande et ne s'installent pas ensemble : retirez l'un avant d'installer l'autre.",
     cliArchives: "Archives",
     commandsText: "bonk seul ouvre la fenêtre. Le même travail se fait depuis un terminal.",
     flowTitle: "D'une clé vierge à une clé écrite",
