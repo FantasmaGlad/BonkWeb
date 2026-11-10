@@ -98,6 +98,7 @@ export const CLI_PLATFORMS: readonly PlatformDefinition[] = [
     builds: [
       { arch: "x86_64", format: ".tar.gz", file: "bonk-cli-{version}-linux-x86_64.tar.gz" },
       { arch: "aarch64", format: ".tar.gz", file: "bonk-cli-{version}-linux-aarch64.tar.gz" },
+      { arch: "i686", format: ".tar.gz", file: "bonk-cli-{version}-linux-i686.tar.gz" },
     ],
   },
   {
@@ -115,6 +116,7 @@ export const CLI_PLATFORMS: readonly PlatformDefinition[] = [
     os: "macos",
     logos: ["apple"],
     builds: [
+      { arch: "universal", format: ".tar.gz", file: "bonk-cli-{version}-macos-universal.tar.gz" },
       { arch: "x86_64", format: ".tar.gz", file: "bonk-cli-{version}-macos-x86_64.tar.gz" },
       { arch: "aarch64", format: ".tar.gz", file: "bonk-cli-{version}-macos-aarch64.tar.gz" },
     ],
