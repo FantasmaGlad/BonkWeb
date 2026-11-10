@@ -1,0 +1,39 @@
+.title {
+  margin: 2rem 0 0.5rem;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.commands {
+  margin: 0;
+}
+
+.commands > div {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.commands dt {
+  font-weight: 600;
+}
+
+.commands dd {
+  margin: 0;
+}
+
+.commands dd > div {
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 40rem) {
+  .commands > div {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 0.5rem;
+  }
+}

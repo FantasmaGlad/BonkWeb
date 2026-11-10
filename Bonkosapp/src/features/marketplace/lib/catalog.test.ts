@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { summarize } from "../../../shared/lib/catalog";
+import { recentReleases, summarize } from "../../../shared/lib/catalog";
 import { CATALOG } from "../../../test/fixtures";
 import type { CatalogFilter } from "../../../types/system";
 import { filterFromParams, filterSystems, NO_FILTER, paramsOfFilter } from "./filter";
@@ -29,6 +29,20 @@ describe("résumé", () => {
   it("donne la clé nécessaire : celle de l'image, ou celle que l'éditeur demande", () => {
     expect(ubuntu?.driveGb).toBe(2);
     expect(ALL.find((system) => system.family.id === "tails")?.driveGb).toBe(8);
+  });
+});
+
+describe("dernières sorties", () => {
+  it("donne une sortie par système, la plus récente d'abord, jamais une version en fin de vie", () => {
+    const dated = summarize({
+      families: CATALOG.families,
+      images: CATALOG.images.map((image) =>
+        image.id === "u24" ? { ...image, released: "2026-09-09" } : image,
+      ),
+    });
+    const recent = recentReleases(dated, 2);
+    expect(recent.map((system) => system.latest.id)).toEqual(["u24", "f44"]);
+    expect(recentReleases(dated, 9).length).toBe(4);
   });
 });
 

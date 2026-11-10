@@ -10,6 +10,7 @@
 }
 
 .detail {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -19,22 +20,9 @@
   font-size: 0.875rem;
 }
 
-.other {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-
-.other select {
-  max-width: 20rem;
-  padding: 0.125rem 0;
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  border-radius: 0;
-  background: none;
-  color: var(--accent);
-  font-size: inherit;
-  font-weight: 600;
+/* The official logo as a plain white shape: it reads on the accent whatever its own colours. */
+.mark {
+  filter: brightness(0) invert(1);
 }
 
 @media (max-width: 40rem) {
