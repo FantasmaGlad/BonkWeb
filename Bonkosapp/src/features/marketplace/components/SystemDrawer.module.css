@@ -20,8 +20,13 @@
   height: 100%;
   padding: 1.5rem 1.75rem 3rem;
   overflow-y: auto;
+  scrollbar-width: none;
   background: var(--paper);
   box-shadow: -1px 0 0 var(--line);
+}
+
+.drawer::-webkit-scrollbar {
+  display: none;
 }
 
 .head {

@@ -1,0 +1,118 @@
+.menu {
+  position: relative;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.125rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.trigger::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transform: translateY(-0.125rem) rotate(45deg);
+}
+
+.trigger[aria-expanded="true"]::after {
+  transform: translateY(0.1rem) rotate(-135deg);
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  z-index: 5;
+  width: min(34rem, calc(100vw - 2rem));
+  padding: 0.25rem 1rem 0.75rem;
+  border-radius: var(--radius-small);
+  background: var(--surface);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 12px 32px rgb(29 27 34 / 12%);
+  color: var(--ink);
+  font-size: 0.9375rem;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list button {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto 4rem;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0.5rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.list button:hover {
+  background: var(--sunk);
+}
+
+.list button[aria-pressed="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.logos {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.format {
+  color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+}
+
+.arch {
+  text-align: right;
+}
+
+/* On a narrow screen the panel spans the line it hangs from instead of starting at its button. */
+@media (max-width: 40rem) {
+  .menu {
+    position: static;
+  }
+
+  .panel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 30rem) {
+  .list button {
+    grid-template-columns: 3rem minmax(0, 1fr) auto;
+  }
+
+  .logos img:nth-child(n + 3) {
+    display: none;
+  }
+
+  .format {
+    display: none;
+  }
+}

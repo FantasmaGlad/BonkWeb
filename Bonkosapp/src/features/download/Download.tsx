@@ -2,57 +2,67 @@ import { COMMANDS_ANCHOR } from "../../app/routes";
 import { RELEASES } from "../../data/links";
 import { RELEASE } from "../../data/releases";
 import { useLanguage, useText } from "../../i18n/I18nProvider";
+import { FirstScreen } from "../../shared/components/FirstScreen";
 import { useOsDetection } from "../../shared/hooks/useOsDetection";
 import { dateLabel } from "../../shared/lib/format";
 import { AppDownloads } from "./components/AppDownloads";
-import { CliDownloads } from "./components/CliDownloads";
+import { CliOnly } from "./components/CliOnly";
 import { CommandReference } from "./components/CommandReference";
 import { TerminalInstall } from "./components/TerminalInstall";
 import styles from "./Download.module.css";
 
-const APPS_ANCHOR = "apps";
-const TERMINAL_ANCHOR = "terminal";
+const ANCHORS = {
+  apps: "apps",
+  terminal: "terminal",
+  cli: "cli",
+  commands: COMMANDS_ANCHOR,
+} as const;
+const ORDER = ["apps", "terminal", "cli", "commands"] as const;
 
 export function Download() {
   const all = useText();
   const text = all.install;
   const language = useLanguage();
   const machine = useOsDetection();
-  const sections = [
-    [APPS_ANCHOR, text.sections.apps],
-    [TERMINAL_ANCHOR, text.sections.terminal],
-    [COMMANDS_ANCHOR, text.sections.commands],
-  ] as const;
+  const title = (section: (typeof ORDER)[number]) => `${ANCHORS[section]}-title`;
   return (
     <>
-      <header className={styles.head}>
-        <h1>{text.title}</h1>
+      <FirstScreen labelledBy="download-title" next={ANCHORS.apps} nextLabel={text.sections.apps}>
+        <h1 id="download-title">{text.title}</h1>
         <p className="lead">
           {text.intro(RELEASE.version, dateLabel(RELEASE.published, language))}{" "}
           <a href={RELEASES}>{all.footer.releases}</a>
         </p>
-        <nav className={styles.nav} aria-label={text.title}>
-          {sections.map(([id, label]) => (
-            <a key={id} href={`#${id}`}>
-              {label}
-            </a>
-          ))}
+        <nav aria-label={text.title}>
+          <ul className={styles.contents}>
+            {ORDER.map((section) => (
+              <li key={section}>
+                <a href={`#${ANCHORS[section]}`}>
+                  <strong>{text.sections[section]}</strong>
+                  <span>{text.sectionTexts[section]}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </nav>
-      </header>
-      <section id={APPS_ANCHOR} className={styles.section} aria-labelledby="apps-title">
-        <h2 id="apps-title">{text.sections.apps}</h2>
+      </FirstScreen>
+      <section id={ANCHORS.apps} className={styles.section} aria-labelledby={title("apps")}>
+        <h2 id={title("apps")}>{text.sections.apps}</h2>
         <p className="muted">{text.appsText}</p>
         <AppDownloads arch={machine.arch} />
       </section>
-      <section id={TERMINAL_ANCHOR} className={styles.section} aria-labelledby="terminal-title">
-        <h2 id="terminal-title">{text.sections.terminal}</h2>
+      <section id={ANCHORS.terminal} className={styles.section} aria-labelledby={title("terminal")}>
+        <h2 id={title("terminal")}>{text.sections.terminal}</h2>
         <p className="muted">{text.terminalText}</p>
         <TerminalInstall machine={machine} />
-        <h3 className={styles.sub}>{text.cliTitle}</h3>
-        <CliDownloads arch={machine.arch} />
       </section>
-      <section id={COMMANDS_ANCHOR} className={styles.section} aria-labelledby="commands-title">
-        <h2 id="commands-title">{text.sections.commands}</h2>
+      <section id={ANCHORS.cli} className={styles.section} aria-labelledby={title("cli")}>
+        <h2 id={title("cli")}>{text.sections.cli}</h2>
+        <p className="muted">{text.cliText}</p>
+        <CliOnly arch={machine.arch} />
+      </section>
+      <section id={ANCHORS.commands} className={styles.section} aria-labelledby={title("commands")}>
+        <h2 id={title("commands")}>{text.sections.commands}</h2>
         <p className="muted">{text.commandsText}</p>
         <CommandReference />
       </section>

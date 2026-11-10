@@ -60,3 +60,23 @@ export const summarize = (catalog: Catalog): SystemSummary[] =>
 
 export const architecturesOf = (catalog: Catalog): string[] =>
   distinct(catalog.images.map((image) => image.arch));
+
+/** Newest releases, one per system, so a single publisher's batch does not fill the list. */
+export const recentReleases = (systems: readonly SystemSummary[], count: number): SystemSummary[] =>
+  systems
+    .filter((system) => supported(system.latest))
+    .map((system) => ({
+      ...system,
+      latest: system.images
+        .filter(supported)
+        .reduce(
+          (newest, image) => (image.released > newest.released ? image : newest),
+          system.latest,
+        ),
+    }))
+    .sort(
+      (a, b) =>
+        b.latest.released.localeCompare(a.latest.released) ||
+        a.family.name.localeCompare(b.family.name),
+    )
+    .slice(0, count);

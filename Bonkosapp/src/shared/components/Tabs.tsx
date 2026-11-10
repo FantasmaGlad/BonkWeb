@@ -1,7 +1,7 @@
 import { type KeyboardEvent, type ReactNode, useId } from "react";
 import styles from "./Tabs.module.css";
 
-type Tab = { id: string; label: string };
+type Tab = { id: string; label: string; icon?: string };
 
 /** Tabs of the WAI-ARIA pattern: arrows move between tabs, Tab goes into the panel. */
 export function Tabs({
@@ -42,6 +42,7 @@ export function Tabs({
             onClick={() => onSelect(tab.id)}
             onKeyDown={move}
           >
+            {tab.icon ? <img src={tab.icon} alt="" width="20" height="20" /> : null}
             {tab.label}
           </button>
         ))}

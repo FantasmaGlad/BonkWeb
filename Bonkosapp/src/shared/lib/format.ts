@@ -28,5 +28,9 @@ const DRIVE_SIZES_GB = [1, 2, 4, 8, 16, 32, 64, 128];
 export const driveFor = (bytes: number): number | undefined =>
   DRIVE_SIZES_GB.find((size) => size * 1e9 >= bytes);
 
-export const dateLabel = (iso: string, language: Language): string =>
-  new Intl.DateTimeFormat(language, { dateStyle: "long", timeZone: "UTC" }).format(new Date(iso));
+export const dateLabel = (
+  iso: string,
+  language: Language,
+  dateStyle: "long" | "medium" = "long",
+): string =>
+  new Intl.DateTimeFormat(language, { dateStyle, timeZone: "UTC" }).format(new Date(iso));

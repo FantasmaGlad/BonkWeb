@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import axe from "axe-core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PACKAGE_MANAGERS } from "../data/packageManagers";
-import { APPS, RELEASE } from "../data/releases";
+import { APPS, CLIS, RELEASE } from "../data/releases";
 import { browseAs, serveCatalog, UBUNTU_FIREFOX } from "../test/fixtures";
 import { App } from "./App";
 
@@ -19,6 +19,8 @@ const violations = async (container: HTMLElement) =>
     (violation) => violation.id,
   );
 
+const header = () => within(screen.getByRole("navigation", { name: "Bonk" }));
+
 const open = (address: string) => {
   history.replaceState(null, "", address);
   return render(<App />);
@@ -28,7 +30,7 @@ describe("langue", () => {
   it("suit l'adresse, sans bouton de langue, et le dit au document", () => {
     open("/?lang=fr");
     expect(screen.queryByRole("button", { name: /English|Français/ })).toBeNull();
-    expect(screen.getByRole("link", { name: "Systèmes" }).getAttribute("href")).toBe(
+    expect(header().getByRole("link", { name: "Systèmes" }).getAttribute("href")).toBe(
       "/images/?lang=fr",
     );
     expect(document.documentElement.lang).toBe("fr");
@@ -37,7 +39,7 @@ describe("langue", () => {
   it("suit le navigateur quand l'adresse ne dit rien, sans l'écrire dans les liens", () => {
     browseAs(UBUNTU_FIREFOX, "Linux x86_64", "fr-FR");
     open("/");
-    expect(screen.getByRole("link", { name: "Systèmes" }).getAttribute("href")).toBe("/images/");
+    expect(header().getByRole("link", { name: "Systèmes" }).getAttribute("href")).toBe("/images/");
   });
 });
 
@@ -46,12 +48,12 @@ describe("navigation", () => {
     const { container } = open("/?lang=fr");
     const root = container.firstChild;
     const pages = history.length;
-    fireEvent.click(screen.getByRole("link", { name: "Systèmes" }));
+    fireEvent.click(header().getByRole("link", { name: "Systèmes" }));
     expect(`${location.pathname}${location.search}`).toBe("/images/?lang=fr");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Systèmes");
     expect(document.title).toBe("Bonk : systèmes");
     expect(history.length).toBe(pages + 1);
-    fireEvent.click(screen.getByRole("link", { name: /^Télécharger/ }));
+    fireEvent.click(header().getByRole("link", { name: /^Télécharger/ }));
     expect(`${location.pathname}${location.search}`).toBe("/install/?lang=fr");
     expect(container.firstChild).toBe(root);
   });
@@ -75,7 +77,10 @@ describe("accueil", () => {
     expect(download?.textContent).toBe("Download for Linux.deb");
     expect(download?.getAttribute("href")).toBe(deb?.url);
     expect(explore?.textContent).toBe("Explore systems");
-    await screen.findByText(/4 systems, 9 images/);
+    expect(download?.querySelector("img")?.getAttribute("src")).toBe("/logos/linux.png");
+    await screen.findByRole("link", { name: "See all 4 systems" });
+    const recent = screen.getByRole("heading", { level: 3, name: "Latest releases" }).parentElement;
+    expect(recent?.querySelectorAll("li").length).toBe(4);
     expect(container.querySelector("pre")).toBeNull();
     expect(await violations(container)).toEqual([]);
   });
@@ -83,9 +88,12 @@ describe("accueil", () => {
   it("laisse choisir un autre système et s'en souvient", () => {
     browseAs(UBUNTU_FIREFOX, "Linux x86_64");
     const { unmount } = open("/");
-    fireEvent.change(screen.getByRole("combobox", { name: "Another system" }), {
-      target: { value: "macos/universal" },
-    });
+    fireEvent.click(screen.getByRole("button", { name: "Another system" }));
+    expect(screen.getByRole("tab", { selected: true }).textContent).toBe("Linux");
+    expect(screen.getAllByRole("button", { pressed: true }).length).toBe(1);
+    fireEvent.click(screen.getByRole("tab", { name: "macOS 12+" }));
+    fireEvent.click(screen.getByRole("button", { name: /\.dmg/ }));
+    expect(screen.queryByRole("tab")).toBeNull();
     const dmg = APPS.find((platform) => platform.id === "macos")?.builds[0];
     expect(screen.getByRole("link", { name: /Download for macOS/ }).getAttribute("href")).toBe(
       dmg?.url,
@@ -221,14 +229,40 @@ describe("téléchargement et commandes", () => {
   it("ouvre sur le gestionnaire de la machine et parcourt les onglets au clavier", () => {
     browseAs(UBUNTU_FIREFOX, "Linux x86_64");
     open("/install/");
-    expect(screen.getAllByRole("tab").length).toBe(PACKAGE_MANAGERS.length + 1);
+    expect(screen.getAllByRole("tab").length).toBe(PACKAGE_MANAGERS.length);
     expect(screen.getByRole("tab", { selected: true }).textContent).toBe("APT");
     fireEvent.click(screen.getByRole("tab", { name: "pacman" }));
     expect(screen.getByRole("tabpanel").textContent).toContain("sudo pacman -R bonk");
     fireEvent.keyDown(screen.getByRole("tab", { name: "pacman" }), { key: "ArrowRight" });
     expect(screen.getByRole("tab", { selected: true }).textContent).toBe("Homebrew");
-    fireEvent.click(screen.getByRole("tab", { name: "Script" }));
-    expect(screen.getByRole("tabpanel").textContent).toContain("install.sh | sh");
+    expect(screen.getByRole("tabpanel").textContent).not.toContain("bonk-cli");
+  });
+
+  it("réunit la version sans fenêtre : script, paquet bonk-cli et archives avec leur taille", () => {
+    const { container } = open("/install/");
+    const section = container.querySelector("#cli") as HTMLElement;
+    expect(section.textContent).toContain("install.sh | sh");
+    expect(section.textContent).toContain("install.ps1 | iex");
+    for (const manager of PACKAGE_MANAGERS) {
+      expect(section.textContent, manager.id).toContain(manager.cli);
+    }
+    for (const build of CLIS.flatMap((platform) => platform.builds)) {
+      expect(section.querySelector(`a[href="${build.url}"]`), build.name).toBeTruthy();
+    }
+    expect(section.textContent).toMatch(/\d MB/);
+  });
+
+  it("ouvre sur un premier écran qui mène aux quatre sections", () => {
+    const { container } = open("/install/");
+    const first = screen.getByRole("heading", { level: 1 }).closest("section") as HTMLElement;
+    const targets = within(first)
+      .getAllByRole("link")
+      .map((link) => link.getAttribute("href"))
+      .filter((href) => href?.startsWith("#"));
+    expect(targets).toEqual(["#apps", "#terminal", "#cli", "#commands", "#apps"]);
+    for (const target of targets) {
+      expect(container.querySelector(target ?? ""), target ?? "").toBeTruthy();
+    }
   });
 
   it("donne le flux essentiel puis la référence, options avancées à part", () => {

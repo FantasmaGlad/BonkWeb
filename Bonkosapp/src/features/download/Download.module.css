@@ -1,32 +1,33 @@
-.head {
-  padding: 3rem 0 0;
+.contents {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0 2.5rem;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.head h1 {
-  margin-bottom: 0.75rem;
-}
-
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1.5rem;
-  margin-top: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--line);
-  font-size: 0.9375rem;
-  font-weight: 600;
-}
-
-.nav a {
+.contents a {
+  display: grid;
+  gap: 0.25rem;
+  height: 100%;
+  padding: 1.125rem 0;
+  border-top: 1px solid var(--line);
   text-decoration: none;
 }
 
-.nav a:hover {
+.contents span {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.contents a:hover strong {
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .section {
-  padding-top: 3.5rem;
+  padding-top: 4rem;
 }
 
 .section > h2 {
@@ -35,8 +36,4 @@
 
 .section > p {
   max-width: 44rem;
-}
-
-.sub {
-  margin: 2.5rem 0 0.75rem;
 }

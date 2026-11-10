@@ -1,0 +1,41 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--header));
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+.scroll {
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.scroll::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: translateY(-0.2rem) rotate(45deg);
+}
+
+.scroll:hover::before {
+  border-color: var(--accent);
+}
+
+@media (max-width: 48rem) {
+  .body {
+    padding: 1rem 0 0.5rem;
+  }
+}
