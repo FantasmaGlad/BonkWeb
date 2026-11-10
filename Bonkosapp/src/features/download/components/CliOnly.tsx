@@ -26,6 +26,7 @@ export function CliOnly({ arch }: { arch: Arch | undefined }) {
         ))}
       </dl>
       <h3 className={styles.title}>{text.cliPackages}</h3>
+      <p className={styles.note}>{text.cliSwitch}</p>
       <dl className={styles.commands}>
         {PACKAGE_MANAGERS.map((manager) => (
           <div key={manager.id}>

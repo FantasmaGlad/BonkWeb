@@ -198,6 +198,8 @@ export const en = {
     unix: "Linux, macOS",
     windows: "Windows (PowerShell)",
     cliPackages: "bonk-cli package",
+    cliSwitch:
+      "bonk and bonk-cli install the same command and cannot be installed together: remove one before installing the other.",
     cliArchives: "Archives",
     commandsText: "Run bonk alone to open the window. The same work is done from a terminal.",
     flowTitle: "From a blank drive to a written one",
