@@ -18,6 +18,9 @@ export const compareVersions = (a: string, b: string): number => {
 
 export const supported = (image: CatalogImage) => image.channel !== "end_of_life";
 
+/** Bonk can download and write it: a link and a file that boots from a drive. */
+export const writable = (image: CatalogImage) => Boolean(image.url) && image.usb_boot !== false;
+
 export const distinct = (values: string[]): string[] => [...new Set(values)].sort();
 
 /** Within one version, the system itself before its flavours (Ubuntu before Kubuntu). */
@@ -35,7 +38,10 @@ export const summaryOf = (
   family: SystemSummary["family"],
   images: CatalogImage[],
 ): SystemSummary | undefined => {
-  const latest = images.find(supported) ?? images[0];
+  const latest =
+    images.find((image) => supported(image) && writable(image)) ??
+    images.find(supported) ??
+    images[0];
   if (!latest) {
     return undefined;
   }

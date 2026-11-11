@@ -117,6 +117,7 @@ export const en = {
     lts: "LTS",
     endOfLife: "end of life",
     noMatch: "No system matches these filters.",
+    ramUnstated: "Minimum memory not stated by the publisher",
     clear: "Clear filters",
     unknownSystem: "This system is not in the catalog.",
     close: "Close",

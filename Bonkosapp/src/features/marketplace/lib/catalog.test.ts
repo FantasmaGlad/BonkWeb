@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { recentReleases, summarize } from "../../../shared/lib/catalog";
+import { recentReleases, summarize, summaryOf } from "../../../shared/lib/catalog";
 import { CATALOG } from "../../../test/fixtures";
 import type { CatalogFilter } from "../../../types/system";
-import { filterFromParams, filterSystems, NO_FILTER, paramsOfFilter } from "./filter";
+import { filterFromParams, filterSystems, NO_FILTER, paramsOfFilter, splitByRam } from "./filter";
 import { choicesFor, defaultImage, editionKey, reselect } from "./selection";
 
 const ALL = summarize(CATALOG);
@@ -67,11 +67,19 @@ describe("filtres", () => {
 
   it("filtre par processeur, mémoire et clé, sans promettre ce que l'éditeur ne dit pas", () => {
     expect(ids({ arch: "aarch64" })).toEqual(["ubuntu"]);
-    expect(ids({ ramMb: 4096 })).toEqual(["tails"]);
-    expect(ids({ ramMb: 8192 })).toEqual(["tails", "ubuntu"]);
+    expect(ids({ ramMb: 4096 })).toEqual(["fedora", "haiku", "tails"]);
+    expect(ids({ ramMb: 8192 })).toEqual(["fedora", "haiku", "tails", "ubuntu"]);
     expect(ids({ driveGb: 4 })).toEqual(["fedora", "haiku", "ubuntu"]);
     const small = filterSystems(ALL, { ...NO_FILTER, driveGb: 4 });
     expect(small.find((system) => system.family.id === "ubuntu")?.latest.id).toBe("u26arm");
+  });
+
+  it("met à part, sans les cacher, les systèmes dont l'éditeur ne publie pas la mémoire", () => {
+    const filter = { ...NO_FILTER, ramMb: 4096 };
+    const { fitting, unstated } = splitByRam(filterSystems(ALL, filter), filter);
+    expect(fitting.map((system) => system.family.id)).toEqual(["tails"]);
+    expect(unstated.map((system) => system.family.id)).toEqual(["fedora", "haiku"]);
+    expect(splitByRam(ALL, NO_FILTER).unstated).toEqual([]);
   });
 
   it("lit et écrit l'état dans l'adresse", () => {
@@ -112,6 +120,14 @@ describe("cascade édition, architecture, version", () => {
     expect(choices.architectures).toEqual(["aarch64", "x86_64"]);
     expect(choices.versions.map((candidate) => candidate.id)).toEqual(["u26", "u24", "u20"]);
     expect(choicesFor(images, named("k26")).architectures).toEqual(["x86_64"]);
+  });
+
+  it("propose d'abord une édition que Bonk sait écrire", () => {
+    const dvd = { ...named("u26srv"), id: "dvd", edition: "dvd", usb_boot: false };
+    const live = { ...named("u26"), id: "live", edition: "live" };
+    expect(choicesFor([dvd, live], dvd).editions.map((image) => image.id)).toEqual(["live", "dvd"]);
+    const family = ubuntu?.family;
+    expect(family && summaryOf(family, [dvd, live])?.latest.id).toBe("live");
   });
 
   it("garde la version quand on change de processeur, sinon retombe sur la plus récente", () => {

@@ -1,4 +1,4 @@
-import { distinct, supported } from "../../../shared/lib/catalog";
+import { distinct, supported, writable } from "../../../shared/lib/catalog";
 import type { CatalogImage } from "../../../types/catalog";
 
 /** An edition is a product name and its variant: "Ubuntu desktop", "Kubuntu". */
@@ -21,11 +21,17 @@ export const choicesFor = (
   selected: CatalogImage,
 ): ImageChoices => {
   const seen = new Set<string>();
-  const editions = images.filter((image) => {
+  const firsts = images.filter((image) => {
     const first = !seen.has(editionKey(image));
     seen.add(editionKey(image));
     return first;
   });
+  const anyWritable = (key: string) =>
+    images.some((image) => editionKey(image) === key && writable(image));
+  const editions = [
+    ...firsts.filter((image) => anyWritable(editionKey(image))),
+    ...firsts.filter((image) => !anyWritable(editionKey(image))),
+  ];
   const sameEdition = images.filter((image) => editionKey(image) === editionKey(selected));
   return {
     editions,
@@ -33,8 +39,6 @@ export const choicesFor = (
     versions: sameEdition.filter((image) => image.arch === selected.arch),
   };
 };
-
-const writable = (image: CatalogImage) => Boolean(image.url) && image.usb_boot !== false;
 
 const best = (
   images: readonly CatalogImage[],

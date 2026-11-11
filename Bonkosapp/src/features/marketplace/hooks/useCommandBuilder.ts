@@ -1,4 +1,5 @@
 import { DISK_PLACEHOLDER, WRITE_TEMPLATE } from "../../../data/commands";
+import { writable } from "../../../shared/lib/catalog";
 import type { CatalogImage } from "../../../types/catalog";
 
 export const writeCommand = (image: string): string =>
@@ -6,5 +7,5 @@ export const writeCommand = (image: string): string =>
 
 /** The exact command that writes this image; none for a file that cannot boot from a drive. */
 export function useCommandBuilder(image: CatalogImage): string | undefined {
-  return image.url && image.usb_boot !== false ? writeCommand(image.id) : undefined;
+  return writable(image) ? writeCommand(image.id) : undefined;
 }
