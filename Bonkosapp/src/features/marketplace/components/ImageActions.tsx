@@ -5,6 +5,7 @@ import { Link } from "../../../router/Link";
 import { buttonClass } from "../../../shared/components/button";
 import { CommandBlock } from "../../../shared/components/CommandBlock";
 import { CopyButton } from "../../../shared/components/CopyButton";
+import { writable } from "../../../shared/lib/catalog";
 import { exactBytes, sizeLabel } from "../../../shared/lib/format";
 import type { CatalogImage } from "../../../types/catalog";
 import { useBonkLink } from "../hooks/useBonkLink";
@@ -37,7 +38,9 @@ export function ImageActions({ image }: { image: CatalogImage }) {
             {text.publisherPage}
           </a>
         )}
-        <Link to={`${PATHS.download}#apps`}>{link ? text.getBonk : text.needsBonk}</Link>
+        {writable(image) ? (
+          <Link to={`${PATHS.download}#apps`}>{link ? text.getBonk : text.needsBonk}</Link>
+        ) : null}
       </p>
       {image.usb_boot === false ? <p className="notice">{text.dvdOnly}</p> : null}
       {image.note && image.usb_boot !== false ? (

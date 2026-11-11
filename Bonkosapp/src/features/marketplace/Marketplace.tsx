@@ -7,7 +7,7 @@ import { SpecFilters } from "./components/SpecFilters";
 import { SystemCard } from "./components/SystemCard";
 import { SystemDrawer } from "./components/SystemDrawer";
 import { useCatalogFilter } from "./hooks/useCatalogFilter";
-import { isFiltered, paramsOfFilter } from "./lib/filter";
+import { isFiltered, paramsOfFilter, splitByRam } from "./lib/filter";
 import styles from "./Marketplace.module.css";
 
 export function Marketplace() {
@@ -17,6 +17,15 @@ export function Marketplace() {
   const machine = useOsDetection();
   const store = useCatalogFilter(catalog);
   const { filter, systems } = store;
+  const { fitting, unstated } = splitByRam(systems, filter);
+  const card = (system: (typeof systems)[number]) => (
+    <SystemCard
+      key={system.family.id}
+      system={system}
+      params={paramsOfFilter(filter)}
+      onOpen={() => store.open(system.family.id)}
+    />
+  );
   return (
     <>
       <header className={styles.head}>
@@ -54,18 +63,16 @@ export function Marketplace() {
               systems.reduce((total, system) => total + system.images.length, 0),
             )}
           </p>
-          {systems.length ? (
-            <ul className={styles.grid}>
-              {systems.map((system) => (
-                <SystemCard
-                  key={system.family.id}
-                  system={system}
-                  params={paramsOfFilter(filter)}
-                  onOpen={() => store.open(system.family.id)}
-                />
-              ))}
-            </ul>
-          ) : (
+          {fitting.length ? <ul className={styles.grid}>{fitting.map(card)}</ul> : null}
+          {unstated.length ? (
+            <section aria-labelledby="unstated-title">
+              <h2 id="unstated-title" className={styles.group}>
+                {market.ramUnstated}
+              </h2>
+              <ul className={styles.grid}>{unstated.map(card)}</ul>
+            </section>
+          ) : null}
+          {systems.length ? null : (
             <p className={styles.empty}>
               {market.noMatch}{" "}
               {isFiltered(filter) ? (

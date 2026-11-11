@@ -32,8 +32,7 @@ export const filterSystems = (
     if (category && !category.match(system)) {
       return [];
     }
-    // A system whose publisher states no memory figure cannot be promised to fit a given one.
-    if (filter.ramMb && !(profile.ramMb !== undefined && profile.ramMb <= filter.ramMb)) {
+    if (filter.ramMb && profile.ramMb !== undefined && profile.ramMb > filter.ramMb) {
       return [];
     }
     if (filter.driveGb && (profile.driveGb ?? 0) > filter.driveGb) {
@@ -55,6 +54,19 @@ export const filterSystems = (
     );
     return summaryOf(family, images) ?? [];
   });
+};
+
+/** With a memory filter, systems whose publisher states no figure are set apart rather than promised to fit. */
+export const splitByRam = (
+  systems: readonly SystemSummary[],
+  filter: CatalogFilter,
+): { fitting: SystemSummary[]; unstated: SystemSummary[] } => {
+  const unstated = (system: SystemSummary) =>
+    filter.ramMb > 0 && system.profile.ramMb === undefined;
+  return {
+    fitting: systems.filter((system) => !unstated(system)),
+    unstated: systems.filter(unstated),
+  };
 };
 
 const isCategory = (value: string | null): value is CategoryId =>

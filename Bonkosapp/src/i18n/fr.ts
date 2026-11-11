@@ -122,6 +122,7 @@ export const fr: Dictionary = {
     lts: "LTS",
     endOfLife: "fin de vie",
     noMatch: "Aucun système ne correspond à ces filtres.",
+    ramUnstated: "Mémoire minimale non publiée par l'éditeur",
     clear: "Effacer les filtres",
     unknownSystem: "Ce système n'est pas dans le catalogue.",
     close: "Fermer",

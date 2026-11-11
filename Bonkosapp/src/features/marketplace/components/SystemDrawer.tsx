@@ -44,7 +44,7 @@ export function SystemDrawer({
         aria-labelledby="drawer-title"
       >
         <header className={styles.head}>
-          <Logo src={logoOf(family)} size={56} />
+          <Logo src={logoOf(family)} size={56} eager />
           <div>
             <h2 id="drawer-title">{family.name}</h2>
             <a href={system.latest.homepage}>{text.site}</a>

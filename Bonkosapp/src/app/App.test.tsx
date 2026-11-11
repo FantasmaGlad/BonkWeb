@@ -142,7 +142,10 @@ describe("systèmes", () => {
     fireEvent.change(screen.getByRole("combobox", { name: "Available memory" }), {
       target: { value: "4096" },
     });
-    expect(cards()).toEqual(["Tails"]);
+    expect(cards()).toEqual(["Tails", "Fedora", "Haiku"]);
+    expect(
+      screen.getByRole("heading", { name: "Minimum memory not stated by the publisher" }),
+    ).toBeTruthy();
     expect(location.search).toBe("?ram=4096");
   });
 

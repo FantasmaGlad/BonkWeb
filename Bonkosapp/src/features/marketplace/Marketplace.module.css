@@ -68,3 +68,10 @@
 .loading {
   min-height: 60vh;
 }
+
+.group {
+  margin: 2rem 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
