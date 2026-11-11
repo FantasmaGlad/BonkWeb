@@ -1,4 +1,11 @@
-export type CatalogFamily = { id: string; name: string; icon: string; category?: string };
+export type CatalogFamily = {
+  id: string;
+  name: string;
+  icon: string;
+  category?: string;
+  /** The system a flavour derives from: `ubuntu` for Kubuntu. */
+  parent?: string;
+};
 
 export type CatalogImage = {
   id: string;

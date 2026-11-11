@@ -20,11 +20,6 @@
   font-size: 0.875rem;
 }
 
-/* The official logo as a plain white shape: it reads on the accent whatever its own colours. */
-.mark {
-  filter: brightness(0) invert(1);
-}
-
 @media (max-width: 40rem) {
   .actions > * {
     flex: 1 1 100%;

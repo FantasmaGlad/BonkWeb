@@ -160,6 +160,11 @@ export const fr: Dictionary = {
     },
     systems: {
       ubuntu: "Distribution généraliste de Canonical. Bureau GNOME ; variantes KDE, Xfce et LXQt.",
+      kubuntu: "Saveur officielle d'Ubuntu avec le bureau KDE Plasma.",
+      xubuntu: "Saveur officielle d'Ubuntu avec le bureau Xfce, légère.",
+      lubuntu: "Saveur officielle d'Ubuntu avec le bureau LXQt, pour les machines modestes.",
+      ubuntustudio: "Saveur officielle d'Ubuntu pour la création : son, vidéo, graphisme.",
+      "ubuntu-mate": "Saveur officielle d'Ubuntu avec le bureau MATE, classique.",
       debian:
         "Distribution communautaire, base de nombreuses autres. Installateur réseau et images live.",
       linuxmint: "Distribution de bureau fondée sur Ubuntu. Cinnamon, MATE ou Xfce.",

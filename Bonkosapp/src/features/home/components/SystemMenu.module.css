@@ -53,7 +53,7 @@
 
 .list button {
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) auto 4rem;
+  grid-template-columns: 5.75rem minmax(0, 1fr) auto 4rem;
   align-items: center;
   gap: 0.75rem;
   width: 100%;
@@ -105,10 +105,10 @@
 
 @media (max-width: 30rem) {
   .list button {
-    grid-template-columns: 3rem minmax(0, 1fr) auto;
+    grid-template-columns: 3.75rem minmax(0, 1fr) auto;
   }
 
-  .logos img:nth-child(n + 3) {
+  .logos > :nth-child(n + 3) {
     display: none;
   }
 
