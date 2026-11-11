@@ -1,4 +1,4 @@
-import type { Arch, Distro, Machine, Os } from "../../types/machine";
+import type { Arch, Distro, Machine } from "../../types/machine";
 import type { Build, PackageManager, Platform } from "../../types/release";
 
 type Hints = { architecture?: string; bitness?: string };
@@ -96,6 +96,3 @@ export const suggestManager = (
       manager.os === machine.os &&
       (machine.os !== "linux" || manager.distros?.includes(machine.distro ?? DEFAULT_DISTRO)),
   );
-
-export const isOs = (value: string): value is Os =>
-  ["linux", "windows", "macos", "android"].includes(value);

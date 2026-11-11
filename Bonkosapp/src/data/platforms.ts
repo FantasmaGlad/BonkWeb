@@ -1,4 +1,3 @@
-import type { Arch } from "../types/machine";
 import type { BuildArch, OsGroup, PlatformDefinition } from "../types/release";
 
 export const OS_GROUPS: readonly OsGroup[] = [
@@ -14,8 +13,6 @@ export const ARCH_LABELS: Record<BuildArch, string> = {
   i686: "x86",
   universal: "Universal",
 };
-
-export const ARCHS: readonly Arch[] = ["x86_64", "aarch64", "i686"];
 
 /** `{version}` is replaced by the latest release; a file the release lacks is not offered. */
 export const APP_PLATFORMS: readonly PlatformDefinition[] = [

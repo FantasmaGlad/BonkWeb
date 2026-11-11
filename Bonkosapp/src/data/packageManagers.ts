@@ -88,9 +88,6 @@ sudo pacman -Sy bonk`,
 ];
 
 export const SCRIPTS = {
-  unix: { install: `curl -fsSL ${URL}/install.sh | sh`, remove: "rm ~/.local/bin/bonk" },
-  windows: {
-    install: `irm ${URL}/install.ps1 | iex`,
-    remove: 'Remove-Item "$env:LOCALAPPDATA\\Programs\\Bonk" -Recurse',
-  },
+  unix: { install: `curl -fsSL ${URL}/install.sh | sh` },
+  windows: { install: `irm ${URL}/install.ps1 | iex` },
 } as const;
