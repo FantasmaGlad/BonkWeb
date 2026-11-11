@@ -1,4 +1,5 @@
 import { CATEGORIES } from "../../../data/categories";
+import { PUBLISHER_DRIVES } from "../../../data/systems";
 import { summaryOf } from "../../../shared/lib/catalog";
 import type { CatalogFilter, CategoryId, SystemSummary } from "../../../types/system";
 
@@ -28,14 +29,14 @@ export const filterSystems = (
   const words = fold(filter.query).split(/\s+/).filter(Boolean);
   const category = CATEGORIES.find((candidate) => candidate.id === filter.category);
   return systems.flatMap((system) => {
-    const { family, profile } = system;
+    const { family } = system;
     if (category && !category.match(system)) {
       return [];
     }
-    if (filter.ramMb && profile.ramMb !== undefined && profile.ramMb > filter.ramMb) {
+    if (filter.ramMb && system.memory && system.memory.value > filter.ramMb) {
       return [];
     }
-    if (filter.driveGb && (profile.driveGb ?? 0) > filter.driveGb) {
+    if (filter.driveGb && (PUBLISHER_DRIVES[family.id]?.value ?? 0) > filter.driveGb) {
       return [];
     }
     const haystack = fold(
@@ -61,8 +62,7 @@ export const splitByRam = (
   systems: readonly SystemSummary[],
   filter: CatalogFilter,
 ): { fitting: SystemSummary[]; unstated: SystemSummary[] } => {
-  const unstated = (system: SystemSummary) =>
-    filter.ramMb > 0 && system.profile.ramMb === undefined;
+  const unstated = (system: SystemSummary) => filter.ramMb > 0 && system.memory === undefined;
   return {
     fitting: systems.filter((system) => !unstated(system)),
     unstated: systems.filter(unstated),

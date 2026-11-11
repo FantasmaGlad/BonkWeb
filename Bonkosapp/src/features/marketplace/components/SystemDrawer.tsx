@@ -27,7 +27,7 @@ export function SystemDrawer({
   const language = useLanguage();
   const panel = useRef<HTMLDivElement>(null);
   const selection = useImageSelection(system.images, imageId, preferredArch, onSelect);
-  const { family, profile } = system;
+  const { family, memory } = system;
 
   useModal(panel, onClose);
 
@@ -54,9 +54,9 @@ export function SystemDrawer({
           </button>
         </header>
         {text.systems[family.id] ? <p>{text.systems[family.id]}</p> : null}
-        {profile.ramMb ? (
+        {memory ? (
           <p className={styles.spec}>
-            {text.ramSource} <a href={profile.source}>{ramLabel(profile.ramMb, language)}</a>
+            {text.ramSource} <a href={memory.source}>{ramLabel(memory.value, language)}</a>
           </p>
         ) : null}
         {selection ? (

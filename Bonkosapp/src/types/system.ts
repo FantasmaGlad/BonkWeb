@@ -1,25 +1,25 @@
 import type { CatalogFamily, CatalogImage } from "./catalog";
 
-export type UsageTag = "daily" | "server" | "light" | "security";
-
-/** Editorial facts the signed catalog does not carry, each with the publisher page it was read on. */
-export type SystemProfile = {
-  tags: readonly UsageTag[];
-  ramMb?: number;
-  /** Drive size the publisher asks for, when larger than the image itself. */
-  driveGb?: number;
-  source?: string;
-};
-
-export type CategoryId =
-  | "all"
-  | "daily"
-  | "windows"
-  | "server"
+export type UseId =
+  | "desktop"
+  | "beginner"
+  | "gaming"
   | "light"
-  | "security"
-  | "arm"
-  | "alt";
+  | "creative"
+  | "advanced"
+  | "server"
+  | "homelab"
+  | "privacy"
+  | "rescue"
+  | "media"
+  | "boards"
+  | "windows"
+  | "other";
+
+export type CategoryId = "all" | UseId;
+
+/** A figure the publisher states, with the page it was read on. */
+export type Stated = { value: number; source: string };
 
 export type SystemSummary = {
   family: CatalogFamily;
@@ -27,7 +27,8 @@ export type SystemSummary = {
   /** Newest supported image: it stands for the system on its card. */
   latest: CatalogImage;
   architectures: string[];
-  profile: SystemProfile;
+  /** Least memory among its variants, in MiB, when the publisher states one. */
+  memory?: Stated | undefined;
   driveGb?: number | undefined;
 };
 

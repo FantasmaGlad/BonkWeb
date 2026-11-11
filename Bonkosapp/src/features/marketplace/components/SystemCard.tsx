@@ -19,10 +19,10 @@ export function SystemCard({
 }) {
   const text = useText().market;
   const language = useLanguage();
-  const { family, latest, architectures, profile, driveGb } = system;
+  const { family, latest, architectures, memory, driveGb } = system;
   const specs = [
     ...architectures,
-    profile.ramMb ? text.specRam(ramLabel(profile.ramMb, language)) : undefined,
+    memory ? text.specRam(ramLabel(memory.value, language)) : undefined,
     driveGb ? text.specDrive(driveGb) : undefined,
   ].filter(Boolean);
   return (

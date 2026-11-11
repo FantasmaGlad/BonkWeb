@@ -15,7 +15,7 @@ import {
 import { PACKAGE_MANAGERS } from "./packageManagers";
 import { APP_PLATFORMS, CLI_PLATFORMS, DEEP_LINK, OS_GROUPS } from "./platforms";
 import { APPS, CLIS, RELEASE } from "./releases";
-import { SYSTEM_PROFILES } from "./systems";
+import { PUBLISHER_DRIVES } from "./systems";
 
 describe("dernière version", () => {
   // A declared file missing from the release is hidden until published (the next version's builds).
@@ -104,10 +104,8 @@ describe("lien bonk://", () => {
 
 describe("fiches des systèmes", () => {
   it("toute valeur matérielle cite la page de l'éditeur", () => {
-    for (const [id, profile] of Object.entries(SYSTEM_PROFILES)) {
-      if (profile.ramMb !== undefined || profile.driveGb !== undefined) {
-        expect(profile.source, id).toMatch(/^https:\/\//);
-      }
+    for (const [id, drive] of Object.entries(PUBLISHER_DRIVES)) {
+      expect(drive.source, id).toMatch(/^https:\/\//);
     }
   });
 
