@@ -34,3 +34,8 @@
 .facts dd {
   margin: 0;
 }
+
+.block summary {
+  font-weight: 600;
+  cursor: pointer;
+}

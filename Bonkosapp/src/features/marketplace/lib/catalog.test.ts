@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { recentReleases, summarize, summaryOf } from "../../../shared/lib/catalog";
-import { CATALOG } from "../../../test/fixtures";
+import { CATALOG, image } from "../../../test/fixtures";
 import type { CatalogFilter } from "../../../types/system";
 import { filterFromParams, filterSystems, NO_FILTER, paramsOfFilter, splitByRam } from "./filter";
 import { choicesFor, defaultImage, editionKey, reselect } from "./selection";
+import { firstVariant, groupOf, variantsOf } from "./variants";
 
 const ALL = summarize(CATALOG);
 const ids = (filter: Partial<CatalogFilter>) =>
@@ -142,5 +143,64 @@ describe("cascade édition, architecture, version", () => {
     expect(reselect(images, named("u24"), { arch: "aarch64" }).id).toBe("u26arm");
     expect(reselect(images, named("u26arm"), { edition: "Kubuntu|" }).id).toBe("k26");
     expect(reselect(images, named("u24"), { edition: "Ubuntu|server" }).id).toBe("u26srv");
+  });
+});
+
+describe("variantes", () => {
+  const family = { id: "debian", name: "Debian", icon: "icons/debian.png" };
+  const debian = [
+    image("netinst", "debian", "13", { name: "Debian", edition: "netinst", desktop: "choice" }),
+    image("xfce", "debian", "13", { name: "Debian", edition: "live xfce", desktop: "xfce" }),
+    image("cd", "debian", "13", {
+      name: "Debian",
+      edition: "cd",
+      desktop: "xfce",
+      usb_boot: false,
+    }),
+    image("srv", "debian", "13", { name: "Debian", edition: "standard", desktop: "none" }),
+    image("pi", "debian", "13", { name: "Debian", edition: "pi", media: "sd", ram_mb: 512 }),
+  ];
+  const first = debian[0] ?? named("u26");
+
+  it("range les variantes par groupe, les bureaux d'abord et les CD à la fin", () => {
+    const variants = variantsOf(family, debian, first);
+    expect(variants.map((variant) => [variant.image.id, variant.group])).toEqual([
+      ["xfce", "desktop"],
+      ["netinst", "choice"],
+      ["srv", "headless"],
+      ["pi", "boards"],
+      ["cd", "elsewhere"],
+    ]);
+  });
+
+  it("donne à chaque variante la mémoire de son image, sinon celle du système", () => {
+    const stated = { ...family, ram_mb: 1024, ram_source: "https://debian.example/" };
+    const memory = Object.fromEntries(
+      variantsOf(stated, debian, first).map((variant) => [variant.image.id, variant.memory?.value]),
+    );
+    expect(memory.pi).toBeUndefined();
+    expect(memory.xfce).toBe(1024);
+  });
+
+  it("classe une image sans indication comme une variante avec bureau", () => {
+    expect(groupOf(named("u26"))).toBe("desktop");
+  });
+});
+
+describe("variante proposée d'abord", () => {
+  it("propose le premier bureau qui s'écrit, pas le DVD ni l'installateur", () => {
+    const family = { id: "debian", name: "Debian", icon: "icons/debian.png" };
+    const debian = [
+      image("dvd", "debian", "13", { name: "Debian", edition: "DVD", desktop: "choice" }),
+      image("cinnamon", "debian", "13", { name: "Debian", edition: "c", desktop: "cinnamon" }),
+      image("gnome", "debian", "13", { name: "Debian", edition: "g", desktop: "gnome" }),
+    ];
+    expect(firstVariant(family, debian, "x86_64")?.id).toBe("gnome");
+    const first = debian[0] ?? named("u26");
+    expect(variantsOf(family, debian, first).map((variant) => variant.image.id)).toEqual([
+      "gnome",
+      "cinnamon",
+      "dvd",
+    ]);
   });
 });

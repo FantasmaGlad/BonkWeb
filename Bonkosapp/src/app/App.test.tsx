@@ -156,47 +156,52 @@ describe("systèmes", () => {
     expect(card.textContent).toContain("aarch64 · x86_64 · 6 Go de RAM · clé de 2 Go");
   });
 
-  it("ouvre le panneau d'un système et met à jour taille, empreinte et commande", async () => {
+  it("ouvre la page d'un système et met à jour taille, empreinte et commande", async () => {
     const { container } = open("/images/");
     fireEvent.click(await screen.findByRole("link", { name: /^Ubuntu/ }));
     expect(location.search).toBe("?system=ubuntu");
-    const panel = screen.getByRole("dialog", { name: "Ubuntu" });
-    const read = () => panel.textContent ?? "";
+    const page = screen.getByRole("article");
+    expect(within(page).getByRole("heading", { level: 1, name: "Ubuntu" })).toBeTruthy();
+    const read = () => page.textContent ?? "";
     expect(read()).toContain("bonk disk write <DISK> --image u26 --yes");
     expect(read()).toContain("6,482,409,472 bytes (6.5 GB)");
-    expect(within(panel).getByRole("link", { name: /^Download the image/ })).toBeTruthy();
-    expect(within(panel).queryByRole("link", { name: "Open in Bonk" })).toBeNull();
+    expect(within(page).getByRole("link", { name: /^Download the image/ })).toBeTruthy();
+    expect(within(page).queryByRole("link", { name: "Open in Bonk" })).toBeNull();
     expect(await violations(container)).toEqual([]);
 
-    fireEvent.change(within(panel).getByRole("combobox", { name: "Architecture" }), {
+    fireEvent.change(within(page).getByRole("combobox", { name: "Architecture" }), {
       target: { value: "aarch64" },
     });
     expect(location.search).toBe("?system=ubuntu&image=u26arm");
     expect(read()).toContain("--image u26arm --yes");
     expect(read()).toContain("u26arm".padEnd(64, "0"));
 
-    fireEvent.change(within(panel).getByRole("combobox", { name: "Edition" }), {
-      target: { value: "Kubuntu|" },
-    });
+    fireEvent.click(within(page).getByRole("button", { name: /^Kubuntu/ }));
     expect(read()).toContain("--image k26 --yes");
+    expect(
+      within(page)
+        .getByRole("button", { name: /^Kubuntu/ })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
 
-    fireEvent.keyDown(window, { key: "Escape" });
-    expect(screen.queryByRole("dialog")).toBeNull();
+    fireEvent.click(within(page).getByRole("button", { name: "All systems" }));
+    expect(screen.queryByRole("article")).toBeNull();
     expect(location.search).toBe("");
   });
 
-  it("rouvre un panneau depuis l'adresse, version en fin de vie comprise", async () => {
+  it("rouvre une page depuis l'adresse, version en fin de vie comprise", async () => {
     open("/images/?system=ubuntu&image=u20");
-    const panel = await screen.findByRole("dialog", { name: "Ubuntu" });
-    expect(within(panel).getByRole("link", { name: "Publisher's page" })).toBeTruthy();
-    expect(panel.textContent).not.toContain("bonk disk write");
+    const page = await screen.findByRole("article");
+    expect(within(page).getByRole("link", { name: "Publisher's page" })).toBeTruthy();
+    expect(page.textContent).not.toContain("bonk disk write");
   });
 
   it("signale une image qui ne démarre pas sur clé et ne donne pas de commande pour elle", async () => {
     open("/images/?system=fedora&lang=fr");
-    const panel = await screen.findByRole("dialog", { name: "Fedora" });
-    expect(panel.textContent).toContain("DVD ou machine virtuelle seulement");
-    expect(panel.textContent).not.toContain("bonk disk write");
+    const page = await screen.findByRole("article");
+    expect(page.textContent).toContain("DVD ou machine virtuelle seulement");
+    expect(page.textContent).not.toContain("bonk disk write");
+    expect(within(page).queryByRole("link", { name: /Bonk pour l'écrire/ })).toBeNull();
   });
 
   it("dit quand le système demandé n'existe pas", async () => {
