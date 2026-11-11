@@ -5,7 +5,7 @@ import { architecturesOf } from "../../shared/lib/catalog";
 import { CategoryRail } from "./components/CategoryRail";
 import { SpecFilters } from "./components/SpecFilters";
 import { SystemCard } from "./components/SystemCard";
-import { SystemDrawer } from "./components/SystemDrawer";
+import { SystemPage } from "./components/SystemPage";
 import { useCatalogFilter } from "./hooks/useCatalogFilter";
 import { isFiltered, paramsOfFilter, splitByRam } from "./lib/filter";
 import styles from "./Marketplace.module.css";
@@ -17,6 +17,18 @@ export function Marketplace() {
   const machine = useOsDetection();
   const store = useCatalogFilter(catalog);
   const { filter, systems } = store;
+  if (catalog && store.opened) {
+    return (
+      <SystemPage
+        key={store.openId}
+        system={store.opened}
+        imageId={store.imageId}
+        preferredArch={filter.arch || machine.arch}
+        onSelect={store.selectImage}
+        onBack={store.close}
+      />
+    );
+  }
   const { fitting, unstated } = splitByRam(systems, filter);
   const card = (system: (typeof systems)[number]) => (
     <SystemCard
@@ -82,16 +94,7 @@ export function Marketplace() {
               ) : null}
             </p>
           )}
-          {store.opened ? (
-            <SystemDrawer
-              key={store.openId}
-              system={store.opened}
-              imageId={store.imageId}
-              preferredArch={filter.arch || machine.arch}
-              onSelect={store.selectImage}
-              onClose={store.close}
-            />
-          ) : store.openId ? (
+          {store.openId ? (
             <p role="alert" className="notice">
               {market.unknownSystem}
             </p>

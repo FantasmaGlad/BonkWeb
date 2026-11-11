@@ -47,8 +47,8 @@ export function ImageActions({ image }: { image: CatalogImage }) {
         <p className={styles.note}>{text.notes[image.note] ?? image.note}</p>
       ) : null}
       {image.sha256 ? (
-        <section className={styles.block} aria-labelledby="verification-title">
-          <h3 id="verification-title">{text.verification}</h3>
+        <details className={styles.block}>
+          <summary>{text.verification}</summary>
           <dl className={styles.facts}>
             {image.size_bytes ? (
               <div>
@@ -63,7 +63,7 @@ export function ImageActions({ image }: { image: CatalogImage }) {
               </dd>
             </div>
           </dl>
-        </section>
+        </details>
       ) : null}
       {command ? (
         <section className={styles.block} aria-labelledby="command-title">
