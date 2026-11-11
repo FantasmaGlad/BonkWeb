@@ -1,4 +1,4 @@
-/* The test suite recomputes the contrast ratios from this block. */
+/* The test suite recomputes the contrast ratios from both blocks; Bonk's window and app share them. */
 :root {
   --paper: #faf7f2;
   --surface: #ffffff;
@@ -12,9 +12,29 @@
   --warn-soft: #fcebdc;
   --line: #e6e0d6;
   --on-accent: #ffffff;
+  /* White in both themes: a dark logo and a light one read alike. */
+  --logo-tile: #ffffff;
   --radius-small: 8px;
   --width: 72rem;
   --header: 4rem;
   --motion: 0.15s;
   color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #17151b;
+    --surface: #211e26;
+    --sunk: #121015;
+    --ink: #f2eef7;
+    --muted: #b3acbd;
+    --accent: #c7aef0;
+    --accent-strong: #dccbf7;
+    --accent-soft: #2f2541;
+    --warn: #f2a873;
+    --warn-soft: #3b2516;
+    --line: #36313e;
+    --on-accent: #1d1b22;
+    color-scheme: dark;
+  }
 }

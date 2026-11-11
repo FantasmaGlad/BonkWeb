@@ -1,4 +1,5 @@
 import { type KeyboardEvent, type ReactNode, useId } from "react";
+import { Logo } from "./Logo";
 import styles from "./Tabs.module.css";
 
 type Tab = { id: string; label: string; icon?: string };
@@ -42,7 +43,7 @@ export function Tabs({
             onClick={() => onSelect(tab.id)}
             onKeyDown={move}
           >
-            {tab.icon ? <img src={tab.icon} alt="" width="20" height="20" /> : null}
+            {tab.icon ? <Logo src={tab.icon} size={28} /> : null}
             {tab.label}
           </button>
         ))}

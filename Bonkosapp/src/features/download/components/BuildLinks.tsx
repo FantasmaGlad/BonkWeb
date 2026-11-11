@@ -1,6 +1,7 @@
 import { localLogo } from "../../../data/catalogService";
 import { ARCH_LABELS } from "../../../data/platforms";
 import { useLanguage } from "../../../i18n/I18nProvider";
+import { Logo } from "../../../shared/components/Logo";
 import { sizeLabel } from "../../../shared/lib/format";
 import type { Arch } from "../../../types/machine";
 import type { Platform } from "../../../types/release";
@@ -22,7 +23,7 @@ export function BuildLinks({
     <li className={styles.row}>
       <span className={styles.name}>
         {platform.logos.map((logo) => (
-          <img key={logo} src={localLogo(logo)} alt="" width="24" height="24" />
+          <Logo key={logo} src={localLogo(logo)} size={28} />
         ))}
         <strong>{name}</strong>
       </span>

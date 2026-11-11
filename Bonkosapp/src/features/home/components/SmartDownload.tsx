@@ -4,6 +4,7 @@ import { ARCH_LABELS, OS_GROUPS } from "../../../data/platforms";
 import { useLanguage, useText } from "../../../i18n/I18nProvider";
 import { Link } from "../../../router/Link";
 import { buttonClass } from "../../../shared/components/button";
+import { Logo } from "../../../shared/components/Logo";
 import { sizeLabel } from "../../../shared/lib/format";
 import { isOtherDevice } from "../../../shared/lib/machine";
 import { useSmartDownload } from "../hooks/useSmartDownload";
@@ -23,13 +24,7 @@ export function SmartDownload() {
       <p className={styles.actions}>
         {suggestion && group ? (
           <a className={buttonClass("primary", true)} href={suggestion.build.url}>
-            <img
-              className={styles.mark}
-              src={localLogo(group.logo)}
-              alt=""
-              width="24"
-              height="24"
-            />
+            <Logo src={localLogo(group.logo)} size={28} />
             {text.home.downloadFor(group.name)}
             <small>{suggestion.build.format}</small>
           </a>

@@ -142,6 +142,11 @@ export const en = {
     systems: {
       ubuntu:
         "General-purpose distribution by Canonical. GNOME desktop; flavours with KDE, Xfce and LXQt.",
+      kubuntu: "Official Ubuntu flavour with the KDE Plasma desktop.",
+      xubuntu: "Official Ubuntu flavour with the light Xfce desktop.",
+      lubuntu: "Official Ubuntu flavour with the LXQt desktop, for modest machines.",
+      ubuntustudio: "Official Ubuntu flavour for creative work: audio, video, graphics.",
+      "ubuntu-mate": "Official Ubuntu flavour with the classic MATE desktop.",
       debian: "Community distribution, the base of many others. Network installer and live images.",
       linuxmint: "Ubuntu-based desktop distribution. Cinnamon, MATE or Xfce.",
       popos: "Ubuntu-based distribution by System76, with an image for NVIDIA graphics.",

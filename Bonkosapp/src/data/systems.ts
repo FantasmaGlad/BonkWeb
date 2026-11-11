@@ -3,6 +3,11 @@ import type { SystemProfile } from "../types/system";
 /** Memory figures are the publisher's own; a system without one stays without. */
 export const SYSTEM_PROFILES: Readonly<Record<string, SystemProfile>> = {
   ubuntu: { tags: ["daily", "server"], ramMb: 6144, source: "https://ubuntu.com/download/desktop" },
+  kubuntu: { tags: ["daily"] },
+  xubuntu: { tags: ["daily"] },
+  lubuntu: { tags: ["daily"] },
+  ubuntustudio: { tags: ["daily"] },
+  "ubuntu-mate": { tags: ["daily"] },
   debian: {
     tags: ["daily", "server"],
     ramMb: 1024,

@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { localLogo } from "../../../data/catalogService";
 import { ARCH_LABELS, OS_GROUPS } from "../../../data/platforms";
 import { useText } from "../../../i18n/I18nProvider";
+import { Logo } from "../../../shared/components/Logo";
 import { Tabs } from "../../../shared/components/Tabs";
 import type { Os } from "../../../types/machine";
 import type { DownloadChoice } from "../hooks/useSmartDownload";
@@ -84,7 +85,7 @@ export function SystemMenu({
                     >
                       <span className={styles.logos}>
                         {choice.platform.logos.map((logo) => (
-                          <img key={logo} src={localLogo(logo)} alt="" width="20" height="20" />
+                          <Logo key={logo} src={localLogo(logo)} size={28} />
                         ))}
                       </span>
                       <span className={styles.name}>
