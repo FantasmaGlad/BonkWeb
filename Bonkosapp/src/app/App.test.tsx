@@ -134,7 +134,7 @@ describe("systèmes", () => {
     fireEvent.click(rail.getByRole("link", { name: /^Security/ }));
     expect(rail.getByRole("link", { name: /^Security/ }).getAttribute("aria-current")).toBe("true");
     expect(cards()).toEqual(["Tails"]);
-    expect(location.search).toBe("?category=security");
+    expect(location.search).toBe("?category=privacy");
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "ubuntu" } });
     expect(screen.getByText("No system matches these filters.")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Clear filters" }));

@@ -23,7 +23,7 @@ describe("résumé", () => {
     expect(ALL.map((system) => system.family.id)).toEqual(["fedora", "haiku", "tails", "ubuntu"]);
     expect(ubuntu?.latest.id).toBe("u26");
     expect(ubuntu?.architectures).toEqual(["aarch64", "x86_64"]);
-    expect(ubuntu?.profile.ramMb).toBe(6144);
+    expect(ubuntu?.memory).toEqual({ value: 6144, source: "https://ubuntu.example/desktop" });
   });
 
   it("donne la clé nécessaire : celle de l'image, ou celle que l'éditeur demande", () => {
@@ -47,12 +47,19 @@ describe("dernières sorties", () => {
 });
 
 describe("filtres", () => {
-  it("classe par usage à partir des étiquettes et des faits du catalogue", () => {
-    expect(ids({ category: "daily" })).toEqual(["fedora", "ubuntu"]);
-    expect(ids({ category: "security" })).toEqual(["tails"]);
-    expect(ids({ category: "arm" })).toEqual(["ubuntu"]);
-    expect(ids({ category: "alt" })).toEqual(["haiku"]);
-    expect(ids({ category: "light" })).toEqual(["haiku"]);
+  it("classe par les usages que le catalogue donne à chaque famille", () => {
+    expect(ids({ category: "desktop" })).toEqual(["fedora", "ubuntu"]);
+    expect(ids({ category: "server" })).toEqual(["ubuntu"]);
+    expect(ids({ category: "privacy" })).toEqual(["tails"]);
+    expect(ids({ category: "other" })).toEqual(["haiku"]);
+    expect(ids({ category: "gaming" })).toEqual([]);
+  });
+
+  it("prend la mémoire la plus basse parmi les variantes, celle de l'image avant celle du système", () => {
+    const tails = CATALOG.families.find((family) => family.id === "tails");
+    const light = { ...named("u26srv"), ram_mb: 1024, ram_source: "https://x.example/light" };
+    expect(tails && summaryOf(tails, [named("u24"), light])?.memory?.value).toBe(1024);
+    expect(tails && summaryOf(tails, [named("u24")])?.memory?.value).toBe(3072);
   });
 
   it("cherche sans accent ni casse, aussi dans les éditions et la description", () => {

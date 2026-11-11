@@ -26,10 +26,36 @@ const withdrawn = ({ url, sha256, size_bytes, ...rest }: CatalogImage): CatalogI
 
 export const CATALOG: Catalog = {
   families: [
-    { id: "ubuntu", name: "Ubuntu", icon: "icons/ubuntu.png", category: "Debian derivatives" },
-    { id: "tails", name: "Tails", icon: "icons/tails.png", category: "Debian derivatives" },
-    { id: "fedora", name: "Fedora", icon: "icons/fedora.png", category: "Red Hat family" },
-    { id: "haiku", name: "Haiku", icon: "icons/haiku.png", category: "Other systems" },
+    {
+      id: "ubuntu",
+      name: "Ubuntu",
+      icon: "icons/ubuntu.png",
+      category: "Debian derivatives",
+      uses: ["desktop", "server"],
+    },
+    {
+      id: "tails",
+      name: "Tails",
+      icon: "icons/tails.png",
+      category: "Debian derivatives",
+      uses: ["privacy"],
+      ram_mb: 3072,
+      ram_source: "https://tails.example/requirements",
+    },
+    {
+      id: "fedora",
+      name: "Fedora",
+      icon: "icons/fedora.png",
+      category: "Red Hat family",
+      uses: ["desktop"],
+    },
+    {
+      id: "haiku",
+      name: "Haiku",
+      icon: "icons/haiku.png",
+      category: "Other systems",
+      uses: ["other"],
+    },
   ],
   images: [
     image("u24", "ubuntu", "24.04.5", { name: "Ubuntu", channel: "lts", edition: "desktop" }),
@@ -38,6 +64,8 @@ export const CATALOG: Catalog = {
       channel: "lts",
       edition: "desktop",
       size_bytes: 6482409472,
+      ram_mb: 6144,
+      ram_source: "https://ubuntu.example/desktop",
     }),
     image("u26arm", "ubuntu", "26.04.1", {
       name: "Ubuntu",

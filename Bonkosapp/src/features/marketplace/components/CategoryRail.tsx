@@ -19,22 +19,27 @@ export function CategoryRail({
   return (
     <nav className={styles.rail} aria-label={text.market.categoriesLabel}>
       <ul>
-        {CATEGORIES.map((category) => (
-          <li key={category.id}>
-            <Link
-              to={PATHS.marketplace}
-              params={paramsOfFilter({ ...filter, category: category.id })}
-              aria-current={filter.category === category.id ? "true" : undefined}
-              onClick={(event) => {
-                event.preventDefault();
-                onChange({ ...filter, category: category.id });
-              }}
-            >
-              {text.market.categories[category.id]}
-              <span className={styles.count}>{systems.filter(category.match).length}</span>
-            </Link>
-          </li>
-        ))}
+        {CATEGORIES.map((category) => ({
+          category,
+          count: systems.filter(category.match).length,
+        }))
+          .filter(({ category, count }) => count > 0 || category.id === filter.category)
+          .map(({ category, count }) => (
+            <li key={category.id}>
+              <Link
+                to={PATHS.marketplace}
+                params={paramsOfFilter({ ...filter, category: category.id })}
+                aria-current={filter.category === category.id ? "true" : undefined}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onChange({ ...filter, category: category.id });
+                }}
+              >
+                {text.market.categories[category.id]}
+                <span className={styles.count}>{count}</span>
+              </Link>
+            </li>
+          ))}
       </ul>
     </nav>
   );
