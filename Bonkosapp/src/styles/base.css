@@ -88,6 +88,13 @@ input {
   color: inherit;
 }
 
+/* The open list is drawn by the system, which keeps its own light background under inherited light text. */
+option,
+optgroup {
+  background-color: var(--surface);
+  color: var(--ink);
+}
+
 .muted {
   color: var(--muted);
 }
