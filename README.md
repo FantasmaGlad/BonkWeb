@@ -30,7 +30,7 @@
 | Command reference | <https://bonk-os.app/reference/> |
 | Security policy | <https://security.bonk-os.app> |
 
-React, Vite and TypeScript; pages in English and French.
+React, Vite and TypeScript; pages prerendered in English, French chosen in the browser.
 
 ---
 
