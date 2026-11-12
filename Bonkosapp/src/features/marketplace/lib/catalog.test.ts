@@ -4,7 +4,7 @@ import { CATALOG, image } from "../../../test/fixtures";
 import type { CatalogFilter } from "../../../types/system";
 import { filterFromParams, filterSystems, NO_FILTER, paramsOfFilter, splitByRam } from "./filter";
 import { choicesFor, defaultImage, editionKey, reselect } from "./selection";
-import { firstVariant, groupOf, variantsOf } from "./variants";
+import { editionBeyond, firstVariant, groupOf, variantsOf } from "./variants";
 
 const ALL = summarize(CATALOG);
 const ids = (filter: Partial<CatalogFilter>) =>
@@ -202,5 +202,13 @@ describe("variante proposée d'abord", () => {
       "cinnamon",
       "dvd",
     ]);
+  });
+});
+
+describe("nom d'édition", () => {
+  it("ne garde que ce que le nom de l'éditeur ajoute au bureau", () => {
+    expect(editionBeyond("live xfce", "xfce")).toBeUndefined();
+    expect(editionBeyond("steam gaming mode gnome", "gnome")).toBe("steam gaming mode");
+    expect(editionBeyond("nvidia", "kde")).toBe("nvidia");
   });
 });
