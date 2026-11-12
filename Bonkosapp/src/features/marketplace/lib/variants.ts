@@ -23,6 +23,8 @@ const DESKTOP_ORDER = [
   "lxqt",
   "lxde",
   "budgie",
+  "unity",
+  "ukui",
   "cosmic",
   "pantheon",
   "deepin",
@@ -98,3 +100,11 @@ export const firstVariant = (
   );
   return usable?.image ?? base;
 };
+
+/** What the publisher's edition name adds to the desktop: "live xfce" adds nothing, "nvidia gnome" adds "nvidia". */
+export const editionBeyond = (edition: string, desktop: string): string | undefined =>
+  edition
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word) => word && word !== desktop && word !== "live")
+    .join(" ") || undefined;

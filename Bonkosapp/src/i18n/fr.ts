@@ -145,11 +145,15 @@ export const fr: Dictionary = {
       enlightenment: "Enlightenment",
       i3: "i3",
       sway: "Sway",
+      unity: "Unity",
+      ukui: "UKUI",
       pixel: "Bureau Raspberry Pi",
       none: "Sans interface",
       choice: "Bureau au choix",
     },
     desktopHints: {
+      unity: "bureau historique d'Ubuntu",
+      ukui: "bureau proche de Windows",
       gnome: "bureau complet",
       kde: "bureau complet et très réglable",
       xfce: "bureau léger",
@@ -221,6 +225,17 @@ export const fr: Dictionary = {
       lubuntu: "Saveur officielle d'Ubuntu avec le bureau LXQt, pour les machines modestes.",
       ubuntustudio: "Saveur officielle d'Ubuntu pour la création : son, vidéo, graphisme.",
       "ubuntu-mate": "Saveur officielle d'Ubuntu avec le bureau MATE, classique.",
+      "ubuntu-budgie": "Saveur officielle d'Ubuntu avec le bureau Budgie.",
+      ubuntucinnamon: "Saveur officielle d'Ubuntu avec le bureau Cinnamon.",
+      "ubuntu-unity": "Saveur officielle d'Ubuntu avec le bureau Unity.",
+      ubuntukylin: "Saveur officielle d'Ubuntu pour les utilisateurs chinois, avec le bureau UKUI.",
+      edubuntu: "Saveur officielle d'Ubuntu pour l'école, avec des logiciels éducatifs.",
+      bazzite:
+        "Système fondé sur Fedora et fait pour jouer, Steam prêt ; bureau ou mode jeu de Steam.",
+      cachyos:
+        "Distribution fondée sur Arch et réglée pour la vitesse, avec une édition pour consoles portables.",
+      nobara: "Distribution fondée sur Fedora et réglée pour le jeu et la diffusion en direct.",
+      lakka: "Console de jeux rétro construite sur RetroArch, pour un PC branché à la télévision.",
       debian:
         "Distribution communautaire, base de nombreuses autres. Installateur réseau et images live.",
       linuxmint: "Distribution de bureau fondée sur Ubuntu. Cinnamon, MATE ou Xfce.",

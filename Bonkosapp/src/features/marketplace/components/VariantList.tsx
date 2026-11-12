@@ -1,7 +1,7 @@
 import { useLanguage, useText } from "../../../i18n/I18nProvider";
 import { ramLabel, sizeLabel } from "../../../shared/lib/format";
 import { editionLabel } from "../lib/selection";
-import { GROUPS, type Variant } from "../lib/variants";
+import { editionBeyond, GROUPS, type Variant } from "../lib/variants";
 import styles from "./VariantList.module.css";
 
 export function VariantList({
@@ -63,10 +63,7 @@ function VariantRow({
   const edition = editionLabel(image, familyName, text.standard);
   const title = desktop ?? edition;
   const details = [
-    // "live xfce" under "Xfce" says nothing more; "nvidia" under "COSMIC" does.
-    desktop && image.desktop && !edition.toLowerCase().includes(image.desktop)
-      ? edition
-      : undefined,
+    desktop && image.desktop ? editionBeyond(edition, image.desktop) : undefined,
     image.kind ? text.kinds[image.kind] : undefined,
     memory ? text.specRam(ramLabel(memory.value, language)) : undefined,
     image.size_bytes ? sizeLabel(image.size_bytes, language) : undefined,
