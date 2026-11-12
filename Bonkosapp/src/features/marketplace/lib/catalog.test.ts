@@ -2,7 +2,14 @@ import { describe, expect, it } from "vitest";
 import { recentReleases, summarize, summaryOf } from "../../../shared/lib/catalog";
 import { CATALOG, image } from "../../../test/fixtures";
 import type { CatalogFilter } from "../../../types/system";
-import { filterFromParams, filterSystems, NO_FILTER, paramsOfFilter, splitByRam } from "./filter";
+import {
+  filterFromParams,
+  filterSystems,
+  mediaOf,
+  NO_FILTER,
+  paramsOfFilter,
+  splitByRam,
+} from "./filter";
 import { choicesFor, defaultImage, editionKey, reselect } from "./selection";
 import { editionBeyond, firstVariant, groupOf, variantsOf } from "./variants";
 
@@ -99,6 +106,8 @@ describe("filtres", () => {
       arch: "aarch64",
       ramMb: 2048,
       driveGb: 8,
+      desktop: "",
+      media: "",
     });
     expect(paramsOfFilter(filter)).toEqual({
       q: "pro",
@@ -210,5 +219,43 @@ describe("nom d'édition", () => {
     expect(editionBeyond("live xfce", "xfce")).toBeUndefined();
     expect(editionBeyond("steam gaming mode gnome", "gnome")).toBe("steam gaming mode");
     expect(editionBeyond("nvidia", "kde")).toBe("nvidia");
+  });
+});
+
+describe("bureau, support et archives", () => {
+  const family = { id: "debian", name: "Debian", icon: "icons/debian.png" };
+  const debian = [
+    image("xfce", "debian", "13", { name: "Debian", edition: "live xfce", desktop: "xfce" }),
+    image("gnome", "debian", "13", { name: "Debian", edition: "live gnome", desktop: "gnome" }),
+    image("pi", "debian", "13", { name: "Debian", edition: "pi", desktop: "none", media: "sd" }),
+    image("old", "debian", "9", {
+      name: "Debian",
+      edition: "live xfce",
+      desktop: "xfce",
+      channel: "archive",
+    }),
+  ];
+  const summary = summaryOf(family, debian);
+  const all = summary ? [summary] : [];
+  const kept = (filter: Partial<CatalogFilter>) =>
+    filterSystems(all, { ...NO_FILTER, ...filter }).flatMap((system) =>
+      system.images.map((candidate) => candidate.id),
+    );
+
+  it("ne garde que les images du bureau ou du support demandés", () => {
+    expect(kept({ desktop: "xfce" })).toEqual(["xfce", "old"]);
+    expect(kept({ media: "sd" })).toEqual(["pi"]);
+    expect(kept({ desktop: "kde" })).toEqual([]);
+  });
+
+  it("ne présente jamais une archive comme la version du système", () => {
+    expect(
+      summaryOf(family, [debian[3] ?? named("u26"), debian[0] ?? named("u26")])?.latest.id,
+    ).toBe("xfce");
+  });
+
+  it("déduit le support d'un catalogue qui ne le donne pas", () => {
+    expect(mediaOf(named("u26"))).toBe("usb");
+    expect(mediaOf({ ...named("u26"), usb_boot: false })).toBe("optical");
   });
 });

@@ -27,4 +27,5 @@ export const CATEGORIES: readonly Category[] = [
 ];
 
 export const RAM_CHOICES_MB: readonly number[] = [512, 1024, 2048, 4096, 8192, 16384];
+export const MEDIA_CHOICES = ["usb", "sd", "optical"] as const;
 export const DRIVE_CHOICES_GB: readonly number[] = [2, 4, 8, 16, 32];

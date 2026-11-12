@@ -42,4 +42,8 @@ export type CatalogFilter = {
   ramMb: number;
   /** Size of the drive at hand, in GB; 0 for any. */
   driveGb: number;
+  /** Desktop of the image (`xfce`, `none`); empty for any. */
+  desktop: string;
+  /** `usb`, `sd` or `optical`; empty for any. */
+  media: string;
 };
