@@ -19,8 +19,9 @@ export const compareVersions = (a: string, b: string): number => {
 export const supported = (image: CatalogImage) =>
   image.channel !== "end_of_life" && image.channel !== "archive";
 
-/** Bonk can download and write it: a link and a file that boots from a drive. */
-export const writable = (image: CatalogImage) => Boolean(image.url) && image.usb_boot !== false;
+/** Bonk can download and write it: a link and a file that boots from a drive, never a disc-only image. */
+export const writable = (image: CatalogImage) =>
+  Boolean(image.url) && image.usb_boot !== false && image.media !== "optical";
 
 export const distinct = (values: string[]): string[] => [...new Set(values)].sort();
 
