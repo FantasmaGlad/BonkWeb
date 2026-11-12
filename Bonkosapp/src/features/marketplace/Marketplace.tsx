@@ -4,6 +4,7 @@ import { Breadcrumb } from "../../shared/components/Breadcrumb";
 import { useCatalog } from "../../shared/hooks/useCatalog";
 import { useOsDetection } from "../../shared/hooks/useOsDetection";
 import { architecturesOf, desktopsOf } from "../../shared/lib/catalog";
+import type { Catalog } from "../../types/catalog";
 import { CategoryRail } from "./components/CategoryRail";
 import { SpecFilters } from "./components/SpecFilters";
 import { SystemCard } from "./components/SystemCard";
@@ -18,7 +19,7 @@ export function Marketplace() {
   const { catalog, failed } = useCatalog();
   const machine = useOsDetection();
   const store = useCatalogFilter(catalog);
-  const { filter, systems } = store;
+  const { filter } = store;
   if (catalog && store.opened) {
     return (
       <SystemPage
@@ -31,15 +32,6 @@ export function Marketplace() {
       />
     );
   }
-  const { fitting, unstated } = splitByRam(systems, filter);
-  const card = (system: (typeof systems)[number]) => (
-    <SystemCard
-      key={system.family.id}
-      system={system}
-      params={paramsOfFilter(filter)}
-      onOpen={() => store.open(system.family.id)}
-    />
-  );
   return (
     <>
       <header className={styles.head}>
@@ -53,60 +45,81 @@ export function Marketplace() {
         </p>
       ) : null}
       {catalog ? (
-        <>
-          <div className={styles.tools}>
-            <label className={styles.search}>
-              <span className="visually-hidden">{market.search}</span>
-              <input
-                type="search"
-                value={filter.query}
-                placeholder={market.searchPlaceholder}
-                autoComplete="off"
-                onChange={(event) => store.setFilter({ ...filter, query: event.target.value })}
-              />
-            </label>
-            <SpecFilters
-              architectures={architecturesOf(catalog)}
-              desktops={desktopsOf(catalog)}
-              filter={filter}
-              onChange={store.setFilter}
-            />
-          </div>
-          <CategoryRail systems={store.all} filter={filter} onChange={store.setFilter} />
-          <p className={styles.count} aria-live="polite">
-            {text.common.stats(
-              systems.length,
-              systems.reduce((total, system) => total + system.images.length, 0),
-            )}
-          </p>
-          {fitting.length ? <ul className={styles.grid}>{fitting.map(card)}</ul> : null}
-          {unstated.length ? (
-            <section aria-labelledby="unstated-title">
-              <h2 id="unstated-title" className={styles.group}>
-                {market.ramUnstated}
-              </h2>
-              <ul className={styles.grid}>{unstated.map(card)}</ul>
-            </section>
-          ) : null}
-          {systems.length ? null : (
-            <p className={styles.empty}>
-              {market.noMatch}{" "}
-              {isFiltered(filter) ? (
-                <button type="button" onClick={store.clear}>
-                  {market.clear}
-                </button>
-              ) : null}
-            </p>
-          )}
-          {store.openId ? (
-            <p role="alert" className="notice">
-              {market.unknownSystem}
-            </p>
-          ) : null}
-        </>
+        <Results catalog={catalog} store={store} />
       ) : failed ? null : (
         <div className={styles.loading} aria-hidden="true" />
       )}
+    </>
+  );
+}
+
+type Store = ReturnType<typeof useCatalogFilter>;
+type System = Store["systems"][number];
+
+function Results({ catalog, store }: { catalog: Catalog; store: Store }) {
+  const text = useText();
+  const market = text.market;
+  const { filter, systems } = store;
+  const { fitting, unstated } = splitByRam(systems, filter);
+  const card = (system: System) => (
+    <SystemCard
+      key={system.family.id}
+      system={system}
+      params={paramsOfFilter(filter)}
+      onOpen={() => store.open(system.family.id)}
+    />
+  );
+  return (
+    <>
+      <div className={styles.tools}>
+        <label className={styles.search}>
+          <span className="visually-hidden">{market.search}</span>
+          <input
+            type="search"
+            value={filter.query}
+            placeholder={market.searchPlaceholder}
+            autoComplete="off"
+            onChange={(event) => store.setFilter({ ...filter, query: event.target.value })}
+          />
+        </label>
+        <SpecFilters
+          architectures={architecturesOf(catalog)}
+          desktops={desktopsOf(catalog)}
+          filter={filter}
+          onChange={store.setFilter}
+        />
+      </div>
+      <CategoryRail systems={store.all} filter={filter} onChange={store.setFilter} />
+      <p className={styles.count} aria-live="polite">
+        {text.common.stats(
+          systems.length,
+          systems.reduce((total, system) => total + system.images.length, 0),
+        )}
+      </p>
+      {fitting.length ? <ul className={styles.grid}>{fitting.map(card)}</ul> : null}
+      {unstated.length ? (
+        <section aria-labelledby="unstated-title">
+          <h2 id="unstated-title" className={styles.group}>
+            {market.ramUnstated}
+          </h2>
+          <ul className={styles.grid}>{unstated.map(card)}</ul>
+        </section>
+      ) : null}
+      {systems.length ? null : (
+        <p className={styles.empty}>
+          {market.noMatch}{" "}
+          {isFiltered(filter) ? (
+            <button type="button" onClick={store.clear}>
+              {market.clear}
+            </button>
+          ) : null}
+        </p>
+      )}
+      {store.openId ? (
+        <p role="alert" className="notice">
+          {market.unknownSystem}
+        </p>
+      ) : null}
     </>
   );
 }
