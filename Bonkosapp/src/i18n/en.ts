@@ -1,9 +1,17 @@
 export const en = {
   titles: {
-    home: "Bonk",
+    home: "Bonk: write bootable images to USB drives",
     marketplace: "Bonk: systems",
     download: "Bonk: download and commands",
   },
+  descriptions: {
+    home: "Bonk writes Linux, BSD and Windows installation images to USB drives, from each publisher's own files checked by SHA-256. MIT licence; Linux, Windows, macOS and Android.",
+    marketplace: (systems: number, images: number) =>
+      `Official links and SHA-256 hashes of ${images} images of ${systems} systems, read every day from each publisher.`,
+    download:
+      "Bonk packages for Linux, Windows, macOS and Android, and the command-line reference.",
+  },
+  breadcrumb: "Breadcrumb",
   skip: "Skip to content",
   nav: {
     label: "Bonk",
@@ -113,7 +121,6 @@ export const en = {
       windows: "Windows",
       other: "Other systems",
     },
-    back: "All systems",
     liveNote: "Live: starts from the drive to try the system, then installs it if you wish.",
     variants: "Variants",
     chosen: "Chosen variant",

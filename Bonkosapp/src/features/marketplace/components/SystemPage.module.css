@@ -2,23 +2,6 @@
   padding: 1rem 0 2rem;
 }
 
-.back {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--muted);
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  cursor: pointer;
-}
-
-.back:hover {
-  color: var(--accent);
-}
-
 .head {
   display: flex;
   align-items: flex-start;

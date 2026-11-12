@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://bonk-os.app/sitemap.xml
