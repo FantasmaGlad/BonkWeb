@@ -47,6 +47,7 @@ export const fr: Dictionary = {
       real: "Essayé sur de vraies clés.",
       ci: "Éprouvé en intégration continue, pas encore sur une vraie clé.",
       beta: "Bêta.",
+      untested: "Pas encore essayé sur cet appareil.",
     },
   },
   home: {
@@ -344,9 +345,12 @@ export const fr: Dictionary = {
     cliScriptText: "Relancez-le pour mettre à jour.",
     unix: "Linux, macOS",
     windows: "Windows (PowerShell)",
+    termux: "Termux (Android)",
+    termuxText:
+      "Sans root, par termux-usb : l'application Termux:API vient de la même source que Termux (F-Droid ou GitHub). Pas encore essayé sur un téléphone.",
     cliPackages: "Paquet bonk-cli",
     cliSwitch:
-      "bonk et bonk-cli installent la même commande et ne s'installent pas ensemble : retirez l'un avant d'installer l'autre.",
+      "bonk et bonk-cli installent la même commande. APT, DNF, Zypper et pacman remplacent l'un par l'autre ; avec Homebrew et Scoop, retirez l'autre d'abord.",
     cliArchives: "Archives",
     commandsText: "bonk seul ouvre la fenêtre. Le même travail se fait depuis un terminal.",
     flowTitle: "D'une clé vierge à une clé écrite",

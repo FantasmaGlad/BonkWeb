@@ -46,6 +46,7 @@ export const en = {
       real: "Tried on real drives.",
       ci: "Tested in continuous integration, not yet on a real drive.",
       beta: "Beta.",
+      untested: "Not yet tried on this device.",
     },
   },
   home: {
@@ -320,9 +321,12 @@ export const en = {
     cliScriptText: "Run it again to update.",
     unix: "Linux, macOS",
     windows: "Windows (PowerShell)",
+    termux: "Termux (Android)",
+    termuxText:
+      "Without root, through termux-usb: the Termux:API app comes from the same source as Termux (F-Droid or GitHub). Not yet tried on a phone.",
     cliPackages: "bonk-cli package",
     cliSwitch:
-      "bonk and bonk-cli install the same command and cannot be installed together: remove one before installing the other.",
+      "bonk and bonk-cli install the same command. APT, DNF, Zypper and pacman replace one with the other; with Homebrew and Scoop, remove the other first.",
     cliArchives: "Archives",
     commandsText: "Run bonk alone to open the window. The same work is done from a terminal.",
     flowTitle: "From a blank drive to a written one",

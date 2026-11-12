@@ -9,6 +9,8 @@ import { BuildLinks } from "./BuildLinks";
 import styles from "./CliOnly.module.css";
 
 /** Three ways to the windowless build: the script, the bonk-cli package, the archives. */
+const TERMUX = CLIS.some((platform) => platform.id === "cli-termux");
+
 export function CliOnly({ arch }: { arch: Arch | undefined }) {
   const text = useText().install;
   return (
@@ -24,6 +26,15 @@ export function CliOnly({ arch }: { arch: Arch | undefined }) {
             </dd>
           </div>
         ))}
+        {TERMUX ? (
+          <div>
+            <dt>{text.termux}</dt>
+            <dd>
+              <p className={styles.note}>{text.termuxText}</p>
+              <CommandBlock value={SCRIPTS.termux.install} />
+            </dd>
+          </div>
+        ) : null}
       </dl>
       <h3 className={styles.title}>{text.cliPackages}</h3>
       <p className={styles.note}>{text.cliSwitch}</p>
@@ -43,7 +54,11 @@ export function CliOnly({ arch }: { arch: Arch | undefined }) {
           <BuildLinks
             key={platform.id}
             platform={platform}
-            name={OS_GROUPS.find((group) => group.os === platform.os)?.name ?? platform.id}
+            name={
+              platform.name ??
+              OS_GROUPS.find((group) => group.os === platform.os)?.name ??
+              platform.id
+            }
             arch={arch}
           />
         ))}
