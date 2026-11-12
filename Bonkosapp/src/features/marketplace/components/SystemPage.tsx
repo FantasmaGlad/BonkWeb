@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { PATHS } from "../../../app/routes";
 import { logoOf } from "../../../data/catalogService";
 import { useLanguage, useText } from "../../../i18n/I18nProvider";
+import { Breadcrumb } from "../../../shared/components/Breadcrumb";
 import { Logo } from "../../../shared/components/Logo";
 import { ramLabel } from "../../../shared/lib/format";
 import type { SystemSummary, UseId } from "../../../types/system";
@@ -25,7 +27,7 @@ export function SystemPage({
   onSelect: (image: string) => void;
   onBack: () => void;
 }) {
-  const text = useText().market;
+  const { market: text, nav } = useText();
   const { family } = system;
   const start = imageId || firstVariant(family, system.images, preferredArch)?.id || "";
   const selection = useImageSelection(system.images, start, preferredArch, onSelect);
@@ -34,9 +36,20 @@ export function SystemPage({
   }, []);
   return (
     <article className={styles.page}>
-      <button type="button" className={styles.back} onClick={onBack}>
-        {text.back}
-      </button>
+      <Breadcrumb
+        trail={[
+          { label: "Bonk", to: PATHS.home },
+          {
+            label: nav.systems,
+            to: PATHS.marketplace,
+            onFollow: (event) => {
+              event.preventDefault();
+              onBack();
+            },
+          },
+          { label: family.name },
+        ]}
+      />
       <SystemHead system={system} />
       {selection ? (
         <div className={styles.columns}>

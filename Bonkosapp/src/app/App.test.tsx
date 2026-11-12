@@ -184,7 +184,9 @@ describe("systèmes", () => {
         .getAttribute("aria-pressed"),
     ).toBe("true");
 
-    fireEvent.click(within(page).getByRole("button", { name: "All systems" }));
+    const trail = within(page).getByRole("navigation", { name: "Breadcrumb" });
+    expect(within(trail).getByText("Ubuntu").getAttribute("aria-current")).toBe("page");
+    fireEvent.click(within(trail).getByRole("link", { name: "Systems" }));
     expect(screen.queryByRole("article")).toBeNull();
     expect(location.search).toBe("");
   });

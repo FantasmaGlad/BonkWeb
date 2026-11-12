@@ -1,0 +1,22 @@
+.trail ol {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  list-style: none;
+}
+
+.trail li + li::before {
+  padding: 0 0.5rem;
+  content: "/";
+}
+
+.trail a {
+  color: var(--muted);
+}
+
+.trail a:hover {
+  color: var(--accent);
+}

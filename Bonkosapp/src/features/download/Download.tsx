@@ -1,7 +1,8 @@
-import { COMMANDS_ANCHOR } from "../../app/routes";
+import { COMMANDS_ANCHOR, PATHS } from "../../app/routes";
 import { RELEASES } from "../../data/links";
 import { RELEASE } from "../../data/releases";
 import { useLanguage, useText } from "../../i18n/I18nProvider";
+import { Breadcrumb } from "../../shared/components/Breadcrumb";
 import { FirstScreen } from "../../shared/components/FirstScreen";
 import { useOsDetection } from "../../shared/hooks/useOsDetection";
 import { dateLabel } from "../../shared/lib/format";
@@ -28,6 +29,12 @@ export function Download() {
   return (
     <>
       <FirstScreen labelledBy="download-title" next={ANCHORS.apps} nextLabel={text.sections.apps}>
+        <Breadcrumb
+          trail={[
+            { label: "Bonk", to: PATHS.home },
+            { label: `${all.nav.download}${all.nav.downloadMore}` },
+          ]}
+        />
         <h1 id="download-title">{text.title}</h1>
         <p className="lead">
           {text.intro(RELEASE.version, dateLabel(RELEASE.published, language))}{" "}

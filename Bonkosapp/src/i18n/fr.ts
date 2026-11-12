@@ -2,10 +2,17 @@ import type { Dictionary } from "./en";
 
 export const fr: Dictionary = {
   titles: {
-    home: "Bonk",
+    home: "Bonk : écrire des images amorçables sur clé USB",
     marketplace: "Bonk : systèmes",
     download: "Bonk : téléchargement et commandes",
   },
+  descriptions: {
+    home: "Bonk écrit sur clé USB les images d'installation Linux, BSD et Windows, depuis les fichiers de chaque éditeur contrôlés par SHA-256. Licence MIT ; Linux, Windows, macOS et Android.",
+    marketplace: (systems: number, images: number) =>
+      `Liens officiels et empreintes SHA-256 de ${images} images de ${systems} systèmes, relus chaque jour chez chaque éditeur.`,
+    download: "Paquets de Bonk pour Linux, Windows, macOS et Android, et référence des commandes.",
+  },
+  breadcrumb: "Fil d'Ariane",
   skip: "Aller au contenu",
   nav: {
     label: "Bonk",
@@ -118,7 +125,6 @@ export const fr: Dictionary = {
       windows: "Windows",
       other: "Autres systèmes",
     },
-    back: "Tous les systèmes",
     liveNote:
       "Live : démarre depuis la clé pour essayer le système, puis l'installe si vous le voulez.",
     variants: "Variantes",

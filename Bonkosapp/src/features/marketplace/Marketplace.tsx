@@ -1,4 +1,6 @@
+import { PATHS } from "../../app/routes";
 import { useText } from "../../i18n/I18nProvider";
+import { Breadcrumb } from "../../shared/components/Breadcrumb";
 import { useCatalog } from "../../shared/hooks/useCatalog";
 import { useOsDetection } from "../../shared/hooks/useOsDetection";
 import { architecturesOf, desktopsOf } from "../../shared/lib/catalog";
@@ -41,6 +43,7 @@ export function Marketplace() {
   return (
     <>
       <header className={styles.head}>
+        <Breadcrumb trail={[{ label: "Bonk", to: PATHS.home }, { label: text.nav.systems }]} />
         <h1>{market.title}</h1>
         <p className="lead">{market.intro}</p>
       </header>
