@@ -275,6 +275,46 @@ export const fr: Dictionary = {
       windows: "Images d'évaluation et de vente de Microsoft. Bonk dispose la clé d'installation.",
       templeos: "Système d'exploitation amateur de Terry A. Davis.",
       haiku: "Système open source inspiré de BeOS.",
+      mxlinux: "Distribution de bureau fondée sur Debian stable. Xfce, KDE Plasma ou Fluxbox.",
+      linuxlite: "Distribution fondée sur Ubuntu LTS avec le bureau Xfce, pour qui débute.",
+      kdeneon: "Image de KDE fondée sur Ubuntu LTS, avec les dernières versions de Plasma.",
+      deepin: "Distribution venue de Chine, avec son propre bureau, DDE.",
+      solus:
+        "Distribution indépendante en publication continue encadrée. Budgie, GNOME, KDE Plasma ou Xfce.",
+      mageia:
+        "Distribution communautaire issue de Mandriva. Images live GNOME, KDE Plasma ou Xfce, et installateurs.",
+      openmandriva:
+        "Distribution communautaire issue de Mandriva : Rock aux versions fixes, ROME en publication continue.",
+      peppermint: "Distribution légère avec le bureau Xfce, fondée sur Debian ou sur Devuan.",
+      bodhi: "Distribution légère fondée sur Ubuntu, avec le bureau Moksha, issu d'Enlightenment.",
+      q4os: "Distribution fondée sur Debian, avec KDE Plasma ou Trinity pour les machines anciennes.",
+      sparky: "Distribution fondée sur Debian. Xfce, KDE Plasma, LXQt, MATE ou sans bureau.",
+      antix: "Distribution légère fondée sur Debian, sans systemd, pour les très vieux PC.",
+      trisquel: "Distribution fondée sur Ubuntu, composée uniquement de logiciels libres.",
+      devuan: "Debian sans systemd. Images live, installateurs et image minimale.",
+      tuxedo: "Distribution de TUXEDO Computers fondée sur Ubuntu, avec KDE Plasma.",
+      vanillaos: "Distribution immuable fondée sur Debian, avec le bureau GNOME.",
+      garuda: "Distribution fondée sur Arch, avec de nombreux bureaux et une édition pour le jeu.",
+      ultramarine: "Distribution fondée sur Fedora. Budgie, GNOME, KDE Plasma ou Xfce.",
+      rhino:
+        "Distribution en publication continue fondée sur Ubuntu, avec le bureau Unicorn construit sur Xfce.",
+      nitrux:
+        "Distribution fondée sur Debian, sans systemd, avec une image pour les cartes NVIDIA.",
+      slackware: "La plus ancienne distribution encore maintenue, installée en mode texte.",
+      puppy: "Distribution très légère qui fonctionne entièrement en mémoire vive.",
+      centos: "Distribution de Red Hat qui précède RHEL : ce qui deviendra la prochaine version.",
+      oraclelinux:
+        "Distribution d'entreprise d'Oracle, compatible avec RHEL, avec le noyau UEK au choix.",
+      openeuler: "Distribution d'entreprise de la fondation OpenAtom, lancée par Huawei.",
+      netbsd: "Système BSD conçu pour la portabilité, sur de nombreuses architectures.",
+      ghostbsd: "Système de bureau fondé sur FreeBSD, avec MATE ou Xfce.",
+      dragonfly: "Système BSD issu de FreeBSD, avec le système de fichiers HAMMER2.",
+      systemrescue: "Système live de dépannage : partitions, sauvegarde, récupération de données.",
+      clonezilla: "Système live pour cloner et sauvegarder des disques et des partitions.",
+      gparted: "Système live pour modifier les partitions d'un disque avec GParted.",
+      rescuezilla:
+        "Système live graphique pour sauvegarder, restaurer et cloner des disques, compatible avec Clonezilla.",
+      grml: "Système live fondé sur Debian, pour le dépannage en ligne de commande.",
     },
   },
   install: {
