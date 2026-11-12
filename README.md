@@ -26,7 +26,7 @@
 | :--- | :--- |
 | Website | <https://bonk-os.app> |
 | <img src="docs/icons/linux.svg" width="20" height="20" valign="middle" alt="Linux"> Package repositories | <https://packages.bonk-os.app> |
-| Image catalog | <https://catalog.bonk-os.app/v1/catalog.json> |
+| Image catalog | <https://catalog.bonk-os.app/v2/catalog.json> |
 | Command reference | <https://bonk-os.app/reference/> |
 | Security policy | <https://security.bonk-os.app> |
 
