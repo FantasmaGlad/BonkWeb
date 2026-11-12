@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { bonkLink } from "../features/marketplace/hooks/useBonkLink";
 import { writeCommand } from "../features/marketplace/hooks/useCommandBuilder";
+import { compareVersions } from "../shared/lib/catalog";
 import { LOCAL_LOGOS } from "./catalogService";
 import { CATEGORIES } from "./categories";
 import {
@@ -21,7 +22,11 @@ describe("dernière version", () => {
   // A declared file missing from the release is hidden until published (the next version's builds).
   it("chaque plateforme déclarée a au moins un fichier publié, sous son nom publié", () => {
     expect(APPS.map((platform) => platform.id)).toEqual(APP_PLATFORMS.map(({ id }) => id));
-    expect(CLIS.map((platform) => platform.id)).toEqual(CLI_PLATFORMS.map(({ id }) => id));
+    const due = ({ from }: { from?: string }) =>
+      !from || compareVersions(RELEASE.version, from) <= 0;
+    expect(CLIS.map((platform) => platform.id)).toEqual(
+      CLI_PLATFORMS.filter(due).map(({ id }) => id),
+    );
     for (const { builds } of [...APPS, ...CLIS]) {
       for (const build of builds) {
         expect(build.url).toBe(`${RELEASE.base}/${build.name}`);

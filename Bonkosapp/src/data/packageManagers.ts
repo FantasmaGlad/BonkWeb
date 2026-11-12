@@ -3,23 +3,25 @@ import { PACKAGES as URL } from "./links";
 
 const KEY = "8DE680FFBE475B663E8B019A757866E34D67014B";
 
-export const PACKAGE_MANAGERS: readonly PackageManager[] = [
-  {
-    id: "apt",
-    name: "APT",
-    scope: "Debian, Ubuntu, Mint",
-    os: "linux",
-    distros: ["debian"],
-    status: "real",
-    install: `sudo install -d /etc/apt/keyrings
+const APT: PackageManager = {
+  id: "apt",
+  name: "APT",
+  scope: "Debian, Ubuntu, Mint",
+  os: "linux",
+  distros: ["debian"],
+  status: "real",
+  install: `sudo install -d /etc/apt/keyrings
 curl -fsSL ${URL}/bonk.gpg | sudo tee /etc/apt/keyrings/bonk.gpg > /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/bonk.gpg] ${URL}/debian stable main" | sudo tee /etc/apt/sources.list.d/bonk.list
 sudo apt update
 sudo apt install bonk`,
-    cli: "sudo apt install bonk-cli",
-    update: "sudo apt update && sudo apt upgrade bonk",
-    remove: "sudo apt remove bonk",
-  },
+  cli: "sudo apt install bonk-cli",
+  update: "sudo apt update && sudo apt upgrade bonk",
+  remove: "sudo apt remove bonk",
+};
+
+export const PACKAGE_MANAGERS: readonly PackageManager[] = [
+  APT,
   {
     id: "dnf",
     name: "DNF",
@@ -85,9 +87,18 @@ sudo pacman -Sy bonk`,
     update: `scoop uninstall bonk; scoop install ${URL}/scoop/bonk.json`,
     remove: "scoop uninstall bonk",
   },
+  {
+    ...APT,
+    id: "chromebook",
+    name: "Chromebook",
+    scope: "Crostini (Debian)",
+    distros: [],
+    status: "untested",
+  },
 ];
 
 export const SCRIPTS = {
   unix: { install: `curl -fsSL ${URL}/install.sh | sh` },
   windows: { install: `irm ${URL}/install.ps1 | iex` },
+  termux: { install: `pkg install termux-api\ncurl -fsSL ${URL}/install.sh | sh` },
 } as const;

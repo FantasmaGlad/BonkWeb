@@ -118,6 +118,17 @@ export const CLI_PLATFORMS: readonly PlatformDefinition[] = [
       { arch: "aarch64", format: ".tar.gz", file: "bonk-cli-{version}-macos-aarch64.tar.gz" },
     ],
   },
+  {
+    id: "cli-termux",
+    os: "android",
+    name: "Termux",
+    from: "0.0.6",
+    logos: ["android"],
+    builds: [
+      { arch: "aarch64", format: ".tar.gz", file: "bonk-cli-{version}-android-aarch64.tar.gz" },
+      { arch: "x86_64", format: ".tar.gz", file: "bonk-cli-{version}-android-x86_64.tar.gz" },
+    ],
+  },
 ];
 
 /** First Bonk version that registers the bonk:// scheme; null while no release does. */

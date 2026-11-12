@@ -12,8 +12,8 @@ export type Release = {
 
 export type BuildArch = Arch | "universal";
 
-/** real: tried on a physical drive; ci: proven on virtual disks only. */
-export type Status = "real" | "ci" | "beta";
+/** real: tried on a physical drive; ci: proven on virtual disks only; untested: never run on that device. */
+export type Status = "real" | "ci" | "beta" | "untested";
 
 export type BuildTemplate = { arch: BuildArch; format: string; file: string };
 
@@ -24,6 +24,8 @@ export type PlatformDefinition = {
   logos: readonly string[];
   /** Linux package families the platform serves. */
   distros?: readonly Distro[];
+  /** First release that carries it: absent from older ones without being an error. */
+  from?: string;
   builds: readonly BuildTemplate[];
 };
 
