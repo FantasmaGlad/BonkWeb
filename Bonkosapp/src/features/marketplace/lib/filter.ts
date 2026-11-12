@@ -1,6 +1,7 @@
 import { CATEGORIES } from "../../../data/categories";
 import { PUBLISHER_DRIVES } from "../../../data/systems";
 import { summaryOf } from "../../../shared/lib/catalog";
+import type { CatalogImage } from "../../../types/catalog";
 import type { CatalogFilter, CategoryId, SystemSummary } from "../../../types/system";
 
 /** Accents and case ignored, so "elementary" finds "Elementary". */
@@ -16,7 +17,19 @@ export const NO_FILTER: CatalogFilter = {
   arch: "",
   ramMb: 0,
   driveGb: 0,
+  desktop: "",
+  media: "",
 };
+
+/** What a file is written to; a catalog without the field says so through `usb_boot`. */
+export const mediaOf = (image: CatalogImage): string =>
+  image.media ?? (image.usb_boot === false ? "optical" : "usb");
+
+const imageFits = (image: CatalogImage, filter: CatalogFilter): boolean =>
+  (!filter.arch || image.arch === filter.arch) &&
+  (!filter.desktop || image.desktop === filter.desktop) &&
+  (!filter.media || mediaOf(image) === filter.media) &&
+  (!filter.driveGb || (image.size_bytes !== undefined && image.size_bytes <= filter.driveGb * 1e9));
 
 export const isFiltered = (filter: CatalogFilter): boolean =>
   Object.entries(NO_FILTER).some(([key, value]) => filter[key as keyof CatalogFilter] !== value);
@@ -47,12 +60,7 @@ export const filterSystems = (
     if (!words.every((word) => haystack.includes(word))) {
       return [];
     }
-    const images = system.images.filter(
-      (image) =>
-        (!filter.arch || image.arch === filter.arch) &&
-        (!filter.driveGb ||
-          (image.size_bytes !== undefined && image.size_bytes <= filter.driveGb * 1e9)),
-    );
+    const images = system.images.filter((image) => imageFits(image, filter));
     return summaryOf(family, images) ?? [];
   });
 };
@@ -81,6 +89,8 @@ export const filterFromParams = (params: URLSearchParams): CatalogFilter => {
     arch: params.get("arch") ?? "",
     ramMb: Number(params.get("ram")) || 0,
     driveGb: Number(params.get("drive")) || 0,
+    desktop: params.get("desktop") ?? "",
+    media: params.get("media") ?? "",
   };
 };
 
@@ -90,4 +100,6 @@ export const paramsOfFilter = (filter: CatalogFilter): Record<string, string | u
   arch: filter.arch || undefined,
   ram: filter.ramMb ? String(filter.ramMb) : undefined,
   drive: filter.driveGb ? String(filter.driveGb) : undefined,
+  desktop: filter.desktop || undefined,
+  media: filter.media || undefined,
 });

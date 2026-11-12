@@ -16,7 +16,8 @@ export const compareVersions = (a: string, b: string): number => {
   return 0;
 };
 
-export const supported = (image: CatalogImage) => image.channel !== "end_of_life";
+export const supported = (image: CatalogImage) =>
+  image.channel !== "end_of_life" && image.channel !== "archive";
 
 /** Bonk can download and write it: a link and a file that boots from a drive. */
 export const writable = (image: CatalogImage) => Boolean(image.url) && image.usb_boot !== false;
@@ -81,6 +82,10 @@ export const summarize = (catalog: Catalog): SystemSummary[] =>
   catalog.families
     .flatMap((family) => summaryOf(family, imagesOf(catalog, family)) ?? [])
     .sort((a, b) => a.family.name.localeCompare(b.family.name));
+
+/** Desktops present in the catalog, in a stable order. */
+export const desktopsOf = (catalog: Catalog): string[] =>
+  distinct(catalog.images.flatMap((image) => image.desktop ?? []));
 
 export const architecturesOf = (catalog: Catalog): string[] =>
   distinct(catalog.images.map((image) => image.arch));

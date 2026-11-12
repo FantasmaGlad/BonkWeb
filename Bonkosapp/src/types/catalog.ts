@@ -18,7 +18,8 @@ export type CatalogImage = {
   name: string;
   version: string;
   edition?: string;
-  channel: "lts" | "stable" | "end_of_life";
+  /** `archive`: an older version served by the publisher's own archive. */
+  channel: "lts" | "stable" | "end_of_life" | "archive";
   released: string;
   arch: string;
   note?: string;

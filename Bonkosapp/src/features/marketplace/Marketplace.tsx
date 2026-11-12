@@ -1,7 +1,7 @@
 import { useText } from "../../i18n/I18nProvider";
 import { useCatalog } from "../../shared/hooks/useCatalog";
 import { useOsDetection } from "../../shared/hooks/useOsDetection";
-import { architecturesOf } from "../../shared/lib/catalog";
+import { architecturesOf, desktopsOf } from "../../shared/lib/catalog";
 import { CategoryRail } from "./components/CategoryRail";
 import { SpecFilters } from "./components/SpecFilters";
 import { SystemCard } from "./components/SystemCard";
@@ -64,6 +64,7 @@ export function Marketplace() {
             </label>
             <SpecFilters
               architectures={architecturesOf(catalog)}
+              desktops={desktopsOf(catalog)}
               filter={filter}
               onChange={store.setFilter}
             />
