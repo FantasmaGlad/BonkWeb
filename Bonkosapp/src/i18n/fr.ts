@@ -273,6 +273,11 @@ export const fr: Dictionary = {
       gentoo: "Distribution compilée depuis les sources. Image d'installation minimale.",
       proxmox: "Plateforme de virtualisation fondée sur Debian, avec KVM et LXC.",
       truenas: "Système de stockage en réseau construit sur ZFS.",
+      "proxmox-backup":
+        "Serveur de sauvegarde des machines virtuelles et conteneurs Proxmox, avec déduplication.",
+      xcpng: "Plateforme de virtualisation fondée sur l'hyperviseur Xen.",
+      openwrt: "Système de routeur et d'équipement réseau, ici pour machines x86_64.",
+      ipfire: "Système de pare-feu et de routeur, pour machines x86_64 et ARM64.",
       freebsd: "Système BSD pour serveurs, postes de travail et embarqué.",
       openbsd: "Système BSD centré sur la sécurité et la rigueur du code.",
       windows: "Images d'évaluation et de vente de Microsoft. Bonk dispose la clé d'installation.",
