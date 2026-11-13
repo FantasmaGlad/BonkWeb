@@ -264,6 +264,8 @@ export const fr: Dictionary = {
       kali: "Distribution fondée sur Debian, pour les tests d'intrusion.",
       fedora:
         "Distribution communautaire soutenue par Red Hat. Workstation (GNOME), KDE et Server.",
+      "fedora-coreos":
+        "Système à mise à jour automatique pour faire tourner des conteneurs, issu de Fedora.",
       almalinux: "Distribution d'entreprise communautaire, compatible avec RHEL.",
       rockylinux: "Distribution d'entreprise communautaire, compatible avec RHEL.",
       arch: "Distribution en publication continue, installée en ligne de commande.",
@@ -281,6 +283,9 @@ export const fr: Dictionary = {
       xcpng: "Plateforme de virtualisation fondée sur l'hyperviseur Xen.",
       openwrt: "Système de routeur et d'équipement réseau, ici pour machines x86_64.",
       ipfire: "Système de pare-feu et de routeur, pour machines x86_64 et ARM64.",
+      talos: "Système minimal dédié à Kubernetes, administré par une API, sans shell.",
+      yunohost:
+        "Système fondé sur Debian pour héberger des services web chez soi, administré depuis une interface web.",
       freebsd: "Système BSD pour serveurs, postes de travail et embarqué.",
       openbsd: "Système BSD centré sur la sécurité et la rigueur du code.",
       windows: "Images d'évaluation et de vente de Microsoft. Bonk dispose la clé d'installation.",

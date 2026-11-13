@@ -241,6 +241,7 @@ export const en = {
       raspios: "Debian-based system for Raspberry Pi boards.",
       kali: "Debian-based distribution for penetration testing.",
       fedora: "Community distribution sponsored by Red Hat. Workstation (GNOME), KDE and Server.",
+      "fedora-coreos": "Automatically updating system for running containers, from Fedora.",
       almalinux: "Community enterprise distribution, compatible with RHEL.",
       rockylinux: "Community enterprise distribution, compatible with RHEL.",
       arch: "Rolling-release distribution, installed from the command line.",
@@ -258,6 +259,9 @@ export const en = {
       xcpng: "Virtualisation platform based on the Xen hypervisor.",
       openwrt: "Router and network appliance system, here for x86_64 machines.",
       ipfire: "Firewall and router system, for x86_64 and ARM64 machines.",
+      talos: "Minimal system dedicated to Kubernetes, managed through an API, without a shell.",
+      yunohost:
+        "Debian-based system for hosting web services at home, managed from a web interface.",
       freebsd: "BSD operating system for servers, desktops and embedded use.",
       openbsd: "BSD operating system centred on security and correctness.",
       windows: "Evaluation and retail images from Microsoft. Bonk lays out the installation drive.",
