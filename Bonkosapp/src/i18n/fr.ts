@@ -203,6 +203,8 @@ export const fr: Dictionary = {
     version: "Version",
     standard: "Standard",
     openInBonk: "Ouvrir dans Bonk",
+    linkUntested:
+      "Demande Bonk 0.0.6 ou plus récent. Pas encore essayé depuis un navigateur sous Windows, macOS et Android.",
     getBonk: "Bonk n'est pas installé ? L'obtenir",
     needsBonk: "Obtenir Bonk pour l'écrire",
     downloadImage: "Télécharger l'image",

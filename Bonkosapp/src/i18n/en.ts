@@ -198,6 +198,8 @@ export const en = {
     version: "Version",
     standard: "Standard",
     openInBonk: "Open in Bonk",
+    linkUntested:
+      "Needs Bonk 0.0.6 or later. Not yet tried from a browser on Windows, macOS and Android.",
     getBonk: "Bonk is not installed? Get it",
     needsBonk: "Get Bonk to write it",
     downloadImage: "Download the image",

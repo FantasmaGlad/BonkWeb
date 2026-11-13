@@ -94,9 +94,10 @@ describe("commandes", () => {
 });
 
 describe("lien bonk://", () => {
-  it("n'existe pas tant qu'aucune version publiée ne gère le schéma", () => {
-    expect(DEEP_LINK.since).toBeNull();
+  it("apparaît avec la 0.0.6, la première version qui gère le schéma", () => {
+    expect(DEEP_LINK.since).toBe("0.0.6");
     expect(bonkLink("mint", "0.0.5", DEEP_LINK)).toBeUndefined();
+    expect(bonkLink("mint", "0.0.6", DEEP_LINK)).toBe("bonk://install/mint");
   });
 
   it("apparaît à partir de la version qui le déclare", () => {
