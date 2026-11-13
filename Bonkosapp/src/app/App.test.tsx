@@ -2,7 +2,9 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import axe from "axe-core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PACKAGE_MANAGERS } from "../data/packageManagers";
+import { DEEP_LINK } from "../data/platforms";
 import { APPS, CLIS, RELEASE } from "../data/releases";
+import { bonkLink } from "../features/marketplace/hooks/useBonkLink";
 import { browseAs, serveCatalog, UBUNTU_FIREFOX } from "../test/fixtures";
 import { App } from "./App";
 
@@ -166,7 +168,13 @@ describe("systèmes", () => {
     expect(read()).toContain("bonk disk write <DISK> --image u26 --yes");
     expect(read()).toContain("6,482,409,472 bytes (6.5 GB)");
     expect(within(page).getByRole("link", { name: /^Download the image/ })).toBeTruthy();
-    expect(within(page).queryByRole("link", { name: "Open in Bonk" })).toBeNull();
+    const button = within(page).queryByRole("link", { name: "Open in Bonk" });
+    if (bonkLink("u26", RELEASE.version, DEEP_LINK)) {
+      expect(button?.getAttribute("href")).toBe("bonk://install/u26");
+      expect(read()).toContain("Not yet tried from a browser");
+    } else {
+      expect(button).toBeNull();
+    }
     expect(await violations(container)).toEqual([]);
 
     fireEvent.change(within(page).getByRole("combobox", { name: "Architecture" }), {
