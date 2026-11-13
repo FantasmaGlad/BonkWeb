@@ -274,6 +274,10 @@ export const fr: Dictionary = {
       artix: "Système fondé sur Arch sans systemd, avec OpenRC, runit, s6 ou dinit.",
       caine:
         "Système live fondé sur Ubuntu pour l'analyse forensique, disques gardés en lecture seule.",
+      turnkey:
+        "Base de serveur fondée sur Debian, d'où TurnKey tire ses applications prêtes à l'emploi.",
+      freedombox:
+        "Serveur personnel fondé sur Debian, pour héberger ses propres services chez soi.",
       manjaro: "Distribution fondée sur Arch, avec un installateur graphique. KDE, GNOME ou Xfce.",
       endeavouros: "Distribution fondée sur Arch, avec un installateur graphique.",
       opensuse: "Tumbleweed, en publication continue, et Leap, aux versions fixes.",
