@@ -251,6 +251,11 @@ export const en = {
       gentoo: "Source-based distribution. Minimal installation image.",
       proxmox: "Debian-based virtualisation platform, with KVM and LXC.",
       truenas: "Network storage system built on ZFS.",
+      "proxmox-backup":
+        "Backup server for Proxmox virtual machines and containers, with deduplication.",
+      xcpng: "Virtualisation platform based on the Xen hypervisor.",
+      openwrt: "Router and network appliance system, here for x86_64 machines.",
+      ipfire: "Firewall and router system, for x86_64 and ARM64 machines.",
       freebsd: "BSD operating system for servers, desktops and embedded use.",
       openbsd: "BSD operating system centred on security and correctness.",
       windows: "Evaluation and retail images from Microsoft. Bonk lays out the installation drive.",
