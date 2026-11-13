@@ -249,6 +249,7 @@ export const fr: Dictionary = {
         "Distribution fondée sur Arch et réglée pour la vitesse, avec une édition pour consoles portables.",
       nobara: "Distribution fondée sur Fedora et réglée pour le jeu et la diffusion en direct.",
       lakka: "Console de jeux rétro construite sur RetroArch, pour un PC branché à la télévision.",
+      libreelec: "Système minimal qui démarre directement sur le centre multimédia Kodi.",
       debian:
         "Distribution communautaire, base de nombreuses autres. Installateur réseau et images live.",
       linuxmint: "Distribution de bureau fondée sur Ubuntu. Cinnamon, MATE ou Xfce.",
@@ -256,6 +257,8 @@ export const fr: Dictionary = {
       zorin: "Distribution de bureau fondée sur Ubuntu, disposée pour qui vient de Windows.",
       tails:
         "Système live qui fait passer les connexions par Tor et ne laisse aucune trace sur l'ordinateur.",
+      qubes:
+        "Système axé sur la sécurité qui isole chaque tâche dans sa propre machine virtuelle, sur Xen.",
       parrot: "Distribution fondée sur Debian, pour les tests de sécurité et la vie privée.",
       raspios: "Système fondé sur Debian pour les cartes Raspberry Pi.",
       kali: "Distribution fondée sur Debian, pour les tests d'intrusion.",
