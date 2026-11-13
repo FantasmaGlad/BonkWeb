@@ -42,6 +42,7 @@ export function ImageActions({ image }: { image: CatalogImage }) {
           <Link to={`${PATHS.download}#apps`}>{link ? text.getBonk : text.needsBonk}</Link>
         ) : null}
       </p>
+      {link ? <p className={styles.note}>{text.linkUntested}</p> : null}
       {image.usb_boot === false ? <p className="notice">{text.dvdOnly}</p> : null}
       {image.note && image.usb_boot !== false ? (
         <p className={styles.note}>{text.notes[image.note] ?? image.note}</p>

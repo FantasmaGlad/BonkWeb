@@ -133,6 +133,6 @@ export const CLI_PLATFORMS: readonly PlatformDefinition[] = [
 
 /** First Bonk version that registers the bonk:// scheme; null while no release does. */
 export const DEEP_LINK: { since: string | null; template: string } = {
-  since: null,
+  since: "0.0.6",
   template: "bonk://install/{image}",
 };
