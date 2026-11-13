@@ -242,9 +242,12 @@ export const en = {
       kali: "Debian-based distribution for penetration testing.",
       fedora: "Community distribution sponsored by Red Hat. Workstation (GNOME), KDE and Server.",
       "fedora-coreos": "Automatically updating system for running containers, from Fedora.",
+      bluefin:
+        "Image-based desktop built on Fedora Atomic, with GNOME and updates applied as a whole.",
       almalinux: "Community enterprise distribution, compatible with RHEL.",
       rockylinux: "Community enterprise distribution, compatible with RHEL.",
       arch: "Rolling-release distribution, installed from the command line.",
+      artix: "Arch-based system without systemd, with OpenRC, runit, s6 or dinit.",
       manjaro: "Arch-based distribution with a graphical installer. KDE, GNOME or Xfce.",
       endeavouros: "Arch-based distribution with a graphical installer.",
       opensuse: "Tumbleweed, a rolling release, and Leap, with fixed releases.",

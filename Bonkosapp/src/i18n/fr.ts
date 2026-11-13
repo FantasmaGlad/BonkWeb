@@ -266,9 +266,12 @@ export const fr: Dictionary = {
         "Distribution communautaire soutenue par Red Hat. Workstation (GNOME), KDE et Server.",
       "fedora-coreos":
         "Système à mise à jour automatique pour faire tourner des conteneurs, issu de Fedora.",
+      bluefin:
+        "Bureau construit sur Fedora Atomic, avec GNOME et des mises à jour appliquées d'un bloc.",
       almalinux: "Distribution d'entreprise communautaire, compatible avec RHEL.",
       rockylinux: "Distribution d'entreprise communautaire, compatible avec RHEL.",
       arch: "Distribution en publication continue, installée en ligne de commande.",
+      artix: "Système fondé sur Arch sans systemd, avec OpenRC, runit, s6 ou dinit.",
       manjaro: "Distribution fondée sur Arch, avec un installateur graphique. KDE, GNOME ou Xfce.",
       endeavouros: "Distribution fondée sur Arch, avec un installateur graphique.",
       opensuse: "Tumbleweed, en publication continue, et Leap, aux versions fixes.",
