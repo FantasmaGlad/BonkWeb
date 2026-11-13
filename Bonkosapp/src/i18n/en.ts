@@ -249,6 +249,8 @@ export const en = {
       arch: "Rolling-release distribution, installed from the command line.",
       artix: "Arch-based system without systemd, with OpenRC, runit, s6 or dinit.",
       caine: "Ubuntu-based live system for digital forensics, with drives kept read-only.",
+      turnkey: "Debian-based server base, from which TurnKey builds its ready-to-use appliances.",
+      freedombox: "Debian-based personal server, to host your own services at home.",
       manjaro: "Arch-based distribution with a graphical installer. KDE, GNOME or Xfce.",
       endeavouros: "Arch-based distribution with a graphical installer.",
       opensuse: "Tumbleweed, a rolling release, and Leap, with fixed releases.",
