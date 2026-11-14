@@ -1,9 +1,10 @@
 import { PATHS } from "../../app/routes";
+import { taxonomyOf } from "../../data/categories";
 import { useText } from "../../i18n/I18nProvider";
 import { Breadcrumb } from "../../shared/components/Breadcrumb";
 import { useCatalog } from "../../shared/hooks/useCatalog";
 import { useOsDetection } from "../../shared/hooks/useOsDetection";
-import { architecturesOf, desktopsOf } from "../../shared/lib/catalog";
+import { architecturesOf, basesOf, desktopsOf } from "../../shared/lib/catalog";
 import type { Catalog } from "../../types/catalog";
 import { CategoryRail } from "./components/CategoryRail";
 import { SpecFilters } from "./components/SpecFilters";
@@ -61,6 +62,7 @@ function Results({ catalog, store }: { catalog: Catalog; store: Store }) {
   const market = text.market;
   const { filter, systems } = store;
   const { fitting, unstated } = splitByRam(systems, filter);
+  const taxonomy = taxonomyOf(catalog);
   const card = (system: System) => (
     <SystemCard
       key={system.family.id}
@@ -83,13 +85,19 @@ function Results({ catalog, store }: { catalog: Catalog; store: Store }) {
           />
         </label>
         <SpecFilters
+          bases={basesOf(catalog, taxonomy.bases)}
           architectures={architecturesOf(catalog)}
           desktops={desktopsOf(catalog)}
           filter={filter}
           onChange={store.setFilter}
         />
       </div>
-      <CategoryRail systems={store.all} filter={filter} onChange={store.setFilter} />
+      <CategoryRail
+        systems={store.all}
+        uses={taxonomy.uses}
+        filter={filter}
+        onChange={store.setFilter}
+      />
       <p className={styles.count} aria-live="polite">
         {text.common.stats(
           systems.length,

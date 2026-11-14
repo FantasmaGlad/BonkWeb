@@ -4,7 +4,7 @@ import { bonkLink } from "../features/marketplace/hooks/useBonkLink";
 import { writeCommand } from "../features/marketplace/hooks/useCommandBuilder";
 import { compareVersions } from "../shared/lib/catalog";
 import { LOCAL_LOGOS } from "./catalogService";
-import { CATEGORIES } from "./categories";
+import { FALLBACK_TAXONOMY, taxonomyOf, termLabel } from "./categories";
 import {
   COMMON_FLAGS,
   commandNamed,
@@ -115,7 +115,17 @@ describe("fiches des systèmes", () => {
     }
   });
 
-  it("le rail commence par toutes les catégories", () => {
-    expect(CATEGORIES[0]?.id).toBe("all");
+  it("la taxonomie du catalogue remplace la copie intégrée, terme par terme absent", () => {
+    const own = taxonomyOf(null);
+    expect(own.uses.map((term) => term.id)).toContain("security");
+    const published = taxonomyOf({
+      families: [],
+      images: [],
+      taxonomy: { uses: [{ id: "retro", en: "Retro", fr: "Rétro" }] },
+    });
+    expect(published.uses.map((term) => term.id)).toEqual(["retro"]);
+    expect(published.bases).toBe(FALLBACK_TAXONOMY.bases);
+    expect(termLabel(published.uses, "retro", "fr")).toBe("Rétro");
+    expect(termLabel(published.uses, "inconnu", "en")).toBe("inconnu");
   });
 });

@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { PATHS } from "../../../app/routes";
 import { logoOf } from "../../../data/catalogService";
+import { taxonomyOf, termLabel } from "../../../data/categories";
 import { useLanguage, useText } from "../../../i18n/I18nProvider";
 import { Breadcrumb } from "../../../shared/components/Breadcrumb";
 import { Logo } from "../../../shared/components/Logo";
+import { useCatalog } from "../../../shared/hooks/useCatalog";
 import { ramLabel } from "../../../shared/lib/format";
-import type { SystemSummary, UseId } from "../../../types/system";
+import type { SystemSummary } from "../../../types/system";
 import { useImageSelection } from "../hooks/useImageSelection";
 import { editionKey } from "../lib/selection";
 import { firstVariant, variantsOf } from "../lib/variants";
@@ -77,7 +79,11 @@ function SystemHead({ system }: { system: SystemSummary }) {
   const text = useText().market;
   const language = useLanguage();
   const { family, memory } = system;
-  const uses = (family.uses ?? []).flatMap((use) => text.categories[use as UseId] ?? []);
+  const { catalog } = useCatalog();
+  const known = taxonomyOf(catalog).uses;
+  const uses = (family.uses ?? []).flatMap((use) =>
+    known.some((term) => term.id === use) ? [termLabel(known, use, language)] : [],
+  );
   return (
     <header className={styles.head}>
       <Logo src={logoOf(family)} size={56} eager />
