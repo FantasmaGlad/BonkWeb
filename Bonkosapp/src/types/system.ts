@@ -1,22 +1,7 @@
 import type { CatalogFamily, CatalogImage } from "./catalog";
 
-export type UseId =
-  | "desktop"
-  | "beginner"
-  | "gaming"
-  | "light"
-  | "creative"
-  | "advanced"
-  | "server"
-  | "homelab"
-  | "privacy"
-  | "rescue"
-  | "media"
-  | "boards"
-  | "windows"
-  | "other";
-
-export type CategoryId = "all" | UseId;
+/** `all`, or a usage of the catalog's taxonomy. */
+export type CategoryId = string;
 
 /** A figure the publisher states, with the page it was read on. */
 export type Stated = { value: number; source: string };
@@ -32,11 +17,11 @@ export type SystemSummary = {
   driveGb?: number | undefined;
 };
 
-export type Category = { id: CategoryId; match: (system: SystemSummary) => boolean };
-
 export type CatalogFilter = {
   query: string;
   category: CategoryId;
+  /** Technical base of the system (`debian`); empty for any. */
+  base: string;
   arch: string;
   /** Memory of the target computer, in MiB; 0 for any. */
   ramMb: number;

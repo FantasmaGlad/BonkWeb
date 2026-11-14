@@ -133,8 +133,8 @@ describe("systèmes", () => {
     await screen.findByRole("link", { name: /^Ubuntu/ });
     expect(await violations(container)).toEqual([]);
     const rail = within(screen.getByRole("navigation", { name: "Categories" }));
-    fireEvent.click(rail.getByRole("link", { name: /^Security/ }));
-    expect(rail.getByRole("link", { name: /^Security/ }).getAttribute("aria-current")).toBe("true");
+    fireEvent.click(rail.getByRole("link", { name: /^Privacy/ }));
+    expect(rail.getByRole("link", { name: /^Privacy/ }).getAttribute("aria-current")).toBe("true");
     expect(cards()).toEqual(["Tails"]);
     expect(location.search).toBe("?category=privacy");
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "ubuntu" } });
@@ -149,6 +149,14 @@ describe("systèmes", () => {
       screen.getByRole("heading", { name: "Minimum memory not stated by the publisher" }),
     ).toBeTruthy();
     expect(location.search).toBe("?ram=4096");
+    fireEvent.change(screen.getByRole("combobox", { name: "Available memory" }), {
+      target: { value: "" },
+    });
+    fireEvent.change(screen.getByRole("combobox", { name: "Base" }), {
+      target: { value: "debian" },
+    });
+    expect(cards()).toEqual(["Tails"]);
+    expect(location.search).toBe("?base=debian");
   });
 
   it("montre sur la carte la version, la mémoire et la clé, en texte", async () => {

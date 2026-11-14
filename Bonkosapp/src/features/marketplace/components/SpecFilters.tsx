@@ -1,6 +1,12 @@
-import { DRIVE_CHOICES_GB, MEDIA_CHOICES, RAM_CHOICES_MB } from "../../../data/categories";
+import {
+  DRIVE_CHOICES_GB,
+  MEDIA_CHOICES,
+  RAM_CHOICES_MB,
+  termLabel,
+} from "../../../data/categories";
 import { useLanguage, useText } from "../../../i18n/I18nProvider";
 import { ramLabel } from "../../../shared/lib/format";
+import type { Term } from "../../../types/catalog";
 import type { CatalogFilter } from "../../../types/system";
 import styles from "./SpecFilters.module.css";
 
@@ -34,11 +40,13 @@ function FilterSelect({
 }
 
 export function SpecFilters({
+  bases,
   architectures,
   desktops,
   filter,
   onChange,
 }: {
+  bases: readonly Term[];
   architectures: readonly string[];
   desktops: readonly string[];
   filter: CatalogFilter;
@@ -50,6 +58,12 @@ export function SpecFilters({
   return (
     <fieldset className={styles.filters}>
       <legend className="visually-hidden">{text.filtersLabel}</legend>
+      <FilterSelect
+        label={text.base}
+        value={filter.base}
+        choices={bases.map(({ id }) => ({ value: id, label: termLabel(bases, id, language) }))}
+        onPick={(base) => onChange({ ...filter, base })}
+      />
       <FilterSelect
         label={text.desktop}
         value={filter.desktop}

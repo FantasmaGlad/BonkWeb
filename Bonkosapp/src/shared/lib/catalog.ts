@@ -1,5 +1,5 @@
 import { PUBLISHER_DRIVES } from "../../data/systems";
-import type { Catalog, CatalogImage } from "../../types/catalog";
+import type { Catalog, CatalogImage, Term } from "../../types/catalog";
 import type { Stated, SystemSummary } from "../../types/system";
 import { driveFor } from "./format";
 
@@ -87,6 +87,10 @@ export const summarize = (catalog: Catalog): SystemSummary[] =>
 /** Desktops present in the catalog, in a stable order. */
 export const desktopsOf = (catalog: Catalog): string[] =>
   distinct(catalog.images.flatMap((image) => image.desktop ?? []));
+
+/** The bases some system rests on, in the taxonomy's order. */
+export const basesOf = (catalog: Catalog, bases: readonly Term[]): Term[] =>
+  bases.filter(({ id }) => catalog.families.some((family) => family.category === id));
 
 export const architecturesOf = (catalog: Catalog): string[] =>
   distinct(catalog.images.map((image) => image.arch));

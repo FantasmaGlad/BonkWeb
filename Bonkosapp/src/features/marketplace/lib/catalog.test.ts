@@ -56,11 +56,13 @@ describe("dernières sorties", () => {
 
 describe("filtres", () => {
   it("classe par les usages que le catalogue donne à chaque famille", () => {
-    expect(ids({ category: "desktop" })).toEqual(["fedora", "ubuntu"]);
+    expect(ids({ category: "office" })).toEqual(["fedora", "ubuntu"]);
     expect(ids({ category: "server" })).toEqual(["ubuntu"]);
     expect(ids({ category: "privacy" })).toEqual(["tails"]);
-    expect(ids({ category: "other" })).toEqual(["haiku"]);
+    expect(ids({ category: "exotic" })).toEqual(["haiku"]);
     expect(ids({ category: "gaming" })).toEqual([]);
+    expect(ids({ base: "debian" })).toEqual(["tails"]);
+    expect(ids({ category: "office", base: "fedora" })).toEqual(["fedora"]);
   });
 
   it("prend la mémoire la plus basse parmi les variantes, celle de l'image avant celle du système", () => {
@@ -98,11 +100,14 @@ describe("filtres", () => {
   });
 
   it("lit et écrit l'état dans l'adresse", () => {
-    const params = new URLSearchParams("q=pro&category=server&arch=aarch64&ram=2048&drive=8");
+    const params = new URLSearchParams(
+      "q=pro&category=server&base=debian&arch=aarch64&ram=2048&drive=8",
+    );
     const filter = filterFromParams(params);
     expect(filter).toEqual({
       query: "pro",
       category: "server",
+      base: "debian",
       arch: "aarch64",
       ramMb: 2048,
       driveGb: 8,
@@ -112,11 +117,12 @@ describe("filtres", () => {
     expect(paramsOfFilter(filter)).toEqual({
       q: "pro",
       category: "server",
+      base: "debian",
       arch: "aarch64",
       ram: "2048",
       drive: "8",
     });
-    expect(filterFromParams(new URLSearchParams("category=nope&ram=x"))).toEqual(NO_FILTER);
+    expect(filterFromParams(new URLSearchParams("category=&ram=x"))).toEqual(NO_FILTER);
   });
 });
 

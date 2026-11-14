@@ -1,8 +1,7 @@
-import { CATEGORIES } from "../../../data/categories";
 import { PUBLISHER_DRIVES } from "../../../data/systems";
 import { summaryOf } from "../../../shared/lib/catalog";
 import type { CatalogImage } from "../../../types/catalog";
-import type { CatalogFilter, CategoryId, SystemSummary } from "../../../types/system";
+import type { CatalogFilter, SystemSummary } from "../../../types/system";
 
 /** Accents and case ignored, so "elementary" finds "Elementary". */
 const fold = (text: string): string =>
@@ -14,6 +13,7 @@ const fold = (text: string): string =>
 export const NO_FILTER: CatalogFilter = {
   query: "",
   category: "all",
+  base: "",
   arch: "",
   ramMb: 0,
   driveGb: 0,
@@ -40,10 +40,12 @@ export const filterSystems = (
   describe: (system: string) => string = () => "",
 ): SystemSummary[] => {
   const words = fold(filter.query).split(/\s+/).filter(Boolean);
-  const category = CATEGORIES.find((candidate) => candidate.id === filter.category);
   return systems.flatMap((system) => {
     const { family } = system;
-    if (category && !category.match(system)) {
+    if (filter.category !== "all" && !family.uses?.includes(filter.category)) {
+      return [];
+    }
+    if (filter.base && family.category !== filter.base) {
       return [];
     }
     if (filter.ramMb && system.memory && system.memory.value > filter.ramMb) {
@@ -77,15 +79,12 @@ export const splitByRam = (
   };
 };
 
-const isCategory = (value: string | null): value is CategoryId =>
-  CATEGORIES.some((category) => category.id === value);
-
 /** Marketplace state carried in the address, so a view can be linked and the back button works. */
 export const filterFromParams = (params: URLSearchParams): CatalogFilter => {
-  const category = params.get("category");
   return {
     query: params.get("q") ?? "",
-    category: isCategory(category) ? category : "all",
+    category: params.get("category") || "all",
+    base: params.get("base") ?? "",
     arch: params.get("arch") ?? "",
     ramMb: Number(params.get("ram")) || 0,
     driveGb: Number(params.get("drive")) || 0,
@@ -97,6 +96,7 @@ export const filterFromParams = (params: URLSearchParams): CatalogFilter => {
 export const paramsOfFilter = (filter: CatalogFilter): Record<string, string | undefined> => ({
   q: filter.query || undefined,
   category: filter.category === "all" ? undefined : filter.category,
+  base: filter.base || undefined,
   arch: filter.arch || undefined,
   ram: filter.ramMb ? String(filter.ramMb) : undefined,
   drive: filter.driveGb ? String(filter.driveGb) : undefined,
