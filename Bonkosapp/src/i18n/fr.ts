@@ -47,6 +47,7 @@ export const fr: Dictionary = {
       real: "Essayé sur de vraies clés.",
       ci: "Éprouvé en intégration continue, pas encore sur une vraie clé.",
       beta: "Bêta.",
+      starts: "Démarre sur cet appareil ; les clés USB ne sont pas encore détectées.",
       untested: "Pas encore essayé sur cet appareil.",
     },
   },

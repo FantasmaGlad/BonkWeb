@@ -93,7 +93,7 @@ sudo pacman -Sy bonk`,
     name: "Chromebook",
     scope: "Crostini (Debian)",
     distros: [],
-    status: "untested",
+    status: "starts",
   },
 ];
 

@@ -12,8 +12,8 @@ export type Release = {
 
 export type BuildArch = Arch | "universal";
 
-/** real: tried on a physical drive; ci: proven on virtual disks only; untested: never run on that device. */
-export type Status = "real" | "ci" | "beta" | "untested";
+/** real: tried on a physical drive; ci: proven on virtual disks only; starts: runs on the device but sees no drive; untested: never run on that device. */
+export type Status = "real" | "ci" | "beta" | "starts" | "untested";
 
 export type BuildTemplate = { arch: BuildArch; format: string; file: string };
 
