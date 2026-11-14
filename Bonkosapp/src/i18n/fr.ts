@@ -270,6 +270,8 @@ export const fr: Dictionary = {
       porteus: "Petit système live modulaire fondé sur Slackware.",
       minios:
         "Système live portable fondé sur Debian, qui peut garder ses modifications sur la clé.",
+      slax: "Petit système portable fondé sur Debian, avec son propre bureau, fait pour démarrer sur une clé USB.",
+      altlinux: "Distribution indépendante à paquets RPM maintenue en Russie, ici avec GNOME.",
       manjaro: "Distribution fondée sur Arch, avec un installateur graphique. KDE, GNOME ou Xfce.",
       endeavouros: "Distribution fondée sur Arch, avec un installateur graphique.",
       opensuse: "Tumbleweed, en publication continue, et Leap, aux versions fixes.",
