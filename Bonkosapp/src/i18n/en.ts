@@ -251,6 +251,8 @@ export const en = {
       caine: "Ubuntu-based live system for digital forensics, with drives kept read-only.",
       turnkey: "Debian-based server base, from which TurnKey builds its ready-to-use appliances.",
       freedombox: "Debian-based personal server, to host your own services at home.",
+      vyos: "Debian-based router and firewall, configured from its command line.",
+      batocera: "Retro gaming system that starts straight into an emulator menu.",
       manjaro: "Arch-based distribution with a graphical installer. KDE, GNOME or Xfce.",
       endeavouros: "Arch-based distribution with a graphical installer.",
       opensuse: "Tumbleweed, a rolling release, and Leap, with fixed releases.",

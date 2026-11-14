@@ -278,6 +278,8 @@ export const fr: Dictionary = {
         "Base de serveur fondée sur Debian, d'où TurnKey tire ses applications prêtes à l'emploi.",
       freedombox:
         "Serveur personnel fondé sur Debian, pour héberger ses propres services chez soi.",
+      vyos: "Routeur et pare-feu fondé sur Debian, configuré en ligne de commande.",
+      batocera: "Système de jeu rétro qui démarre directement sur un menu d'émulateurs.",
       manjaro: "Distribution fondée sur Arch, avec un installateur graphique. KDE, GNOME ou Xfce.",
       endeavouros: "Distribution fondée sur Arch, avec un installateur graphique.",
       opensuse: "Tumbleweed, en publication continue, et Leap, aux versions fixes.",
