@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bonk command reference</title>
-<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.0.6.">
+<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.0.7.">
 <link rel="canonical" href="https://bonk-os.app/reference/">
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/reference/site.css">
@@ -13,7 +13,7 @@
 <main>
 <header>
 <h1>Bonk command reference</h1>
-<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.0.6: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
+<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.0.7: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
 </header>
 <section>
 <h2>Commands</h2>
@@ -453,8 +453,8 @@ Options:
   -v, --verbose...
           Detailed log (-v), then very detailed (-vv) on standard error
 
-      --category &lt;NAME&gt;
-          Keep one category (`Debian derivatives`); the families list gives them
+      --category &lt;BASE&gt;
+          Keep one base (`debian`, `ubuntu`, `arch`, `fedora`, `opensuse`, `independent`, `bsd`, `windows`)
 
   -q, --quiet
           Keep only the result: no progress line, and only errors in the log

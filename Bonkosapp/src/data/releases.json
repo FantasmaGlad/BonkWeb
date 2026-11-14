@@ -1,213 +1,213 @@
 {
-  "version": "0.0.6",
-  "tag": "v0.0.6",
-  "published": "2026-11-13",
-  "base": "https://github.com/FantasmaGlad/Bonk/releases/download/v0.0.6",
+  "version": "0.0.7",
+  "tag": "v0.0.7",
+  "published": "2026-11-14",
+  "base": "https://github.com/FantasmaGlad/Bonk/releases/download/v0.0.7",
   "assets": [
     {
-      "name": "bonk_0.0.6-1_amd64.deb",
-      "size": 6972876,
-      "sha256": "81a6ed614c52ba445c7bf1e6fd26dfcbcf5d3c29d1d60ed6c73069bda7592b34"
+      "name": "bonk_0.0.7-1_amd64.deb",
+      "size": 6998180,
+      "sha256": "ea6fc8c00ca74c2308d6e954100081ed98d925cb3f2fcd5644c39e4f5c393f55"
     },
     {
-      "name": "bonk_0.0.6-1_arm64.deb",
-      "size": 6210456,
-      "sha256": "9c5c6bab8335279720f82bb0578e4368c52e65b3079ce12c2e3e483d2c4945d0"
+      "name": "bonk_0.0.7-1_arm64.deb",
+      "size": 6228304,
+      "sha256": "a39584ae1d2c93372fc8bc118413736abfbca590776d94d45edfd40767cd8395"
     },
     {
-      "name": "bonk-0.0.6-1-x86_64.pkg.tar.zst",
-      "size": 9470637,
-      "sha256": "d9f8a7f770601e8cb167f11805d860a6a766a1f95d13030db122815f36849050"
+      "name": "bonk-0.0.7-1-x86_64.pkg.tar.zst",
+      "size": 9499224,
+      "sha256": "47a32c954c209b1fc939af132d3fbe4fd5664039822955af0284455f1afcb8bf"
     },
     {
-      "name": "bonk-0.0.6-1.aarch64.rpm",
-      "size": 7170637,
-      "sha256": "057da7b63ca9c5c3e60aeee25386a1456c6fef4ad12c54f20125bfd290f035e3"
+      "name": "bonk-0.0.7-1.aarch64.rpm",
+      "size": 7192488,
+      "sha256": "e477ccf97f610e00b1986e98bc1b471875d65237dc0e2ae7323a7bc788d11022"
     },
     {
-      "name": "bonk-0.0.6-1.x86_64.rpm",
-      "size": 7568345,
-      "sha256": "051bec91973a7f9417f619a3298717229bf2c2f8a83d5d32f7ea59e0e5a61f40"
+      "name": "bonk-0.0.7-1.x86_64.rpm",
+      "size": 7595006,
+      "sha256": "7aec39db1a36f7051607eabca3c70dee5b73b54954eebe129abc697a3497632e"
     },
     {
-      "name": "bonk-0.0.6-android-arm64.apk",
-      "size": 3459534,
-      "sha256": "f002712be40db9debac47872cdf61e453158fbcb327b22b9203efae0d9f87a4a"
+      "name": "bonk-0.0.7-android-arm64.apk",
+      "size": 3501942,
+      "sha256": "ff6ea9c90a6a76fe09633d0f149e08094622d2c511d0362ea5dd534b19639f1e"
     },
     {
-      "name": "bonk-0.0.6-android-x86_64.apk",
-      "size": 3738216,
-      "sha256": "50d14a1e7e11afabc174109b467318be4e5a0b69ace006770bc9219dd080c54a"
+      "name": "bonk-0.0.7-android-x86_64.apk",
+      "size": 3786864,
+      "sha256": "8772144308e7ef94a40828fca684acce423f1c451f266dd693b5a7db19cedcbb"
     },
     {
-      "name": "bonk-0.0.6-linux-aarch64.tar.gz",
-      "size": 9178373,
-      "sha256": "4ca9b0f38a03c01a5b29e555f34719d4cb8b2534eb116913e4dc855606adade7"
+      "name": "bonk-0.0.7-linux-aarch64.tar.gz",
+      "size": 9200707,
+      "sha256": "8441340cea92518c85179e870c8da3da35f78be209322c229bcd781c755a6ddc"
     },
     {
-      "name": "bonk-0.0.6-linux-i686.tar.gz",
-      "size": 10120462,
-      "sha256": "9dbb6d6b97ee1308e129b3842c69ef743f036c02a6820c360f8b5b1bbe80765d"
+      "name": "bonk-0.0.7-linux-i686.tar.gz",
+      "size": 10145333,
+      "sha256": "2db3e03037c2332607d431d77f41bb94f730491e9b0cab07955ad6c0794ac983"
     },
     {
-      "name": "bonk-0.0.6-linux-x86_64.tar.gz",
-      "size": 9741812,
-      "sha256": "2daa48e292ac500d339779851f7305bfad82f52da50de91e0bd57c2790869b2b"
+      "name": "bonk-0.0.7-linux-x86_64.tar.gz",
+      "size": 9759916,
+      "sha256": "f9cb1ba34f9b5706f8e68541354c15baef3706bd5c41df0ba394d06786051d20"
     },
     {
-      "name": "bonk-0.0.6-macos-aarch64.tar.gz",
-      "size": 6707585,
-      "sha256": "75178534cb29c36e801efbd47555f995c4cf13787ea0408cf25a667265bcb04d"
+      "name": "bonk-0.0.7-macos-aarch64.tar.gz",
+      "size": 6736344,
+      "sha256": "c4290155bd8f8804a1ca057739c605e7dd92bbdad4671f4023e4081a18602a6f"
     },
     {
-      "name": "bonk-0.0.6-macos-universal.dmg",
-      "size": 16075542,
-      "sha256": "de5552934b044e8c20ec2e17b62dd503042d438acacfd634e488dd7439ba3984"
+      "name": "bonk-0.0.7-macos-universal.dmg",
+      "size": 16162675,
+      "sha256": "6a1a265ac96a8c29b483263aa8d9aff4c192e44ebc494e593f7d12645356b7f7"
     },
     {
-      "name": "bonk-0.0.6-macos-universal.tar.gz",
-      "size": 13766886,
-      "sha256": "d55cbc512e1d1c5aa1aeef6c33aa73bee0b78f54559b8a1a21ea5a6bf4ba5156"
+      "name": "bonk-0.0.7-macos-universal.tar.gz",
+      "size": 13832971,
+      "sha256": "6a77913cbe844756105fd09c1c8fddc13c529f1cdc798cacdaf83b4aa401a801"
     },
     {
-      "name": "bonk-0.0.6-macos-x86_64.tar.gz",
-      "size": 7059410,
-      "sha256": "18f21a22feea39fe502cb9472e832dbb322a95752611a10fc5620f838e073c1c"
+      "name": "bonk-0.0.7-macos-x86_64.tar.gz",
+      "size": 7097115,
+      "sha256": "7b0550b2e0394dd9f08895f198e8ab663f84ce0ce9f6ae5fb3226bd673b1bcc8"
     },
     {
-      "name": "bonk-0.0.6-windows-aarch64-setup.exe",
-      "size": 7147881,
-      "sha256": "265c2f7dc4a4a72a5a2ea8bb7582e096ddf6a56c68e2b4ba834b8f65ce8b941f"
+      "name": "bonk-0.0.7-windows-aarch64-setup.exe",
+      "size": 7163060,
+      "sha256": "0aaaee28532318276c0ac5f195ae73d28bd2eed499517513dfc8b91cfa706fc3"
     },
     {
-      "name": "bonk-0.0.6-windows-aarch64.exe",
-      "size": 17878528,
-      "sha256": "eeb962d3887c300f9fc029f7a52adc68bbfdddbee27c51181b19092a3b866145"
+      "name": "bonk-0.0.7-windows-aarch64.exe",
+      "size": 17924608,
+      "sha256": "30c66d92377718f4a4e854f81bbf16afe49338204ceb0e3df655aa0f102c47e6"
     },
     {
-      "name": "bonk-0.0.6-windows-aarch64.zip",
-      "size": 7263456,
-      "sha256": "d324e02ce0d11d52f340f4e759f938d99d916553ec9843679a96a7647fe6f8c1"
+      "name": "bonk-0.0.7-windows-aarch64.zip",
+      "size": 7289031,
+      "sha256": "38b16a908afe5a2a7b1da98c4b7dbf83ed7dc9d2d198765bd7daffe6facd1a47"
     },
     {
-      "name": "bonk-0.0.6-windows-i686-setup.exe",
-      "size": 7116870,
-      "sha256": "d08601416706491cd2ad6bdc45d5a7bdd6ec32f830731a6d5fca41356201fc63"
+      "name": "bonk-0.0.7-windows-i686-setup.exe",
+      "size": 7128500,
+      "sha256": "ee2f3dad96b559e5d6a923e07804591ef4e11f4f00733409229079e03ef57618"
     },
     {
-      "name": "bonk-0.0.6-windows-i686.exe",
-      "size": 16734208,
-      "sha256": "5f9f9330db4444d03ef21569490e7782bf13b28881cd7de1e34cc4ac687f8011"
+      "name": "bonk-0.0.7-windows-i686.exe",
+      "size": 16789504,
+      "sha256": "489e30c19baf968a4576a7c843be1ecb082d4e646936bc076ecc02aea7527b6e"
     },
     {
-      "name": "bonk-0.0.6-windows-i686.zip",
-      "size": 6994310,
-      "sha256": "84b2eba873ea7f976e5d48bbacf3aa5224c5b7e7114704e3ec7d77c6d9cf900c"
+      "name": "bonk-0.0.7-windows-i686.zip",
+      "size": 7017862,
+      "sha256": "b15ec573b7334ee6776cc1a1b9e36075bb3289042440914083fcc6cdae8d1afe"
     },
     {
-      "name": "bonk-0.0.6-windows-x86_64-setup.exe",
-      "size": 7541802,
-      "sha256": "d016244f74215fc82d11581010dfb1eadc2e89d5d7db69ceb40ee993c20b71bc"
+      "name": "bonk-0.0.7-windows-x86_64-setup.exe",
+      "size": 7554952,
+      "sha256": "97a9b6c3810d64f4abd24b501ff16c5c4359cf0585ed35c3a1547f1b6a9cd2d0"
     },
     {
-      "name": "bonk-0.0.6-windows-x86_64.exe",
-      "size": 20336640,
-      "sha256": "97a3910097f8f4a96f1a11e7b1d78cf3db0e190d6a38060dd3e2fedbfe62c023"
+      "name": "bonk-0.0.7-windows-x86_64.exe",
+      "size": 20432896,
+      "sha256": "7b2f939381af43be9889e9175a797813ee31412e38300cb00b308440af06736b"
     },
     {
-      "name": "bonk-0.0.6-windows-x86_64.zip",
-      "size": 7703448,
-      "sha256": "55030a6aeeff04057cceb017807bd75f7709e256cff12fd5a5a6965e138dff69"
+      "name": "bonk-0.0.7-windows-x86_64.zip",
+      "size": 7729271,
+      "sha256": "1806e69ebb360895c53ce9347d34c6559d0cdee198b90c736c8664a8dcf9f9a0"
     },
     {
-      "name": "bonk-cli_0.0.6-1_amd64.deb",
-      "size": 2792108,
-      "sha256": "2e366e08a60e0e8791b9e32aa27b2c7ba1df136ecc9fb077c1645f7d72e24907"
+      "name": "bonk-cli_0.0.7-1_amd64.deb",
+      "size": 2797042,
+      "sha256": "abb9a74e3b41dba0237a90ed55a2d89bbcfb96eccfba8cc420949402bb7bfa9b"
     },
     {
-      "name": "bonk-cli_0.0.6-1_arm64.deb",
-      "size": 2643346,
-      "sha256": "83b6985c139167486abcb1bcca86d187204723af1a1adfbd714693105fc3d1e2"
+      "name": "bonk-cli_0.0.7-1_arm64.deb",
+      "size": 2659910,
+      "sha256": "b38852d25c6c3c2d6d59cdb061bde89d2a309a032a5d40ae4ba0b1c94d239396"
     },
     {
-      "name": "bonk-cli_0.0.6-1_i386.deb",
-      "size": 2711712,
-      "sha256": "e3883de7670eff12641954b2e013fd2d6ee0f7eb9800a82cda28640e8a04c569"
+      "name": "bonk-cli_0.0.7-1_i386.deb",
+      "size": 2719224,
+      "sha256": "f103df00061a0ae00e9149eab870647ac50c564a73b685ba8b3a91ea9b4eec66"
     },
     {
-      "name": "bonk-cli-0.0.6-1-x86_64.pkg.tar.zst",
-      "size": 3437284,
-      "sha256": "94eb83c5a759558b3a4e6849fb467762898416a562fb667fe57e79e6eeaa5751"
+      "name": "bonk-cli-0.0.7-1-x86_64.pkg.tar.zst",
+      "size": 3446949,
+      "sha256": "182dd6a2ae0e3a882d797b97a9b941b0fae75d5c2c09c7d5bc3761f66fb0b926"
     },
     {
-      "name": "bonk-cli-0.0.6-1.aarch64.rpm",
-      "size": 3412824,
-      "sha256": "a94431f487b366ce1684f1ce961252bdc64e84d288e8c6128ae20c9aabf6afe2"
+      "name": "bonk-cli-0.0.7-1.aarch64.rpm",
+      "size": 3420563,
+      "sha256": "94d710d54bdb14fa850439b33eb65fa25d8058d233225e894a7b4fe3139f6b74"
     },
     {
-      "name": "bonk-cli-0.0.6-1.x86_64.rpm",
-      "size": 3654321,
-      "sha256": "affcf24cb7e5fdedb042e1bab526af9d68f6ead9b03bbe59693c3be490de189d"
+      "name": "bonk-cli-0.0.7-1.x86_64.rpm",
+      "size": 3659815,
+      "sha256": "73c928404f31e063be58668ee878ea56b3062989c8a8ae754b4bc339869821ff"
     },
     {
-      "name": "bonk-cli-0.0.6-android-aarch64.tar.gz",
-      "size": 2625382,
-      "sha256": "c76da48c206d30796b483a15d69d784cffee6b7d00bf4ca275b3f56e8dd335cd"
+      "name": "bonk-cli-0.0.7-android-aarch64.tar.gz",
+      "size": 2634597,
+      "sha256": "83ec3c268c337ad602a10c7ce450db67caa484e90862966f6d6186d62da06e5a"
     },
     {
-      "name": "bonk-cli-0.0.6-android-x86_64.tar.gz",
-      "size": 2834734,
-      "sha256": "bdafd1728d7aa415412dd511d6de5586c1e9fc7d62f524189b75e0948366eefa"
+      "name": "bonk-cli-0.0.7-android-x86_64.tar.gz",
+      "size": 2844514,
+      "sha256": "31655b23b5ba6ea7b2a11e4e87093e55d74dcb4683acdc255e74fd1f968bbd16"
     },
     {
-      "name": "bonk-cli-0.0.6-linux-aarch64.tar.gz",
-      "size": 3362313,
-      "sha256": "9d3e8c09df38930ec1668f78a3e6d6195004561c5fd42ea9f786c473f1b18ed7"
+      "name": "bonk-cli-0.0.7-linux-aarch64.tar.gz",
+      "size": 3369258,
+      "sha256": "9f57795ba849d7e5a0e57813a8b130a3b88945db2482656de343e075939d0446"
     },
     {
-      "name": "bonk-cli-0.0.6-linux-i686.tar.gz",
-      "size": 3453280,
-      "sha256": "08a72b87ced0dede5b164d4f4b60caab933cc3a237d65cb206dbdb2311fc830f"
+      "name": "bonk-cli-0.0.7-linux-i686.tar.gz",
+      "size": 3462565,
+      "sha256": "0e0d8d8fd14c828e795f204e14b764cfc619d88b4b2a57ab8116e1d1bb1cdaac"
     },
     {
-      "name": "bonk-cli-0.0.6-linux-x86_64.tar.gz",
-      "size": 3614034,
-      "sha256": "7f063d933acd394d8719d16f8eb27a9acd070b0765fd09b21d05ebc446eca2fc"
+      "name": "bonk-cli-0.0.7-linux-x86_64.tar.gz",
+      "size": 3619781,
+      "sha256": "05535677dd3be67883af3d02ab7a849dacbc05cf7e7d3fbda8361b2cc4b16124"
     },
     {
-      "name": "bonk-cli-0.0.6-macos-aarch64.tar.gz",
-      "size": 2546458,
-      "sha256": "f784d10e115f538a778e460799510c351e07bb53e25a77f308ff3394f9320b20"
+      "name": "bonk-cli-0.0.7-macos-aarch64.tar.gz",
+      "size": 2559072,
+      "sha256": "1b8692be6c0e7046923a5e8b0f1667519406c6a2c38813e73f493fd0afac814e"
     },
     {
-      "name": "bonk-cli-0.0.6-macos-universal.tar.gz",
-      "size": 5282132,
-      "sha256": "14d78ba2a959f19ec3bfb137157f403e9ecd8b79c9fc52e7332fbdd6672263e9"
+      "name": "bonk-cli-0.0.7-macos-universal.tar.gz",
+      "size": 5308677,
+      "sha256": "e66dc2b50fc5d576ea14d37b00af06ef07d4f2c57ca9b5219d59eedd4dea8ef4"
     },
     {
-      "name": "bonk-cli-0.0.6-macos-x86_64.tar.gz",
-      "size": 2736698,
-      "sha256": "95e655f581b562bd3f2471b8fc7a6c080b0a0d44be8338aae7c092fb95e674cd"
+      "name": "bonk-cli-0.0.7-macos-x86_64.tar.gz",
+      "size": 2750197,
+      "sha256": "f3add03f5f42afae5300762526b12a280dbf18ceb692ef7d8583d4e7bb07e6b5"
     },
     {
-      "name": "bonk-cli-0.0.6-windows-aarch64.zip",
-      "size": 2592080,
-      "sha256": "7de325dc5b31ba05b258daacfd8be742cf1a2c8dc557394fcf80c9885375e56e"
+      "name": "bonk-cli-0.0.7-windows-aarch64.zip",
+      "size": 2608053,
+      "sha256": "1d37d6c68867315772a08fb14902d753d1839bf2fc6e80ae4bd9e525e2ff3083"
     },
     {
-      "name": "bonk-cli-0.0.6-windows-i686.zip",
-      "size": 2339394,
-      "sha256": "8b436a6ac7c0ef951e9efa56146a5df9407370f7837786624ead67b9d239d3d3"
+      "name": "bonk-cli-0.0.7-windows-i686.zip",
+      "size": 2351224,
+      "sha256": "b5e2c0f0bd2a7e3e8ee21b2d63040a3dcd7cb6cccbdd5a613dd192e51a01875d"
     },
     {
-      "name": "bonk-cli-0.0.6-windows-x86_64.zip",
-      "size": 2756765,
-      "sha256": "ce79d2b31f8b32af1953f4c592fb7c8474afc0c591cc4427b163814fffe471c3"
+      "name": "bonk-cli-0.0.7-windows-x86_64.zip",
+      "size": 2767997,
+      "sha256": "ec52323c23cda3f969bcde774075970cc57a8081c5ec9860b11bc59fb0c15e82"
     },
     {
       "name": "bonk.cdx.json",
       "size": 379566,
-      "sha256": "31049a3fa39248201238c1ebc3e0587e5d48c6730393fea1fa25e631cd17f740"
+      "sha256": "c4a3710b432ec911dbffe1431bf566129be3a06f41891ca323c3daf88bab113b"
     }
   ]
 }
