@@ -280,6 +280,11 @@ export const fr: Dictionary = {
         "Serveur personnel fondé sur Debian, pour héberger ses propres services chez soi.",
       vyos: "Routeur et pare-feu fondé sur Debian, configuré en ligne de commande.",
       batocera: "Système de jeu rétro qui démarre directement sur un menu d'émulateurs.",
+      chimera:
+        "Système indépendant avec musl, des outils de base issus de FreeBSD et le gestionnaire de services dinit.",
+      porteus: "Petit système live modulaire fondé sur Slackware.",
+      minios:
+        "Système live portable fondé sur Debian, qui peut garder ses modifications sur la clé.",
       manjaro: "Distribution fondée sur Arch, avec un installateur graphique. KDE, GNOME ou Xfce.",
       endeavouros: "Distribution fondée sur Arch, avec un installateur graphique.",
       opensuse: "Tumbleweed, en publication continue, et Leap, aux versions fixes.",

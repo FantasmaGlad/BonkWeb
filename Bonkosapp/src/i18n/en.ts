@@ -253,6 +253,10 @@ export const en = {
       freedombox: "Debian-based personal server, to host your own services at home.",
       vyos: "Debian-based router and firewall, configured from its command line.",
       batocera: "Retro gaming system that starts straight into an emulator menu.",
+      chimera:
+        "Independent system with musl, a FreeBSD core userland and the dinit service manager.",
+      porteus: "Small modular live system based on Slackware.",
+      minios: "Debian-based portable live system that can keep its changes on the drive.",
       manjaro: "Arch-based distribution with a graphical installer. KDE, GNOME or Xfce.",
       endeavouros: "Arch-based distribution with a graphical installer.",
       opensuse: "Tumbleweed, a rolling release, and Leap, with fixed releases.",
