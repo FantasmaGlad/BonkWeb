@@ -242,6 +242,8 @@ export const en = {
         "Independent system with musl, a FreeBSD core userland and the dinit service manager.",
       porteus: "Small modular live system based on Slackware.",
       minios: "Debian-based portable live system that can keep its changes on the drive.",
+      slax: "Small portable system based on Debian, with its own desktop, made to run from a USB drive.",
+      altlinux: "Independent RPM-based distribution maintained in Russia, here with GNOME.",
       manjaro: "Arch-based distribution with a graphical installer. KDE, GNOME or Xfce.",
       endeavouros: "Arch-based distribution with a graphical installer.",
       opensuse: "Tumbleweed, a rolling release, and Leap, with fixed releases.",
