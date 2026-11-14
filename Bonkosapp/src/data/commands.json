@@ -492,10 +492,10 @@
           }
         },
         {
-          "flag": "--category <NAME>",
+          "flag": "--category <BASE>",
           "text": {
-            "en": "Keeps one category (Debian derivatives)",
-            "fr": "Garde une catégorie (Debian derivatives)"
+            "en": "Keeps one base (debian, ubuntu, arch, fedora, opensuse, independent, bsd, windows)",
+            "fr": "Garde une base (debian, ubuntu, arch, fedora, opensuse, independent, bsd, windows)"
           }
         },
         {
