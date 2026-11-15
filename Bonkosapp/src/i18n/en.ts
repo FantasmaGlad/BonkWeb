@@ -264,6 +264,12 @@ export const en = {
         "Debian-based system for hosting web services at home, managed from a web interface.",
       freebsd: "BSD operating system for servers, desktops and embedded use.",
       openbsd: "BSD operating system centred on security and correctness.",
+      armbian:
+        "Debian-based system for ARM boards, here as a generic UEFI image without a desktop.",
+      dietpi:
+        "Lightweight Debian-based system for Raspberry Pi and PCs, with a tool to install ready-to-use software.",
+      homeassistant:
+        "System dedicated to the Home Assistant home automation platform, managed from a web interface.",
       openindiana:
         "Unix system descended from OpenSolaris, built on illumos, with ZFS and a MATE desktop.",
       windows: "Evaluation and retail images from Microsoft. Bonk lays out the installation drive.",
