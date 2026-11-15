@@ -264,6 +264,8 @@ export const en = {
         "Debian-based system for hosting web services at home, managed from a web interface.",
       freebsd: "BSD operating system for servers, desktops and embedded use.",
       openbsd: "BSD operating system centred on security and correctness.",
+      openindiana:
+        "Unix system descended from OpenSolaris, built on illumos, with ZFS and a MATE desktop.",
       windows: "Evaluation and retail images from Microsoft. Bonk lays out the installation drive.",
       templeos: "Hobby operating system by Terry A. Davis.",
       haiku: "Open-source system inspired by BeOS.",

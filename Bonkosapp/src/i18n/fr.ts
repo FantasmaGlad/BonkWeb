@@ -292,6 +292,8 @@ export const fr: Dictionary = {
         "Système fondé sur Debian pour héberger des services web chez soi, administré depuis une interface web.",
       freebsd: "Système BSD pour serveurs, postes de travail et embarqué.",
       openbsd: "Système BSD centré sur la sécurité et la rigueur du code.",
+      openindiana:
+        "Système Unix issu d'OpenSolaris, fondé sur illumos, avec ZFS et un bureau MATE.",
       windows: "Images d'évaluation et de vente de Microsoft. Bonk dispose la clé d'installation.",
       templeos: "Système d'exploitation amateur de Terry A. Davis.",
       haiku: "Système open source inspiré de BeOS.",
