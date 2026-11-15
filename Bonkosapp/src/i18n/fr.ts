@@ -292,6 +292,11 @@ export const fr: Dictionary = {
         "Système fondé sur Debian pour héberger des services web chez soi, administré depuis une interface web.",
       freebsd: "Système BSD pour serveurs, postes de travail et embarqué.",
       openbsd: "Système BSD centré sur la sécurité et la rigueur du code.",
+      armbian: "Système fondé sur Debian pour cartes ARM, ici en image UEFI générique sans bureau.",
+      dietpi:
+        "Système léger fondé sur Debian pour Raspberry Pi et PC, avec un outil pour installer des logiciels prêts à l'emploi.",
+      homeassistant:
+        "Système dédié à la domotique Home Assistant, administré depuis une interface web.",
       openindiana:
         "Système Unix issu d'OpenSolaris, fondé sur illumos, avec ZFS et un bureau MATE.",
       windows: "Images d'évaluation et de vente de Microsoft. Bonk dispose la clé d'installation.",
