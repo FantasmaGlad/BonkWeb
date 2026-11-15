@@ -264,6 +264,8 @@ export const en = {
         "Debian-based system for hosting web services at home, managed from a web interface.",
       freebsd: "BSD operating system for servers, desktops and embedded use.",
       openbsd: "BSD operating system centred on security and correctness.",
+      kicksecure:
+        "Security-hardened Debian-based system from the Whonix team, with the LXQt desktop.",
       armbian:
         "Debian-based system for ARM boards, here as a generic UEFI image without a desktop.",
       dietpi:
