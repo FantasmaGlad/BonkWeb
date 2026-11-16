@@ -248,7 +248,8 @@ describe("téléchargement et commandes", () => {
     const heading = (name: string) =>
       screen.getByRole("heading", { level: 3, name }).parentElement?.textContent ?? "";
     expect(heading("Linux")).toContain("Tried on real drives.");
-    expect(heading("Windows 10+")).toContain("not yet on a real drive");
+    expect(heading("Windows 10+")).toContain("Tried on real drives.");
+    expect(heading("macOS 12+")).toContain("not yet on a real drive");
     expect(heading("Android 8+")).toContain("Beta.");
   });
 
