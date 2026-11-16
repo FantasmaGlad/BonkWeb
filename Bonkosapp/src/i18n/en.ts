@@ -265,6 +265,8 @@ export const en = {
         "Debian-based system for hosting web services at home, managed from a web interface.",
       freebsd: "BSD operating system for servers, desktops and embedded use.",
       openbsd: "BSD operating system centred on security and correctness.",
+      "glf-os":
+        "Gaming distribution from the French Gaming Linux FR community, built on NixOS, updated automatically.",
       kicksecure:
         "Security-hardened Debian-based system from the Whonix team, with the LXQt desktop.",
       armbian:
