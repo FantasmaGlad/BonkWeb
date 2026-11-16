@@ -46,7 +46,8 @@ export const en = {
       real: "Tried on real drives.",
       ci: "Tested in continuous integration, not yet on a real drive.",
       beta: "Beta.",
-      starts: "Starts on this device; USB drives are not detected yet.",
+      shared:
+        "Sees a USB drive once it is enabled for Linux in the ChromeOS settings (Linux development environment, Manage USB devices).",
       untested: "Not yet tried on this device.",
     },
   },
