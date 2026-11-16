@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bonk command reference</title>
-<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.0.7.">
+<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.0.8.">
 <link rel="canonical" href="https://bonk-os.app/reference/">
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/reference/site.css">
@@ -13,11 +13,11 @@
 <main>
 <header>
 <h1>Bonk command reference</h1>
-<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.0.7: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
+<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.0.8: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
 </header>
 <section>
 <h2>Commands</h2>
-<p><a href="#bonk">bonk</a> · <a href="#disk">bonk disk</a> · <a href="#disk-list">bonk disk list</a> · <a href="#disk-info">bonk disk info</a> · <a href="#disk-write">bonk disk write</a> · <a href="#disk-verify">bonk disk verify</a> · <a href="#disk-repair-gpt">bonk disk repair-gpt</a> · <a href="#catalog">bonk catalog</a> · <a href="#catalog-list">bonk catalog list</a> · <a href="#cache">bonk cache</a> · <a href="#cache-list">bonk cache list</a> · <a href="#cache-clean">bonk cache clean</a> · <a href="#list">bonk list</a> · <a href="#info">bonk info</a> · <a href="#write">bonk write</a> · <a href="#verify">bonk verify</a> · <a href="#repair-gpt">bonk repair-gpt</a> · <a href="#format">bonk format</a> · <a href="#vault">bonk vault</a> · <a href="#vault-init">bonk vault init</a> · <a href="#vault-list">bonk vault list</a> · <a href="#vault-add">bonk vault add</a> · <a href="#vault-remove">bonk vault remove</a> · <a href="#vault-update">bonk vault update</a> · <a href="#capabilities">bonk capabilities</a> · <a href="#diagnose">bonk diagnose</a> · <a href="#debug">bonk debug</a> · <a href="#debug-sources">bonk debug sources</a> · <a href="#debug-filter">bonk debug filter</a> · <a href="#debug-layout">bonk debug layout</a> · <a href="#debug-hexdump">bonk debug hexdump</a> · <a href="#explain">bonk explain</a> · <a href="#config">bonk config</a> · <a href="#config-list">bonk config list</a> · <a href="#config-get">bonk config get</a> · <a href="#config-set">bonk config set</a> · <a href="#config-reset">bonk config reset</a> · <a href="#schema">bonk schema</a> · <a href="#completions">bonk completions</a> · <a href="#serve">bonk serve</a> · <a href="#gui">bonk gui</a></p>
+<p><a href="#bonk">bonk</a> · <a href="#disk">bonk disk</a> · <a href="#disk-list">bonk disk list</a> · <a href="#disk-info">bonk disk info</a> · <a href="#disk-write">bonk disk write</a> · <a href="#disk-verify">bonk disk verify</a> · <a href="#disk-repair-gpt">bonk disk repair-gpt</a> · <a href="#catalog">bonk catalog</a> · <a href="#catalog-list">bonk catalog list</a> · <a href="#catalog-download">bonk catalog download</a> · <a href="#cache">bonk cache</a> · <a href="#cache-list">bonk cache list</a> · <a href="#cache-clean">bonk cache clean</a> · <a href="#list">bonk list</a> · <a href="#info">bonk info</a> · <a href="#write">bonk write</a> · <a href="#verify">bonk verify</a> · <a href="#repair-gpt">bonk repair-gpt</a> · <a href="#format">bonk format</a> · <a href="#vault">bonk vault</a> · <a href="#vault-init">bonk vault init</a> · <a href="#vault-list">bonk vault list</a> · <a href="#vault-add">bonk vault add</a> · <a href="#vault-remove">bonk vault remove</a> · <a href="#vault-update">bonk vault update</a> · <a href="#capabilities">bonk capabilities</a> · <a href="#diagnose">bonk diagnose</a> · <a href="#debug">bonk debug</a> · <a href="#debug-sources">bonk debug sources</a> · <a href="#debug-filter">bonk debug filter</a> · <a href="#debug-layout">bonk debug layout</a> · <a href="#debug-hexdump">bonk debug hexdump</a> · <a href="#explain">bonk explain</a> · <a href="#config">bonk config</a> · <a href="#config-list">bonk config list</a> · <a href="#config-get">bonk config get</a> · <a href="#config-set">bonk config set</a> · <a href="#config-reset">bonk config reset</a> · <a href="#schema">bonk schema</a> · <a href="#completions">bonk completions</a> · <a href="#serve">bonk serve</a> · <a href="#gui">bonk gui</a></p>
 </section>
 <section id="bonk">
 <h2>bonk</h2>
@@ -427,8 +427,9 @@ Options:
 Usage: bonk catalog [OPTIONS] &lt;COMMAND&gt;
 
 Commands:
-  list  List the images offered, newest version of each system first
-  help  Print this message or the help of the given subcommand(s)
+  list      List the images offered, newest version of each system first
+  download  Download an image into the cache and check its hash, without writing it
+  help      Print this message or the help of the given subcommand(s)
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
@@ -500,6 +501,62 @@ Options:
 
       --json
           Result as JSON
+
+      --no-color
+          No color in the help and usage errors (`NO_COLOR` has the same effect)
+
+  -h, --help
+          Print help (see a summary with '-h')</code></pre>
+</section>
+<section id="catalog-download">
+<h2>bonk catalog download</h2>
+<pre><code>Download an image into the cache and check its hash, without writing it
+
+Usage: bonk catalog download [OPTIONS] &lt;ID&gt;
+
+Arguments:
+  &lt;ID&gt;
+          Image identifier (see `bonk catalog list`)
+
+Options:
+      --catalog-url &lt;URL&gt;
+          Catalog address (`BONK_CATALOG_URL`); its signature is checked wherever it comes from
+
+  -v, --verbose...
+          Detailed log (-v), then very detailed (-vv) on standard error
+
+      --cache-dir &lt;DIR&gt;
+          Download directory; by default the user's cache directory
+
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --log-file &lt;PATH&gt;
+          Also write the log to this file (appended)
+
+      --progress &lt;PROGRESS&gt;
+          How progress is shown
+
+          Possible values:
+          - auto: A progress line on standard error if it is a terminal, nothing otherwise
+          - json: One JSON event per line on standard output
+          - none: No progress
+          
+          [default: auto]
+
+      --json
+          Result as JSON
+
+      --log-format &lt;LOG_FORMAT&gt;
+          Log format: text, or one JSON event per line
+          
+          [possible values: text, json]
+
+      --fixture &lt;FILE&gt;
+          Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
 
       --no-color
           No color in the help and usage errors (`NO_COLOR` has the same effect)
@@ -1221,7 +1278,7 @@ Arguments:
           Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
 
   &lt;ISO&gt;
-          ISO image to copy: Debian live, Ubuntu, Arch Linux or Fedora live, without spaces in its name
+          ISO image to copy: Debian live, Ubuntu, Arch Linux or Fedora live; spaces in its name become _
 
 Options:
       --simulate
@@ -1900,7 +1957,7 @@ Options:
 <tr><td><code>E7001</code></td><td>1</td><td>Format failed</td><td>drive too small or too large for the requested table or filesystem<br>write error, or read-back different from what was written<br>system tool failure</td><td>See `bonk format --dry-run`: it says what would be done, writing nothing. Another `--fs` or `--table` may fit.</td></tr>
 <tr><td><code>E7002</code></td><td>1</td><td>Filesystem unavailable on this host</td><td>NTFS and ext4 go through system tools: the tool or service is missing<br>`--simulate`: only FAT32 and exFAT can be written to an image file</td><td>See `bonk capabilities`. Install the named tool, or choose `--fs fat32` or `--fs exfat`, written by Bonk itself.</td></tr>
 <tr><td><code>E7003</code></td><td>1</td><td>No readable Bonk vault on this disk</td><td>the disk was not prepared by `bonk vault init`<br>the first partition is not exFAT labelled BonkVault, or the second is not an EFI system partition<br>the exFAT volume is damaged</td><td>Prepare the disk with `bonk vault init`, which erases it. A damaged volume can be checked by the system's exFAT tool first.</td></tr>
-<tr><td><code>E7004</code></td><td>2</td><td>This ISO cannot start from the vault</td><td>not an ISO 9660 image<br>not a family the vault starts: Debian live, Ubuntu, Arch Linux, Fedora live<br>a space in its name: the started system could not find it again<br>a name not ending in .iso: the vault menu would not list it</td><td>Write the image on its own drive with `bonk write`, or rename it without spaces.</td></tr>
+<tr><td><code>E7004</code></td><td>2</td><td>This ISO cannot start from the vault</td><td>not an ISO 9660 image<br>not a family the vault starts: Debian live, Ubuntu, Arch Linux, Fedora live<br>a name not ending in .iso: the vault menu would not list it</td><td>Write the image on its own drive with `bonk write`.</td></tr>
 <tr><td><code>E7005</code></td><td>1</td><td>Not enough room on the vault</td><td>no free contiguous space as large as the ISO: a live system needs it in one piece<br>the vault's root directory is full</td><td>Remove an ISO with `bonk vault remove`, or prepare a larger drive.</td></tr>
 <tr><td><code>E7006</code></td><td>2</td><td>ISO name already on the vault, or not on it</td><td>`bonk vault add`: an ISO of the same name, case aside, is already there<br>`bonk vault remove`: no ISO of that name at the root of the vault</td><td>List the vault with `bonk vault list`.</td></tr>
 </tbody>

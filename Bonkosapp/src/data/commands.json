@@ -543,6 +543,52 @@
       ]
     },
     {
+      "command": "bonk catalog download",
+      "text": {
+        "en": "Downloads an image of the signed catalog into the cache and checks its hash, without writing it",
+        "fr": "Télécharge une image du catalogue signé dans le cache et contrôle son empreinte, sans l'écrire"
+      },
+      "args": [
+        {
+          "flag": "<ID>",
+          "text": {
+            "en": "Image identifier (bonk catalog list)",
+            "fr": "Identifiant de l'image (bonk catalog list)"
+          }
+        }
+      ],
+      "options": [
+        {
+          "flag": "--catalog-url <URL>",
+          "text": {
+            "en": "Catalog address; its signature is checked wherever it comes from",
+            "fr": "Adresse du catalogue ; sa signature est contrôlée d'où qu'il vienne"
+          }
+        },
+        {
+          "flag": "--cache-dir <DIR>",
+          "text": {
+            "en": "Download directory",
+            "fr": "Dossier de téléchargement"
+          }
+        },
+        {
+          "flag": "--progress <MODE>",
+          "text": {
+            "en": "Progress: auto, json, none",
+            "fr": "Progression : auto, json, none"
+          }
+        },
+        {
+          "flag": "--json",
+          "text": {
+            "en": "JSON output, for scripts",
+            "fr": "Sortie JSON, pour les scripts"
+          }
+        }
+      ]
+    },
+    {
       "command": "bonk cache list",
       "text": {
         "en": "Lists kept images, unfinished downloads included",
