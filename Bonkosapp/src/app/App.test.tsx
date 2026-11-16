@@ -251,6 +251,10 @@ describe("téléchargement et commandes", () => {
     expect(heading("Windows 10+")).toContain("Tried on real drives.");
     expect(heading("macOS 12+")).toContain("not yet on a real drive");
     expect(heading("Android 8+")).toContain("Beta.");
+    fireEvent.click(screen.getByRole("tab", { name: "Chromebook" }));
+    expect(document.body.textContent).toContain(
+      "once it is enabled for Linux in the ChromeOS settings",
+    );
   });
 
   it("ouvre sur le gestionnaire de la machine et parcourt les onglets au clavier", () => {
