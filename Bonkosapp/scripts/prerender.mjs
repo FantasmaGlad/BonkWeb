@@ -123,6 +123,9 @@ for (const { view, path } of entry.PAGES) {
   await writeFile(file, fill(await readFile(file, "utf8"), html, entry.head(view, catalog)));
   console.log(`${path}: ${html.length} characters`);
 }
-await writeFile(new URL("sitemap.xml", DIST), sitemap(entry.PAGES.map((page) => page.path)));
+await writeFile(
+  new URL("sitemap.xml", DIST),
+  sitemap([...entry.PAGES.map((page) => page.path), "/reference/"]),
+);
 await rm(new URL("../dist-ssr/", import.meta.url), { recursive: true, force: true });
 dom.window.close();
