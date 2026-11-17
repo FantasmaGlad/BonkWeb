@@ -293,6 +293,7 @@ export const fr: Dictionary = {
         "Système fondé sur Debian pour héberger des services web chez soi, administré depuis une interface web.",
       freebsd: "Système BSD pour serveurs, postes de travail et embarqué.",
       openbsd: "Système BSD centré sur la sécurité et la rigueur du code.",
+      fuguita: "Système live fondé sur OpenBSD, qui démarre depuis une clé USB.",
       "glf-os":
         "Distribution de jeu de la communauté française Gaming Linux FR, fondée sur NixOS, mise à jour automatiquement.",
       kicksecure:

@@ -265,6 +265,7 @@ export const en = {
         "Debian-based system for hosting web services at home, managed from a web interface.",
       freebsd: "BSD operating system for servers, desktops and embedded use.",
       openbsd: "BSD operating system centred on security and correctness.",
+      fuguita: "OpenBSD-based live system that starts from a USB key.",
       "glf-os":
         "Gaming distribution from the French Gaming Linux FR community, built on NixOS, updated automatically.",
       kicksecure:
