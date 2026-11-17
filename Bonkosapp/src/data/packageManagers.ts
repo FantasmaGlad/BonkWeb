@@ -100,5 +100,5 @@ sudo pacman -Sy bonk`,
 export const SCRIPTS = {
   unix: { install: `curl -fsSL ${URL}/install.sh | sh` },
   windows: { install: `irm ${URL}/install.ps1 | iex` },
-  termux: { install: `pkg install termux-api\ncurl -fsSL ${URL}/install.sh | sh` },
+  termux: { install: `curl -fsSL ${URL}/install.sh | sh` },
 } as const;
