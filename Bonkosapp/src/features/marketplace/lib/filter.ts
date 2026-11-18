@@ -34,6 +34,16 @@ const imageFits = (image: CatalogImage, filter: CatalogFilter): boolean =>
 export const isFiltered = (filter: CatalogFilter): boolean =>
   Object.entries(NO_FILTER).some(([key, value]) => filter[key as keyof CatalogFilter] !== value);
 
+const familyFits = (family: SystemSummary["family"], filter: CatalogFilter): boolean =>
+  (filter.category === "all" || Boolean(family.uses?.includes(filter.category))) &&
+  (!filter.base || family.category === filter.base);
+
+/** Every word of the query must appear in the family's id, name or description, or the image's name or edition. */
+const named = (words: readonly string[], text: string): boolean => {
+  const haystack = fold(text);
+  return words.every((word) => haystack.includes(word));
+};
+
 export const filterSystems = (
   systems: readonly SystemSummary[],
   filter: CatalogFilter,
@@ -42,10 +52,7 @@ export const filterSystems = (
   const words = fold(filter.query).split(/\s+/).filter(Boolean);
   return systems.flatMap((system) => {
     const { family } = system;
-    if (filter.category !== "all" && !family.uses?.includes(filter.category)) {
-      return [];
-    }
-    if (filter.base && family.category !== filter.base) {
+    if (!familyFits(family, filter)) {
       return [];
     }
     if (filter.ramMb && system.memory && system.memory.value > filter.ramMb) {
@@ -54,15 +61,12 @@ export const filterSystems = (
     if (filter.driveGb && (PUBLISHER_DRIVES[family.id]?.value ?? 0) > filter.driveGb) {
       return [];
     }
-    const haystack = fold(
-      [family.name, family.id, describe(family.id)]
-        .concat(system.images.flatMap((image) => [image.name, image.edition ?? ""]))
-        .join(" "),
+    const familyText = [family.id, family.name, describe(family.id)].join(" ");
+    const images = system.images.filter(
+      (image) =>
+        imageFits(image, filter) &&
+        named(words, `${familyText} ${image.name} ${image.edition ?? ""}`),
     );
-    if (!words.every((word) => haystack.includes(word))) {
-      return [];
-    }
-    const images = system.images.filter((image) => imageFits(image, filter));
     return summaryOf(family, images) ?? [];
   });
 };
