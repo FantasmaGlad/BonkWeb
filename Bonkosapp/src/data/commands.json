@@ -266,8 +266,8 @@
         {
           "flag": "--no-verify",
           "text": {
-            "en": "Does not read the drive back after writing",
-            "fr": "Ne relit pas le support après l'écriture"
+            "en": "Does not read the drive back after a raw write; a Windows drive is always read back file by file",
+            "fr": "Ne relit pas le support après une écriture brute ; une clé Windows est toujours relue fichier par fichier"
           }
         },
         {
@@ -275,6 +275,13 @@
           "text": {
             "en": "Does not repair the backup GPT after writing",
             "fr": "Ne répare pas le GPT de secours après l'écriture"
+          }
+        },
+        {
+          "flag": "--notify",
+          "text": {
+            "en": "Shows each step and the end in the system's notifications (Linux, Windows)",
+            "fr": "Affiche chaque étape et la fin dans les notifications du système (Linux, Windows)"
           }
         },
         {
@@ -851,8 +858,8 @@
         {
           "flag": "--no-verify",
           "text": {
-            "en": "Does not read the drive back after writing",
-            "fr": "Ne relit pas le support après l'écriture"
+            "en": "Does not read the drive back after a raw write; a Windows drive is always read back file by file",
+            "fr": "Ne relit pas le support après une écriture brute ; une clé Windows est toujours relue fichier par fichier"
           }
         },
         {
@@ -860,6 +867,13 @@
           "text": {
             "en": "Does not repair the backup GPT after writing",
             "fr": "Ne répare pas le GPT de secours après l'écriture"
+          }
+        },
+        {
+          "flag": "--notify",
+          "text": {
+            "en": "Shows each step and the end in the system's notifications (Linux, Windows)",
+            "fr": "Affiche chaque étape et la fin dans les notifications du système (Linux, Windows)"
           }
         },
         {

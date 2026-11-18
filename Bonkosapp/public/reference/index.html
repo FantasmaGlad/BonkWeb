@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bonk command reference</title>
-<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.0.8.">
+<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.1.0.">
 <link rel="canonical" href="https://bonk-os.app/reference/">
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/reference/site.css">
@@ -13,7 +13,7 @@
 <main>
 <header>
 <h1>Bonk command reference</h1>
-<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.0.8: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
+<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.1.0: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
 </header>
 <section>
 <h2>Commands</h2>
@@ -238,10 +238,13 @@ Options:
           [possible values: gpt, mbr]
 
       --no-verify
-          Do not read the drive back after writing
+          Do not read the drive back after a raw write; a Windows drive is always read back file by file
 
       --no-repair-gpt
           Do not repair the backup GPT after writing
+
+      --notify
+          Show each step and the end in the system's notifications (Linux, Windows)
 
       --force
           Confirm like --yes, and allow an internal disk admitted by --show-internal, without a question. Never a system disk: the safety filter stays in charge
@@ -780,10 +783,13 @@ Options:
           [possible values: gpt, mbr]
 
       --no-verify
-          Do not read the drive back after writing
+          Do not read the drive back after a raw write; a Windows drive is always read back file by file
 
       --no-repair-gpt
           Do not repair the backup GPT after writing
+
+      --notify
+          Show each step and the end in the system's notifications (Linux, Windows)
 
       --force
           Confirm like --yes, and allow an internal disk admitted by --show-internal, without a question. Never a system disk: the safety filter stays in charge
