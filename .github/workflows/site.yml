@@ -4,8 +4,9 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Hourly: a new Bonk release reaches the site within the hour; otherwise a full rebuild once a day.
   schedule:
-    - cron: "17 5 * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -20,8 +21,33 @@ defaults:
     shell: bash
 
 jobs:
+  nouveau:
+    name: nouveau
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      a_faire: ${{ steps.controle.outputs.a_faire }}
+    steps:
+      - name: Nouvelle version de Bonk ?
+        id: controle
+        env:
+          EVENEMENT: ${{ github.event_name }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          derniere=$(gh release view --repo FantasmaGlad/Bonk --json tagName --jq '.tagName | ltrimstr("v")')
+          publiee=$(curl -fsSL https://bonk-os.app/version.txt || true)
+          if [ "$EVENEMENT" != schedule ] || [ "$derniere" != "$publiee" ] || [ "$(date -u +%H)" = 05 ]; then
+            a_faire=true
+          else
+            a_faire=false
+          fi
+          echo "derniere=$derniere publiee=$publiee a_faire=$a_faire"
+          echo "a_faire=$a_faire" >> "$GITHUB_OUTPUT"
+
   controle:
     name: controle
+    needs: nouveau
+    if: needs.nouveau.outputs.a_faire == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:

@@ -4,3 +4,4 @@ dist-ssr/
 .env
 .env.*
 *.local
+Bonkosapp/public/version.txt
