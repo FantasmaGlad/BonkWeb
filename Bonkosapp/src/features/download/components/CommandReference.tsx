@@ -5,7 +5,7 @@ import {
   isCommonFlag,
   REFERENCE_COMMANDS,
 } from "../../../data/commands";
-import { REFERENCE } from "../../../data/links";
+import { COMMANDS_PAGE } from "../../../data/links";
 import { useLanguage, useText } from "../../../i18n/I18nProvider";
 import { CommandBlock } from "../../../shared/components/CommandBlock";
 import type { CommandEntry } from "../../../types/command";
@@ -62,7 +62,7 @@ export function CommandReference() {
           </li>
         ))}
       </ol>
-      <h3 className={styles.title}>{text.referenceTitle}</h3>
+      <h3 className={styles.title}>{text.commandsTitle}</h3>
       <div className={styles.list}>
         {entries.map((entry) => (
           <Entry key={entry.command} entry={entry} />
@@ -77,7 +77,7 @@ export function CommandReference() {
         </details>
       </div>
       <p className={styles.more}>
-        <a href={REFERENCE}>{text.full}</a>
+        <a href={COMMANDS_PAGE}>{text.full}</a>
       </p>
     </>
   );

@@ -1,7 +1,7 @@
 import {
   CATALOG_URL,
+  COMMANDS_PAGE,
   PACKAGES,
-  REFERENCE,
   RELEASES,
   SECURITY_MAIL,
   SECURITY_POLICY,
@@ -44,7 +44,7 @@ export function Footer() {
           <h2>{text.resources}</h2>
           <ul>
             <li>
-              <a href={REFERENCE}>{text.reference}</a>
+              <a href={COMMANDS_PAGE}>{text.allCommands}</a>
             </li>
             <li>
               <a href={RELEASES}>{text.releases}</a>

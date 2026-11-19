@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -23,7 +23,7 @@ async function download() {
   if (!expected || createHash("sha256").update(archive).digest("hex") !== expected) {
     throw new Error(`${name}: hash does not match SHA256SUMS`);
   }
-  const dir = mkdtempSync(join(tmpdir(), "bonk-reference-"));
+  const dir = mkdtempSync(join(tmpdir(), "bonk-commands-"));
   writeFileSync(join(dir, name), archive);
   const untar = spawnSync("tar", ["-xzf", name], { cwd: dir });
   if (untar.status !== 0) throw new Error(untar.stderr.toString());
@@ -64,16 +64,16 @@ const page = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bonk command reference</title>
+<title>Bonk commands</title>
 <meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk ${VERSION}.">
-<link rel="canonical" href="https://bonk-os.app/reference/">
+<link rel="canonical" href="https://bonk-os.app/commands/">
 <link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="/reference/site.css">
+<link rel="stylesheet" href="/commands/site.css">
 </head>
 <body>
 <main>
 <header>
-<h1>Bonk command reference</h1>
+<h1>Bonk commands</h1>
 <p class="lead">Every command, its options and its error codes, as printed by Bonk ${VERSION}: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
 </header>
 <section>
@@ -104,11 +104,12 @@ ${errors
 </section>
 </main>
 <footer>
-<p><a href="https://bonk-os.app">bonk-os.app</a> · <a href="https://bonk-os.app/docs/">Commands</a> · <a href="https://catalog.bonk-os.app">catalog</a> · <a href="https://packages.bonk-os.app">packages</a> · <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a></p>
+<p><a href="https://bonk-os.app">bonk-os.app</a> · <a href="https://bonk-os.app/install/">Install</a> · <a href="https://catalog.bonk-os.app">catalog</a> · <a href="https://packages.bonk-os.app">packages</a> · <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a></p>
 </footer>
 </body>
 </html>
 `;
 
-writeFileSync("public/reference/index.html", page);
+mkdirSync("public/commands", { recursive: true });
+writeFileSync("public/commands/index.html", page);
 console.log(`${all.length} commands, ${errors.length} error codes, Bonk ${VERSION}`);

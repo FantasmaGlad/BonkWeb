@@ -296,7 +296,7 @@ describe("téléchargement et commandes", () => {
     }
   });
 
-  it("donne le flux essentiel puis la référence, options avancées à part", () => {
+  it("donne le flux essentiel puis toutes les commandes, options avancées à part", () => {
     const { container } = open("/install/?lang=fr");
     const section = container.querySelector("#commands") as HTMLElement;
     const flow = [...section.querySelectorAll("ol pre")].map((pre) => pre.textContent);
