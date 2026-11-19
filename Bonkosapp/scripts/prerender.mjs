@@ -125,7 +125,7 @@ for (const { view, path } of entry.PAGES) {
 }
 await writeFile(
   new URL("sitemap.xml", DIST),
-  sitemap([...entry.PAGES.map((page) => page.path), "/reference/"]),
+  sitemap([...entry.PAGES.map((page) => page.path), "/commands/"]),
 );
 await rm(new URL("../dist-ssr/", import.meta.url), { recursive: true, force: true });
 dom.window.close();

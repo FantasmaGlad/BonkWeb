@@ -42,11 +42,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/releases.mjs
-      - name: Référence des commandes de cette version
-        run: node scripts/reference.mjs
-      - name: Référence identique à celle du dépôt
+      - name: Commandes de cette version
+        run: node scripts/commands.mjs
+      - name: Commandes identiques à celles du dépôt
         if: github.event_name == 'pull_request'
-        run: git diff --exit-code public/reference/index.html
+        run: git diff --exit-code public/commands/index.html
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm build
