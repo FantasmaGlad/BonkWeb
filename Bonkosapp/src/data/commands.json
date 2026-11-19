@@ -10,8 +10,8 @@
     {
       "flag": "-q, --quiet",
       "text": {
-        "en": "Keeps only the result: no progress line, and only errors in the log",
-        "fr": "Ne garde que le résultat : aucune ligne de progression, et seules les erreurs au journal"
+        "en": "Keeps only the result: no automatic progress line (`--progress json` still applies), and only errors in the log",
+        "fr": "Ne garde que le résultat : aucune ligne de progression automatique (`--progress json` reste), et seules les erreurs au journal"
       }
     },
     {
@@ -152,8 +152,8 @@
         {
           "flag": "[SOURCE]",
           "text": {
-            "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download, with its checksum",
-            "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger, avec son empreinte"
+            "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download (http:// only on this computer: localhost, 127.0.0.1, [::1]), with its checksum",
+            "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger (http:// seulement sur cet ordinateur : localhost, 127.0.0.1, [::1]), avec son empreinte"
           }
         }
       ],
@@ -391,8 +391,8 @@
     {
       "command": "bonk disk repair-gpt",
       "text": {
-        "en": "Repairs a disk's GPT",
-        "fr": "Répare le GPT d'un disque"
+        "en": "Repairs the GPT of a disk or image",
+        "fr": "Répare le GPT d'un disque ou d'une image"
       },
       "args": [
         {
@@ -499,17 +499,45 @@
           }
         },
         {
+          "flag": "--search <TEXT>",
+          "text": {
+            "en": "Keeps the images whose system or image name holds every word, any case or accent (kubuntu)",
+            "fr": "Garde les images dont le nom du système ou de l'image contient chaque mot, sans tenir compte de la casse ni des accents (kubuntu)"
+          }
+        },
+        {
+          "flag": "--use <ID>",
+          "text": {
+            "en": "Keeps one usage category of the catalog (office, server)",
+            "fr": "Garde une catégorie d'usage du catalogue (office, server)"
+          }
+        },
+        {
           "flag": "--category <BASE>",
           "text": {
-            "en": "Keeps one base (debian, ubuntu, arch, fedora, opensuse, independent, bsd, windows)",
-            "fr": "Garde une base (debian, ubuntu, arch, fedora, opensuse, independent, bsd, windows)"
+            "en": "Keeps one base of the catalog (debian, arch)",
+            "fr": "Garde une base du catalogue (debian, arch)"
+          }
+        },
+        {
+          "flag": "--desktop <ID>",
+          "text": {
+            "en": "Keeps one desktop (gnome, kde, none)",
+            "fr": "Garde un bureau (gnome, kde, none)"
+          }
+        },
+        {
+          "flag": "--media <ID>",
+          "text": {
+            "en": "Keeps one medium (usb, sd, optical)",
+            "fr": "Garde un support (usb, sd, optical)"
           }
         },
         {
           "flag": "--arch <ARCH>",
           "text": {
-            "en": "Keeps one architecture (x86_64, aarch64)",
-            "fr": "Garde une architecture (x86_64, aarch64)"
+            "en": "Keeps one architecture, as the catalog names it (x86_64, aarch64, i686, riscv64)",
+            "fr": "Garde une architecture, telle que le catalogue la nomme (x86_64, aarch64, i686, riscv64)"
           }
         },
         {
@@ -744,8 +772,8 @@
         {
           "flag": "[SOURCE]",
           "text": {
-            "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download, with its checksum",
-            "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger, avec son empreinte"
+            "en": "Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is detected from its content) or an https:// URL to download (http:// only on this computer: localhost, 127.0.0.1, [::1]), with its checksum",
+            "fr": "Image à écrire : un fichier (.img, .iso, .gz, .xz, .zst ; le format se reconnaît à son contenu) ou une adresse https:// à télécharger (http:// seulement sur cet ordinateur : localhost, 127.0.0.1, [::1]), avec son empreinte"
           }
         }
       ],
@@ -1944,8 +1972,8 @@
     {
       "command": "bonk schema",
       "text": {
-        "en": "JSON Schema of a command's `--json` output",
-        "fr": "JSON Schema de la sortie `--json` d'une commande"
+        "en": "JSON Schema of a command's JSON output or of a service event",
+        "fr": "JSON Schema de la sortie JSON d'une commande ou d'un événement du service"
       },
       "args": [
         {
