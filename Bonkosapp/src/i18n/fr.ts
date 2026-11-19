@@ -51,6 +51,7 @@ export const fr: Dictionary = {
         "Voit une clé USB une fois celle-ci activée pour Linux dans les paramètres de ChromeOS (environnement de développement Linux, Gérer les périphériques USB).",
       untested: "Pas encore essayé sur cet appareil.",
     },
+    buildUntested: "non essayé",
   },
   home: {
     title: "Mettez n'importe quel système sur une clé USB.",
@@ -370,7 +371,7 @@ export const fr: Dictionary = {
     appsText: "Un seul programme : la fenêtre et la ligne de commande.",
     anyDistribution: "Toute distribution",
     androidBeta:
-      "Pour les téléphones ARM64 avec un adaptateur USB, sans root. Essayée pour l'instant sur un téléphone (Android 16) avec des images Linux : contrôlez la clé après coup.",
+      "Pour les téléphones ARM64, et x86_64 pour les Chromebooks, avec un adaptateur USB, sans root. Essayée pour l'instant sur un téléphone (Android 16) avec des images Linux : contrôlez la clé après coup.",
     terminalText: "Le dépôt de votre gestionnaire de paquets installe Bonk et le tient à jour.",
     steps: { install: "Installer", update: "Mettre à jour", remove: "Retirer" },
     cliText:

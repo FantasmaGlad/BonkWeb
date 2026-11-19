@@ -57,7 +57,12 @@ export const APP_PLATFORMS: readonly PlatformDefinition[] = [
     builds: [
       { arch: "x86_64", format: ".tar.gz", file: "bonk-{version}-linux-x86_64.tar.gz" },
       { arch: "aarch64", format: ".tar.gz", file: "bonk-{version}-linux-aarch64.tar.gz" },
-      { arch: "i686", format: ".tar.gz", file: "bonk-{version}-linux-i686.tar.gz" },
+      {
+        arch: "i686",
+        format: ".tar.gz",
+        file: "bonk-{version}-linux-i686.tar.gz",
+        status: "untested",
+      },
     ],
   },
   {

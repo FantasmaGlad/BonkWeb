@@ -1,6 +1,6 @@
 import { localLogo } from "../../../data/catalogService";
 import { ARCH_LABELS } from "../../../data/platforms";
-import { useLanguage } from "../../../i18n/I18nProvider";
+import { useLanguage, useText } from "../../../i18n/I18nProvider";
 import { Logo } from "../../../shared/components/Logo";
 import { sizeLabel } from "../../../shared/lib/format";
 import type { Arch } from "../../../types/machine";
@@ -18,6 +18,7 @@ export function BuildLinks({
   arch: Arch | undefined;
 }) {
   const language = useLanguage();
+  const text = useText();
   const formats = [...new Set(platform.builds.map((build) => build.format))];
   return (
     <li className={styles.row}>
@@ -34,7 +35,10 @@ export function BuildLinks({
             <a href={build.url} aria-current={build.arch === arch ? "true" : undefined}>
               {ARCH_LABELS[build.arch]}
             </a>{" "}
-            <small>{sizeLabel(build.size, language)}</small>
+            <small>
+              {sizeLabel(build.size, language)}
+              {build.status === "untested" ? `, ${text.common.buildUntested}` : ""}
+            </small>
           </span>
         ))}
       </span>

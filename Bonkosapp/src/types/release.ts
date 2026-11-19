@@ -15,7 +15,7 @@ export type BuildArch = Arch | "universal";
 /** real: tried on a physical drive; ci: proven on virtual disks only; shared: sees a drive once it is shared with the environment in the system settings; untested: never run on that device. */
 export type Status = "real" | "ci" | "beta" | "shared" | "untested";
 
-export type BuildTemplate = { arch: BuildArch; format: string; file: string };
+export type BuildTemplate = { arch: BuildArch; format: string; file: string; status?: Status };
 
 export type PlatformDefinition = {
   id: string;
@@ -36,6 +36,7 @@ export type Build = {
   url: string;
   size: number;
   sha256: string;
+  status?: Status | undefined;
 };
 
 export type Platform = Omit<PlatformDefinition, "builds"> & { builds: Build[] };
