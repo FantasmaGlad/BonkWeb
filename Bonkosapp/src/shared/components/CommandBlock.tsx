@@ -3,7 +3,6 @@ import { CopyButton } from "./CopyButton";
 
 type Row = { start: number; line: string };
 
-/** Each line keyed by where it starts in the command. */
 const rowsOf = (value: string): Row[] => {
   const rows: Row[] = [];
   let start = 0;
