@@ -13,6 +13,37 @@ import { Link } from "../router/Link";
 import styles from "./Footer.module.css";
 import { COMMANDS_ANCHOR, PATHS } from "./routes";
 
+type FooterText = ReturnType<typeof useText>["footer"];
+type FooterLink = { href: string; label: keyof FooterText; internal?: boolean };
+
+const COLUMNS: readonly { title: keyof FooterText; links: readonly FooterLink[] }[] = [
+  {
+    title: "product",
+    links: [
+      { href: PATHS.marketplace, label: "systems", internal: true },
+      { href: PATHS.download, label: "download", internal: true },
+      { href: `${PATHS.download}#${COMMANDS_ANCHOR}`, label: "commands", internal: true },
+    ],
+  },
+  {
+    title: "resources",
+    links: [
+      { href: COMMANDS_PAGE, label: "allCommands" },
+      { href: RELEASES, label: "releases" },
+      { href: CATALOG_URL, label: "catalog" },
+      { href: PACKAGES, label: "packages" },
+    ],
+  },
+  {
+    title: "project",
+    links: [
+      { href: SOURCE, label: "source" },
+      { href: SECURITY_POLICY, label: "policy" },
+      { href: `mailto:${SECURITY_MAIL}`, label: "security" },
+    ],
+  },
+];
+
 export function Footer() {
   const text = useText().footer;
   return (
@@ -26,51 +57,22 @@ export function Footer() {
           <p className="muted">{text.tagline}</p>
           <p className="muted">{`Bonk ${RELEASE.version}`}</p>
         </div>
-        <div>
-          <h2>{text.product}</h2>
-          <ul>
-            <li>
-              <Link to={PATHS.marketplace}>{text.systems}</Link>
-            </li>
-            <li>
-              <Link to={PATHS.download}>{text.download}</Link>
-            </li>
-            <li>
-              <Link to={`${PATHS.download}#${COMMANDS_ANCHOR}`}>{text.commands}</Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>{text.resources}</h2>
-          <ul>
-            <li>
-              <a href={COMMANDS_PAGE}>{text.allCommands}</a>
-            </li>
-            <li>
-              <a href={RELEASES}>{text.releases}</a>
-            </li>
-            <li>
-              <a href={CATALOG_URL}>{text.catalog}</a>
-            </li>
-            <li>
-              <a href={PACKAGES}>{text.packages}</a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h2>{text.project}</h2>
-          <ul>
-            <li>
-              <a href={SOURCE}>{text.source}</a>
-            </li>
-            <li>
-              <a href={SECURITY_POLICY}>{text.policy}</a>
-            </li>
-            <li>
-              <a href={`mailto:${SECURITY_MAIL}`}>{text.security}</a>
-            </li>
-          </ul>
-        </div>
+        {COLUMNS.map((column) => (
+          <div key={column.title}>
+            <h2>{text[column.title]}</h2>
+            <ul>
+              {column.links.map(({ href, label, internal }) => (
+                <li key={href}>
+                  {internal ? (
+                    <Link to={href}>{text[label]}</Link>
+                  ) : (
+                    <a href={href}>{text[label]}</a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </nav>
     </footer>
   );

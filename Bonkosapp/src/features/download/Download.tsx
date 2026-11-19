@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { COMMANDS_ANCHOR, PATHS } from "../../app/routes";
 import { RELEASES } from "../../data/links";
 import { RELEASE } from "../../data/releases";
@@ -25,7 +26,6 @@ export function Download() {
   const text = all.install;
   const language = useLanguage();
   const machine = useOsDetection();
-  const title = (section: (typeof ORDER)[number]) => `${ANCHORS[section]}-title`;
   return (
     <>
       <FirstScreen labelledBy="download-title" next={ANCHORS.apps} nextLabel={text.sections.apps}>
@@ -53,26 +53,38 @@ export function Download() {
           </ul>
         </nav>
       </FirstScreen>
-      <section id={ANCHORS.apps} className={styles.section} aria-labelledby={title("apps")}>
-        <h2 id={title("apps")}>{text.sections.apps}</h2>
-        <p className="muted">{text.appsText}</p>
+      <Section section="apps" description={text.appsText}>
         <AppDownloads arch={machine.arch} />
-      </section>
-      <section id={ANCHORS.terminal} className={styles.section} aria-labelledby={title("terminal")}>
-        <h2 id={title("terminal")}>{text.sections.terminal}</h2>
-        <p className="muted">{text.terminalText}</p>
+      </Section>
+      <Section section="terminal" description={text.terminalText}>
         <TerminalInstall machine={machine} />
-      </section>
-      <section id={ANCHORS.cli} className={styles.section} aria-labelledby={title("cli")}>
-        <h2 id={title("cli")}>{text.sections.cli}</h2>
-        <p className="muted">{text.cliText}</p>
+      </Section>
+      <Section section="cli" description={text.cliText}>
         <CliOnly arch={machine.arch} />
-      </section>
-      <section id={ANCHORS.commands} className={styles.section} aria-labelledby={title("commands")}>
-        <h2 id={title("commands")}>{text.sections.commands}</h2>
-        <p className="muted">{text.commandsText}</p>
+      </Section>
+      <Section section="commands" description={text.commandsText}>
         <CommandReference />
-      </section>
+      </Section>
     </>
+  );
+}
+
+function Section({
+  section,
+  description,
+  children,
+}: {
+  section: (typeof ORDER)[number];
+  description: string;
+  children: ReactNode;
+}) {
+  const text = useText().install;
+  const title = `${ANCHORS[section]}-title`;
+  return (
+    <section id={ANCHORS[section]} className={styles.section} aria-labelledby={title}>
+      <h2 id={title}>{text.sections[section]}</h2>
+      <p className="muted">{description}</p>
+      {children}
+    </section>
   );
 }

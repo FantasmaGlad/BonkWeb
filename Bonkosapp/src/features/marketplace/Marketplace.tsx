@@ -63,35 +63,9 @@ function Results({ catalog, store }: { catalog: Catalog; store: Store }) {
   const { filter, systems } = store;
   const { fitting, unstated } = splitByRam(systems, filter);
   const taxonomy = taxonomyOf(catalog);
-  const card = (system: System) => (
-    <SystemCard
-      key={system.family.id}
-      system={system}
-      params={paramsOfFilter(filter)}
-      onOpen={() => store.open(system.family.id)}
-    />
-  );
   return (
     <>
-      <div className={styles.tools}>
-        <label className={styles.search}>
-          <span className="visually-hidden">{market.search}</span>
-          <input
-            type="search"
-            value={filter.query}
-            placeholder={market.searchPlaceholder}
-            autoComplete="off"
-            onChange={(event) => store.setFilter({ ...filter, query: event.target.value })}
-          />
-        </label>
-        <SpecFilters
-          bases={basesOf(catalog, taxonomy.bases)}
-          architectures={architecturesOf(catalog)}
-          desktops={desktopsOf(catalog)}
-          filter={filter}
-          onChange={store.setFilter}
-        />
-      </div>
+      <Tools catalog={catalog} store={store} />
       <CategoryRail
         systems={store.all}
         uses={taxonomy.uses}
@@ -104,13 +78,13 @@ function Results({ catalog, store }: { catalog: Catalog; store: Store }) {
           systems.reduce((total, system) => total + system.images.length, 0),
         )}
       </p>
-      {fitting.length ? <ul className={styles.grid}>{fitting.map(card)}</ul> : null}
+      {fitting.length ? <Grid systems={fitting} store={store} /> : null}
       {unstated.length ? (
         <section aria-labelledby="unstated-title">
           <h2 id="unstated-title" className={styles.group}>
             {market.ramUnstated}
           </h2>
-          <ul className={styles.grid}>{unstated.map(card)}</ul>
+          <Grid systems={unstated} store={store} />
         </section>
       ) : null}
       {systems.length ? null : (
@@ -129,5 +103,47 @@ function Results({ catalog, store }: { catalog: Catalog; store: Store }) {
         </p>
       ) : null}
     </>
+  );
+}
+
+function Tools({ catalog, store }: { catalog: Catalog; store: Store }) {
+  const market = useText().market;
+  const { filter } = store;
+  return (
+    <div className={styles.tools}>
+      <label className={styles.search}>
+        <span className="visually-hidden">{market.search}</span>
+        <input
+          type="search"
+          value={filter.query}
+          placeholder={market.searchPlaceholder}
+          autoComplete="off"
+          onChange={(event) => store.setFilter({ ...filter, query: event.target.value })}
+        />
+      </label>
+      <SpecFilters
+        bases={basesOf(catalog, taxonomyOf(catalog).bases)}
+        architectures={architecturesOf(catalog)}
+        desktops={desktopsOf(catalog)}
+        filter={filter}
+        onChange={store.setFilter}
+      />
+    </div>
+  );
+}
+
+function Grid({ systems, store }: { systems: readonly System[]; store: Store }) {
+  const params = paramsOfFilter(store.filter);
+  return (
+    <ul className={styles.grid}>
+      {systems.map((system) => (
+        <SystemCard
+          key={system.family.id}
+          system={system}
+          params={params}
+          onOpen={() => store.open(system.family.id)}
+        />
+      ))}
+    </ul>
   );
 }
