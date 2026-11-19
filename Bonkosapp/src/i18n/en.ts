@@ -50,6 +50,7 @@ export const en = {
         "Sees a USB drive once it is enabled for Linux in the ChromeOS settings (Linux development environment, Manage USB devices).",
       untested: "Not yet tried on this device.",
     },
+    buildUntested: "untested",
   },
   home: {
     title: "Put any system on a USB drive.",
@@ -341,7 +342,7 @@ export const en = {
     appsText: "One program: the window, and the command line.",
     anyDistribution: "Any distribution",
     androidBeta:
-      "For ARM64 phones with a USB adapter, without root. Tried so far on one phone (Android 16) with Linux images: check the drive afterwards.",
+      "For ARM64 phones, and x86_64 for Chromebooks, with a USB adapter, without root. Tried so far on one phone (Android 16) with Linux images: check the drive afterwards.",
     terminalText: "The repository of your package manager installs Bonk and keeps it up to date.",
     steps: { install: "Install", update: "Update", remove: "Remove" },
     cliText:

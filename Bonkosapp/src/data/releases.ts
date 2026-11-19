@@ -11,7 +11,7 @@ export const resolvePlatforms = (
   definitions
     .map((definition) => ({
       ...definition,
-      builds: definition.builds.flatMap(({ arch, format, file }) => {
+      builds: definition.builds.flatMap(({ arch, format, file, status }) => {
         const name = file.replaceAll("{version}", release.version);
         const asset = release.assets.find((candidate) => candidate.name === name);
         return asset
@@ -23,6 +23,7 @@ export const resolvePlatforms = (
                 url: `${release.base}/${name}`,
                 size: asset.size,
                 sha256: asset.sha256,
+                status,
               },
             ]
           : [];
