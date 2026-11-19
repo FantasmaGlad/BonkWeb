@@ -35,4 +35,6 @@ const data = {
   assets,
 };
 writeFileSync("src/data/releases.json", `${JSON.stringify(data, null, 2)}\n`);
+// Published with the site: the hourly check compares it with the latest release.
+writeFileSync("public/version.txt", `${data.version}\n`);
 console.log(`src/data/releases.json: ${data.tag}, ${assets.length} files`);
