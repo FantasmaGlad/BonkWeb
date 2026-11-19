@@ -4,6 +4,12 @@ import styles from "./Tabs.module.css";
 
 type Tab = { id: string; label: string; icon?: string };
 
+const nextTab = (tabs: readonly Tab[], selected: string, key: string): Tab | undefined => {
+  const step = key === "ArrowRight" ? 1 : key === "ArrowLeft" ? -1 : 0;
+  const index = tabs.findIndex((tab) => tab.id === selected);
+  return step ? tabs[(index + step + tabs.length) % tabs.length] : undefined;
+};
+
 /** Tabs of the WAI-ARIA pattern: arrows move between tabs, Tab goes into the panel. */
 export function Tabs({
   label,
@@ -20,9 +26,7 @@ export function Tabs({
 }) {
   const base = useId();
   const move = (event: KeyboardEvent<HTMLButtonElement>) => {
-    const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
-    const index = tabs.findIndex((tab) => tab.id === selected);
-    const next = step ? tabs[(index + step + tabs.length) % tabs.length] : undefined;
+    const next = nextTab(tabs, selected, event.key);
     if (next) {
       onSelect(next.id);
       document.getElementById(`${base}-${next.id}`)?.focus();
