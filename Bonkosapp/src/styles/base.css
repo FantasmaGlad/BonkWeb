@@ -127,5 +127,3 @@ optgroup {
     scroll-behavior: smooth;
   }
 }
-
-/* Set while a side panel is open, so the page behind does not scroll. */

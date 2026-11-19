@@ -8,7 +8,6 @@ import type { Os } from "../../../types/machine";
 import type { DownloadChoice } from "../hooks/useSmartDownload";
 import styles from "./SystemMenu.module.css";
 
-/** Every installer, one operating system at a time, each row with the logos of what it serves. */
 export function SystemMenu({
   choices,
   selected,
