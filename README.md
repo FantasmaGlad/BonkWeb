@@ -5,35 +5,43 @@
 <h1 align="center">BonkWeb</h1>
 
 <p align="center">
-  <b>Source of bonk-os.app, the website of <a href="https://github.com/FantasmaGlad/Bonk">Bonk</a>.</b>
+  Source of bonk-os.app, the website of <a href="https://github.com/FantasmaGlad/Bonk">Bonk</a>.
 </p>
 
 <p align="center">
-  <a href="https://bonk-os.app"><b>bonk-os.app</b></a> &nbsp;·&nbsp;
-  <a href="https://github.com/FantasmaGlad/Bonk#download"><b>Downloads</b></a> &nbsp;·&nbsp;
-  <a href="https://bonk-os.app/images/"><b>Systems</b></a>
+  <a href="https://bonk-os.app">bonk-os.app</a>,
+  <a href="https://github.com/FantasmaGlad/Bonk#download">Downloads</a>,
+  <a href="https://bonk-os.app/images/">Systems</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/FantasmaGlad/BonkWeb/actions/workflows/site.yml"><img src="https://github.com/FantasmaGlad/BonkWeb/actions/workflows/site.yml/badge.svg?branch=main" alt="Site"></a>
 </p>
 
----
-
 ## Sites
 
 | Site | Address |
 | :--- | :--- |
 | Website | <https://bonk-os.app> |
-| <img src="docs/icons/linux.svg" width="20" height="20" valign="middle" alt="Linux"> Package repositories | <https://packages.bonk-os.app> |
-| Image catalog | <https://catalog.bonk-os.app/v2/catalog.json> |
 | Commands | <https://bonk-os.app/commands/> |
+| Package repositories | <https://packages.bonk-os.app> |
+| Image catalog | <https://catalog.bonk-os.app> |
 | Security policy | <https://security.bonk-os.app> |
 
-React, Vite and TypeScript; pages prerendered in English, French chosen in the browser.
+## Build
 
----
+React, Vite and TypeScript, in `Bonkosapp/`. Pages are prerendered in English; French is chosen from the browser language.
 
-License: view-only, all rights reserved ([LICENSE](LICENSE)) · Security: [SECURITY.md](SECURITY.md) · Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
+## License
 
-<sub>Related repositories: [Bonk](https://github.com/FantasmaGlad/Bonk) (application) · [bonk-packages](https://github.com/FantasmaGlad/bonk-packages) (package repositories) · [bonk-catalog](https://github.com/FantasmaGlad/bonk-catalog) (image catalog) · [homebrew-bonk](https://github.com/FantasmaGlad/homebrew-bonk) (Homebrew tap) · [bonk-security](https://github.com/FantasmaGlad/bonk-security) (security site) · Security policy: [security.bonk-os.app](https://security.bonk-os.app), [`/.well-known/security.txt`](https://bonk-os.app/.well-known/security.txt)</sub>
+View-only, all rights reserved: [LICENSE](LICENSE).
+
+Report a vulnerability as described in [SECURITY.md](SECURITY.md). Contributions: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Related repositories
+
+- [Bonk](https://github.com/FantasmaGlad/Bonk): application
+- [bonk-catalog](https://github.com/FantasmaGlad/bonk-catalog): image catalog
+- [bonk-packages](https://github.com/FantasmaGlad/bonk-packages): package repositories
+- [homebrew-bonk](https://github.com/FantasmaGlad/homebrew-bonk): Homebrew tap
+- [bonk-security](https://github.com/FantasmaGlad/bonk-security): security site
