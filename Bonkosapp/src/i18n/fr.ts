@@ -352,6 +352,47 @@ export const fr: Dictionary = {
       rescuezilla:
         "Système live graphique pour sauvegarder, restaurer et cloner des disques, compatible avec Clonezilla.",
       grml: "Système live fondé sur Debian, pour le dépannage en ligne de commande.",
+      tribblix: "Système fondé sur illumos, descendant d'OpenSolaris.",
+      tiny11: "Windows 11 allégé par NTDEV pour les PC modestes.",
+      genode: "Sculpt OS, système d'usage général bâti sur le cadre à composants Genode.",
+      atlasos:
+        "Modification de Windows pour la performance et la vie privée, appliquée à une installation officielle.",
+      revios:
+        "Modification de Windows pour la performance et la vie privée, appliquée à une installation officielle.",
+      "sergei-strelec":
+        "Trousse de dépannage sur Windows PE : sauvegarde, partitions, récupération et diagnostic.",
+      nhvboot:
+        "Trousse de dépannage sur Windows PE pour la réparation, la sauvegarde et la récupération de données.",
+      "acronis-true-image":
+        "Logiciel de sauvegarde et d'image disque ; son support de secours restaure une sauvegarde.",
+      "macrium-reflect":
+        "Logiciel d'image disque et de sauvegarde ; son support de secours restaure hors de Windows.",
+      "easeus-todo-backup":
+        "Logiciel de sauvegarde et de clonage de disque, avec un support de secours amorçable.",
+      "aomei-backupper":
+        "Logiciel de sauvegarde, de restauration et de clonage, avec un support de secours amorçable.",
+      diskgenius:
+        "Gestionnaire de partitions et outil de récupération de données, avec un support de secours amorçable.",
+      "r-drive-image":
+        "Logiciel d'image disque et de clonage, avec un support de secours amorçable.",
+      "active-boot-disk":
+        "Trousse amorçable de récupération de données, de gestion des disques et de réinitialisation de mot de passe.",
+      "oo-diskimage":
+        "Logiciel de sauvegarde et d'image disque, avec un support de secours amorçable.",
+      "hasleo-backup-suite":
+        "Logiciel gratuit de sauvegarde, de restauration et de clonage, avec un support de secours amorçable.",
+      "minitool-partition-wizard":
+        "Gestionnaire de partitions : redimensionner, déplacer, convertir et copier partitions et disques.",
+      memtest86:
+        "Testeur de mémoire de PassMark, démarré seul pour chercher les erreurs de la RAM.",
+      "kaspersky-rescue-disk":
+        "Antivirus amorçable gratuit qui analyse un ordinateur sans démarrer son système.",
+      rhel: "Red Hat Enterprise Linux, distribution commerciale pour serveurs et postes, par abonnement.",
+      sles: "SUSE Linux Enterprise Server, distribution commerciale pour serveurs, par abonnement.",
+      fydeos: "Système fondé sur Chromium OS pour les PC, avec les applications Android.",
+      unraid:
+        "Système de NAS et de virtualisation qui tourne depuis une clé USB, payant après un essai.",
+      "mikrotik-routeros": "Système de routeur de MikroTik, pour machines x86 et ARM.",
     },
   },
   install: {

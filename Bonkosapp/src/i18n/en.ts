@@ -322,6 +322,37 @@ export const en = {
       rescuezilla:
         "Graphical live system to back up, restore and clone disks, compatible with Clonezilla.",
       grml: "Debian-based live system for command-line repair.",
+      tribblix: "illumos-based system, a descendant of OpenSolaris.",
+      tiny11: "Windows 11 build trimmed by NTDEV for modest PCs.",
+      genode: "Sculpt OS, a general-purpose system built on the Genode component framework.",
+      atlasos:
+        "Windows modification for performance and privacy, applied to an official installation.",
+      revios:
+        "Windows modification for performance and privacy, applied to an official installation.",
+      "sergei-strelec":
+        "Windows PE rescue toolkit: backup, partitioning, recovery and diagnostics.",
+      nhvboot: "Windows PE rescue toolkit for repair, backup and data recovery.",
+      "acronis-true-image": "Backup and disk imaging software; its rescue media restores a backup.",
+      "macrium-reflect":
+        "Disk imaging and backup software; its rescue media restores outside Windows.",
+      "easeus-todo-backup": "Backup and disk cloning software with a bootable rescue media.",
+      "aomei-backupper": "Backup, restore and disk cloning software with a bootable rescue media.",
+      diskgenius: "Partition manager and data recovery tool with a bootable rescue media.",
+      "r-drive-image": "Disk imaging and cloning software with a bootable rescue media.",
+      "active-boot-disk": "Bootable toolkit for data recovery, disk management and password reset.",
+      "oo-diskimage": "Backup and disk imaging software with a bootable rescue media.",
+      "hasleo-backup-suite":
+        "Free backup, restore and disk cloning software with a bootable rescue media.",
+      "minitool-partition-wizard":
+        "Partition manager to resize, move, convert and copy partitions and disks.",
+      memtest86: "Memory tester by PassMark, started on its own to check the RAM for errors.",
+      "kaspersky-rescue-disk":
+        "Free bootable antivirus that scans a computer without starting its system.",
+      rhel: "Red Hat Enterprise Linux, commercial distribution for servers and workstations, by subscription.",
+      sles: "SUSE Linux Enterprise Server, commercial server distribution, by subscription.",
+      fydeos: "Chromium OS-based system for PCs, with Android apps.",
+      unraid: "NAS and virtualisation system that runs from a USB drive, paid after a trial.",
+      "mikrotik-routeros": "Router operating system by MikroTik, for x86 and ARM machines.",
     } as Record<string, string>,
   },
   install: {
