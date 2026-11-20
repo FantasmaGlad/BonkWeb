@@ -1,4 +1,13 @@
-import { writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, writeFileSync } from "node:fs";
+
+// Pull requests, tests and local work build from a fixed test release: their checks never depend on
+// release timing. The deployment reads the latest release first, and --sample then keeps it.
+if (process.argv.includes("--sample")) {
+  if (!existsSync("src/data/releases.json")) {
+    copyFileSync("src/data/releases.sample.json", "src/data/releases.json");
+  }
+  process.exit(0);
+}
 
 const REPO = "FantasmaGlad/Bonk";
 const headers = {
