@@ -22,11 +22,11 @@
 
 | Site | Address |
 | :--- | :--- |
-| Website | <https://bonk-os.app> |
-| Commands | <https://bonk-os.app/commands/> |
-| Package repositories | <https://packages.bonk-os.app> |
-| Image catalog | <https://catalog.bonk-os.app> |
-| Security policy | <https://security.bonk-os.app> |
+| <img src="docs/icons/bonk.png" width="20" height="20" valign="middle" alt="Website">&nbsp;Website | <https://bonk-os.app> |
+| <img src="docs/icons/bonk.png" width="20" height="20" valign="middle" alt="Commands">&nbsp;Commands | <https://bonk-os.app/commands/> |
+| <img src="docs/icons/linux.svg" width="20" height="20" valign="middle" alt="Package repositories">&nbsp;Package repositories | <https://packages.bonk-os.app> |
+| <img src="docs/icons/bonk.png" width="20" height="20" valign="middle" alt="Image catalog">&nbsp;Image catalog | <https://catalog.bonk-os.app> |
+| <img src="docs/icons/bonk.png" width="20" height="20" valign="middle" alt="Security policy">&nbsp;Security policy | <https://security.bonk-os.app> |
 
 ## Build
 
@@ -40,8 +40,10 @@ Report a vulnerability as described in [SECURITY.md](SECURITY.md). Contributions
 
 ## Related repositories
 
-- [Bonk](https://github.com/FantasmaGlad/Bonk): application
-- [bonk-catalog](https://github.com/FantasmaGlad/bonk-catalog): image catalog
-- [bonk-packages](https://github.com/FantasmaGlad/bonk-packages): package repositories
-- [homebrew-bonk](https://github.com/FantasmaGlad/homebrew-bonk): Homebrew tap
-- [bonk-security](https://github.com/FantasmaGlad/bonk-security): security site
+| Repository | Content |
+| :--- | :--- |
+| <img src="docs/icons/bonk.png" width="20" height="20" valign="middle" alt="Bonk">&nbsp;**[Bonk](https://github.com/FantasmaGlad/Bonk)** | application |
+| <img src="docs/icons/bonk.png" width="20" height="20" valign="middle" alt="bonk-catalog">&nbsp;**[bonk-catalog](https://github.com/FantasmaGlad/bonk-catalog)** | image catalog |
+| <img src="docs/icons/linux.svg" width="20" height="20" valign="middle" alt="bonk-packages">&nbsp;**[bonk-packages](https://github.com/FantasmaGlad/bonk-packages)** | package repositories |
+| <img src="docs/icons/homebrew.svg" width="20" height="20" valign="middle" alt="homebrew-bonk">&nbsp;**[homebrew-bonk](https://github.com/FantasmaGlad/homebrew-bonk)** | Homebrew tap |
+| <img src="docs/icons/bonk.png" width="20" height="20" valign="middle" alt="bonk-security">&nbsp;**[bonk-security](https://github.com/FantasmaGlad/bonk-security)** | security site |
