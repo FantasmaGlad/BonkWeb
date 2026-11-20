@@ -68,7 +68,9 @@
   margin-top: 1rem;
 }
 
+/* WCAG 2.5.8: stacked targets at least 24 px tall. */
 .advanced > summary {
+  padding-block: 0.25rem;
   color: var(--accent);
   font-size: 0.875rem;
   font-weight: 600;
@@ -77,6 +79,11 @@
 
 .more {
   margin-top: 1.25rem;
+}
+
+.more a {
+  display: inline-block;
+  padding-block: 0.25rem;
 }
 
 @media (max-width: 40rem) {
