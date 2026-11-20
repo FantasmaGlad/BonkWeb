@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bonk commands</title>
-<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.1.2.">
+<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.1.1.">
 <link rel="canonical" href="https://bonk-os.app/commands/">
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/commands/site.css">
@@ -13,7 +13,7 @@
 <main>
 <header>
 <h1>Bonk commands</h1>
-<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.1.2: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
+<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.1.1: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
 </header>
 <section>
 <h2>Commands</h2>
@@ -221,17 +221,13 @@ Options:
       --cache-dir &lt;DIR&gt;
           Download directory; by default the user's cache directory
 
-      --file-name &lt;NAME&gt;
-          Name to keep a downloaded address under, when the address does not end with it (a share link)
-
       --mode &lt;MODE&gt;
-          auto: analyze the image, extract a Windows ISO and refuse what would not boot; raw: write the bytes as they are; extract: require a Windows ISO; hybrid: make a DVD-only ISO start from the drive
+          auto: analyze the image, extract a Windows ISO and refuse what would not boot; raw: write the bytes as they are; extract: require a Windows ISO
 
           Possible values:
           - auto:    Extract a Windows ISO; refuse a truncated image or one that would not boot as written
           - raw:     Write the bytes as they are, whatever the analysis says
           - extract: Copy the files of a Windows installation ISO to a FAT32 partition; auto chooses it by itself
-          - hybrid:  Write a DVD-only ISO as published, then an MBR naming its EFI boot image as an EFI system partition
           
           [default: auto]
 
@@ -782,17 +778,13 @@ Options:
       --cache-dir &lt;DIR&gt;
           Download directory; by default the user's cache directory
 
-      --file-name &lt;NAME&gt;
-          Name to keep a downloaded address under, when the address does not end with it (a share link)
-
       --mode &lt;MODE&gt;
-          auto: analyze the image, extract a Windows ISO and refuse what would not boot; raw: write the bytes as they are; extract: require a Windows ISO; hybrid: make a DVD-only ISO start from the drive
+          auto: analyze the image, extract a Windows ISO and refuse what would not boot; raw: write the bytes as they are; extract: require a Windows ISO
 
           Possible values:
           - auto:    Extract a Windows ISO; refuse a truncated image or one that would not boot as written
           - raw:     Write the bytes as they are, whatever the analysis says
           - extract: Copy the files of a Windows installation ISO to a FAT32 partition; auto chooses it by itself
-          - hybrid:  Write a DVD-only ISO as published, then an MBR naming its EFI boot image as an EFI system partition
           
           [default: auto]
 
@@ -1297,14 +1289,14 @@ Options:
 <h2>bonk vault add</h2>
 <pre><code>Copy an ISO to the vault, in one piece, after checking the vault menu can start it; reads it back
 
-Usage: bonk vault add [OPTIONS] &lt;TARGET&gt; [ISO]
+Usage: bonk vault add [OPTIONS] &lt;TARGET&gt; &lt;ISO&gt;
 
 Arguments:
   &lt;TARGET&gt;
           Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
 
-  [ISO]
-          ISO image to copy: Debian live, Ubuntu, Arch Linux, Fedora live or an Anaconda installer (AlmaLinux, Rocky Linux); spaces in its name become _
+  &lt;ISO&gt;
+          ISO image to copy: Debian live, Ubuntu, Arch Linux or Fedora live; spaces in its name become _
 
 Options:
       --simulate
@@ -1367,15 +1359,6 @@ Options:
 
       --json
           Result as JSON
-
-      --image &lt;ID&gt;
-          Image of the signed catalog (`bonk catalog list`): downloaded into the cache, checked, then added
-
-      --catalog-url &lt;URL&gt;
-          Catalog address (`BONK_CATALOG_URL`); its signature is checked wherever it comes from
-
-      --cache-dir &lt;DIR&gt;
-          Download directory; by default the user's cache directory
 
       --yes
           Confirm: without --yes, Bonk does nothing
