@@ -870,10 +870,17 @@
           }
         },
         {
+          "flag": "--file-name <NAME>",
+          "text": {
+            "en": "Name to keep a downloaded address under, when the address does not end with it (a share link)",
+            "fr": "Nom sous lequel garder une adresse téléchargée, quand l'adresse ne finit pas par lui (lien de partage)"
+          }
+        },
+        {
           "flag": "--mode <MODE>",
           "text": {
-            "en": "auto: analyzes the image, extracts a Windows ISO and refuses what would not boot; raw: writes the bytes as they are; extract: requires a Windows ISO",
-            "fr": "auto : analyse l'image, extrait une ISO Windows et refuse ce qui ne démarrerait pas ; raw : écrit les octets tels quels ; extract : exige une ISO Windows"
+            "en": "auto: analyzes the image, extracts a Windows ISO and refuses what would not boot; raw: writes the bytes as they are; extract: requires a Windows ISO; hybrid: makes a DVD-only ISO start from the drive",
+            "fr": "auto : analyse l'image, extrait une ISO Windows et refuse ce qui ne démarrerait pas ; raw : écrit les octets tels quels ; extract : exige une ISO Windows ; hybrid : fait démarrer depuis la clé une ISO réservée au DVD"
           }
         },
         {
@@ -1431,10 +1438,10 @@
           }
         },
         {
-          "flag": "<ISO>",
+          "flag": "[ISO]",
           "text": {
-            "en": "ISO image to copy: Debian live, Ubuntu, Arch Linux or Fedora live, without spaces in its name",
-            "fr": "Image ISO à copier : Debian live, Ubuntu, Arch Linux ou Fedora live, sans espace dans son nom"
+            "en": "ISO image to copy: Debian live, Ubuntu, Arch Linux, Fedora live or an Anaconda installer (AlmaLinux, Rocky Linux); spaces in its name become _",
+            "fr": "Image ISO à copier : Debian live, Ubuntu, Arch Linux, Fedora live ou un installateur Anaconda (AlmaLinux, Rocky Linux) ; les espaces de son nom deviennent _"
           }
         }
       ],
@@ -1500,6 +1507,27 @@
           "text": {
             "en": "Confirm: without --yes, Bonk does nothing",
             "fr": "Confirme : sans --yes, Bonk ne fait rien"
+          }
+        },
+        {
+          "flag": "--image <ID>",
+          "text": {
+            "en": "Image of the signed catalog (`bonk catalog list`): downloaded into the cache, checked, then added",
+            "fr": "Image du catalogue signé (`bonk catalog list`) : téléchargée dans le cache, contrôlée, puis ajoutée"
+          }
+        },
+        {
+          "flag": "--catalog-url <URL>",
+          "text": {
+            "en": "Catalog address (`BONK_CATALOG_URL`); its signature is checked wherever it comes from",
+            "fr": "Adresse du catalogue (`BONK_CATALOG_URL`) ; sa signature est contrôlée d'où qu'il vienne"
+          }
+        },
+        {
+          "flag": "--cache-dir <DIR>",
+          "text": {
+            "en": "Download directory; by default the user's cache directory",
+            "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
           }
         }
       ]
