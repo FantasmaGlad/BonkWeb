@@ -62,14 +62,14 @@ jobs:
           node-version: "24"
       - run: corepack enable
       - run: pnpm install --frozen-lockfile
-      # A pull request builds from the committed snapshot, so its checks do not depend on release timing.
+      # A pull request keeps the test release copied at install, so its checks do not depend on release timing.
       - name: Dernière version publiée
         if: github.event_name != 'pull_request'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/releases.mjs
       - name: Commandes de cette version
-        run: node scripts/commands.mjs
+        run: node scripts/releases.mjs --sample && node scripts/commands.mjs
       - name: Commandes identiques à celles du dépôt
         if: github.event_name == 'pull_request'
         run: git diff --exit-code public/commands/index.html

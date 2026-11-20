@@ -5,3 +5,4 @@ dist-ssr/
 .env.*
 *.local
 Bonkosapp/public/version.txt
+Bonkosapp/src/data/releases.json
