@@ -181,6 +181,7 @@ export const en = {
     unknownSystem: "This system is not in the catalog.",
     site: "Publisher's site",
     ramSource: "Memory stated by the publisher:",
+    notAffiliated: (owner: string) => `Not affiliated with ${owner}`,
     architecture: "Architecture",
     version: "Version",
     standard: "Standard",

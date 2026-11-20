@@ -5,7 +5,7 @@ import { PACKAGE_MANAGERS } from "../data/packageManagers";
 import { DEEP_LINK } from "../data/platforms";
 import { APPS, CLIS, RELEASE } from "../data/releases";
 import { bonkLink } from "../features/marketplace/hooks/useBonkLink";
-import { browseAs, serveCatalog, UBUNTU_FIREFOX } from "../test/fixtures";
+import { browseAs, CATALOG, serveCatalog, UBUNTU_FIREFOX } from "../test/fixtures";
 import { App } from "./App";
 
 afterEach(cleanup);
@@ -164,6 +164,17 @@ describe("systèmes", () => {
     const card = await screen.findByRole("link", { name: /^Ubuntu/ });
     expect(card.textContent).toContain("26.04.1 · LTS");
     expect(card.textContent).toContain("aarch64 · x86_64 · 6 Go de RAM · clé de 2 Go");
+  });
+
+  it("dit qu'une version tierce n'est pas liée à l'éditeur d'origine", async () => {
+    serveCatalog({
+      ...CATALOG,
+      families: CATALOG.families.map((family) =>
+        family.id === "ubuntu" ? { ...family, not_affiliated_with: "Canonical" } : family,
+      ),
+    });
+    open("/images/?system=ubuntu");
+    expect(await screen.findByText("Not affiliated with Canonical")).toBeTruthy();
   });
 
   it("ouvre la page d'un système et met à jour taille, empreinte et commande", async () => {

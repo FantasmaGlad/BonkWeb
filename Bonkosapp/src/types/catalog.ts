@@ -11,6 +11,8 @@ export type CatalogFamily = {
   /** Minimum memory the publisher states for the whole system, and where. */
   ram_mb?: number;
   ram_source?: string;
+  /** A third-party version of another publisher's system: whose ("Microsoft"). */
+  not_affiliated_with?: string;
 };
 
 export type CatalogImage = {
