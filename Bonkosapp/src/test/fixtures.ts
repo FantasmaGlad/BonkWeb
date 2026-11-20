@@ -1,5 +1,6 @@
 import { vi } from "vitest";
 import type { Catalog, CatalogImage } from "../types/catalog";
+import { signWithTestKey } from "./signing";
 
 export const image = (
   id: string,
@@ -94,8 +95,18 @@ export const CATALOG: Catalog = {
   ],
 };
 
-export const serveCatalog = (catalog: unknown = CATALOG) =>
-  vi.stubGlobal("fetch", async () => new Response(JSON.stringify(catalog)));
+/** Signed by the test key, valid for an hour, as Bonk's publishing serves it. */
+export const serveCatalog = (catalog: unknown = CATALOG) => {
+  const expires = Math.floor(Date.now() / 1000) + 3600;
+  const manifest = new TextEncoder().encode(
+    JSON.stringify({ expires_unix: expires, ...(catalog as object) }),
+  );
+  vi.stubGlobal("fetch", async (url: string) =>
+    String(url).endsWith(".sig")
+      ? new Response(await signWithTestKey(manifest))
+      : new Response(manifest),
+  );
+};
 
 export const UBUNTU_FIREFOX =
   "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0";
