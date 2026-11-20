@@ -187,6 +187,7 @@ export const fr: Dictionary = {
     unknownSystem: "Ce système n'est pas dans le catalogue.",
     site: "Site de l'éditeur",
     ramSource: "Mémoire indiquée par l'éditeur :",
+    notAffiliated: (owner: string) => `Sans lien avec ${owner}`,
     architecture: "Architecture",
     version: "Version",
     standard: "Standard",

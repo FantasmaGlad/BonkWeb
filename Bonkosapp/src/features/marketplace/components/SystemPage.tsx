@@ -90,6 +90,9 @@ function SystemHead({ system }: { system: SystemSummary }) {
       <div>
         <h1>{family.name}</h1>
         {text.systems[family.id] ? <p>{text.systems[family.id]}</p> : null}
+        {family.not_affiliated_with ? (
+          <p className={styles.meta}>{text.notAffiliated(family.not_affiliated_with)}</p>
+        ) : null}
         <p className={styles.meta}>
           {uses.length ? `${uses.join(" · ")} · ` : null}
           <a href={system.latest.homepage}>{text.site}</a>
