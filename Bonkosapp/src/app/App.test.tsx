@@ -261,6 +261,7 @@ describe("téléchargement et commandes", () => {
     expect(heading("Linux")).toContain("Tried on real drives.");
     expect(heading("Windows 10+")).toContain("Tried on real drives.");
     expect(heading("macOS 12+")).toContain("not yet on a real drive");
+    expect(heading("macOS 12+")).toContain("the command line comes from Homebrew or the script");
     expect(heading("Android 8+")).toContain("Tried on real drives.");
     expect(heading("Android 8+")).toContain("Tried on five phones.");
     fireEvent.click(screen.getByRole("tab", { name: "Chromebook" }));

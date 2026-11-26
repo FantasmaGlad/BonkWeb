@@ -371,8 +371,13 @@ export const en = {
     },
     appsText: "One program: the window, and the command line.",
     anyDistribution: "Any distribution",
-    androidNote:
-      "For ARM64 phones, and x86_64 for Chromebooks, with a USB adapter, without root. Tried on five phones.",
+    osNote: {
+      linux: "",
+      windows: "",
+      macos: "The .dmg holds the window app; the command line comes from Homebrew or the script below.",
+      android:
+        "For ARM64 phones, and x86_64 for Chromebooks, with a USB adapter, without root. Tried on five phones.",
+    },
     terminalText: "The repository of your package manager installs Bonk and keeps it up to date.",
     steps: { install: "Install", update: "Update", remove: "Remove" },
     cliText:
