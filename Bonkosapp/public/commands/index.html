@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bonk commands</title>
-<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.1.1.">
+<meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk 0.1.0.">
 <link rel="canonical" href="https://bonk-os.app/commands/">
 <link rel="icon" href="/favicon.ico">
 <link rel="stylesheet" href="/commands/site.css">
@@ -13,7 +13,7 @@
 <main>
 <header>
 <h1>Bonk commands</h1>
-<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.1.1: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
+<p class="lead">Every command, its options and its error codes, as printed by Bonk 0.1.0: <code>bonk &lt;command&gt; --help</code> and <code>bonk explain --json</code>.</p>
 </header>
 <section>
 <h2>Commands</h2>
@@ -26,7 +26,7 @@
 Usage: bonk [OPTIONS] [COMMAND]
 
 Commands:
-  disk          Disks: list, detail, write, verify, repair the GPT
+  disk          Disks: list and detail
   catalog       Images offered by the signed catalog
   cache         Downloaded images: list and cleanup
   list          List the disks Bonk can write (shortcut for `disk list`)
@@ -35,13 +35,13 @@ Commands:
   verify        Compare a disk to an image, writing nothing
   repair-gpt    Repair the GPT of a disk or an image
   format        Return a disk to storage use: table, partition, filesystem
-  vault         Disk carrying several ISO images: prepare, list, add, remove, update
+  vault         Disk carrying several ISO images: prepare, list
   capabilities  What this host allows, and why not the rest
   diagnose      Support report as JSON: system, rendering, disks and verdicts, secrets masked
   debug         Low-level disk view, read-only: system sources, step-by-step filter, partition tables
   explain       Explain an error code (`bonk explain E1003`) or list all codes
   config        Persistent settings: list, get, set, reset
-  schema        JSON Schema of a command's JSON output or of a service event
+  schema        JSON Schema of a command's `--json` output
   completions   Shell completions: bash, zsh, fish, powershell, elvish
   serve         Headless service: drive Bonk with JSON on standard input and output, without a window
   gui           Open the window (like `bonk` alone)
@@ -49,7 +49,7 @@ Commands:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -61,7 +61,7 @@ Options:
 </section>
 <section id="disk">
 <h2>bonk disk</h2>
-<pre><code>Disks: list, detail, write, verify, repair the GPT
+<pre><code>Disks: list and detail
 
 Usage: bonk disk [OPTIONS] &lt;COMMAND&gt;
 
@@ -70,12 +70,12 @@ Commands:
   info        Detail of a disk (read-only)
   write       Write an image to a disk, then verify it
   verify      Compare a disk to an image, writing nothing
-  repair-gpt  Repair the GPT of a disk or an image
+  repair-gpt  Repair the GPT of a disk
   help        Print this message or the help of the given subcommand(s)
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -93,7 +93,7 @@ Options:
       --json                     JSON output, for scripts
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
       --all                      Also show excluded or hidden disks, with the reason
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --show-internal            Also offer internal non-system disks (stronger warning)
       --allow-virtual            Test mode: allow virtual disks (loop, zram, virtual machine)
@@ -115,7 +115,7 @@ Arguments:
 Options:
       --json                     JSON output, for scripts
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --show-internal            Evaluate the disk also offering internal non-system disks
       --allow-virtual            Evaluate the disk in test mode: virtual disks allowed
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
@@ -136,7 +136,7 @@ Arguments:
           Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
 
   [SOURCE]
-          Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is recognized by its content) or an https:// address to download (http:// only on this computer: localhost, 127.0.0.1, [::1]), with its hash
+          Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is recognized by its content) or an https:// address to download, with its hash
 
 Options:
       --simulate
@@ -146,7 +146,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -276,7 +276,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -338,7 +338,7 @@ Options:
 </section>
 <section id="disk-repair-gpt">
 <h2>bonk disk repair-gpt</h2>
-<pre><code>Repair the GPT of a disk or an image
+<pre><code>Repair the GPT of a disk
 
 Usage: bonk disk repair-gpt [OPTIONS] &lt;TARGET&gt;
 
@@ -354,7 +354,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -436,7 +436,7 @@ Commands:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -457,45 +457,30 @@ Options:
   -v, --verbose...
           Detailed log (-v), then very detailed (-vv) on standard error
 
-  -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+      --category &lt;BASE&gt;
+          Keep one base (`debian`, `ubuntu`, `arch`, `fedora`, `opensuse`, `independent`, `bsd`, `windows`)
 
-      --search &lt;TEXT&gt;
-          Keep the images whose system or image name holds every word, any case or accent (`kubuntu`)
+  -q, --quiet
+          Keep only the result: no progress line, and only errors in the log
+
+      --arch &lt;ARCH&gt;
+          Keep one architecture (`x86_64`, `aarch64`)
 
       --log-file &lt;PATH&gt;
           Also write the log to this file (appended)
 
-      --use &lt;ID&gt;
-          Keep one usage category of the catalog (`office`, `server`)
-
-      --category &lt;BASE&gt;
-          Keep one base of the catalog (`debian`, `arch`)
+      --channel &lt;CHANNEL&gt;
+          Keep one life cycle
+          
+          [possible values: lts, stable, end_of_life, archive]
 
       --log-format &lt;LOG_FORMAT&gt;
           Log format: text, or one JSON event per line
           
           [possible values: text, json]
 
-      --desktop &lt;ID&gt;
-          Keep one desktop (`gnome`, `kde`, `none`)
-
       --fixture &lt;FILE&gt;
           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
-
-      --media &lt;ID&gt;
-          Keep one medium (`usb`, `sd`, `optical`)
-
-      --proxy &lt;URL&gt;
-          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
-
-      --arch &lt;ARCH&gt;
-          Keep one architecture, as the catalog names it (`x86_64`, `aarch64`, `i686`, `riscv64`)
-
-      --channel &lt;CHANNEL&gt;
-          Keep one life cycle
-          
-          [possible values: lts, stable, end_of_life, archive]
 
       --sort &lt;SORT&gt;
           Order of the list
@@ -510,6 +495,9 @@ Options:
 
       --catalog-url &lt;URL&gt;
           Catalog address (`BONK_CATALOG_URL`); its signature is checked wherever it comes from
+
+      --proxy &lt;URL&gt;
+          Send all network traffic through this proxy (`BONK_PROXY`): socks5h:// only, such as Tor at socks5h://127.0.0.1:9050. If it cannot be reached, Bonk fails instead of connecting directly
 
       --cache-dir &lt;DIR&gt;
           Download directory; by default the user's cache directory
@@ -544,7 +532,7 @@ Options:
           Download directory; by default the user's cache directory
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --log-file &lt;PATH&gt;
           Also write the log to this file (appended)
@@ -592,7 +580,7 @@ Commands:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -610,7 +598,7 @@ Options:
       --cache-dir &lt;DIR&gt;          Download directory; by default the user's cache directory
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
       --json                     Result as JSON
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -631,7 +619,7 @@ Options:
       --cache-dir &lt;DIR&gt;          Download directory; by default the user's cache directory
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
       --dry-run                  Say what would be removed without removing anything
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --json                     Result as JSON
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
@@ -650,7 +638,7 @@ Options:
       --json                     JSON output, for scripts
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
       --all                      Also show excluded or hidden disks, with the reason
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --show-internal            Also offer internal non-system disks (stronger warning)
       --allow-virtual            Test mode: allow virtual disks (loop, zram, virtual machine)
@@ -672,7 +660,7 @@ Arguments:
 Options:
       --json                     JSON output, for scripts
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --show-internal            Evaluate the disk also offering internal non-system disks
       --allow-virtual            Evaluate the disk in test mode: virtual disks allowed
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
@@ -693,7 +681,7 @@ Arguments:
           Stable identifier of the disk (see `bonk list`); with --simulate, path of the target image file
 
   [SOURCE]
-          Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is recognized by its content) or an https:// address to download (http:// only on this computer: localhost, 127.0.0.1, [::1]), with its hash
+          Image to write: a file (.img, .iso, .gz, .xz, .zst; the format is recognized by its content) or an https:// address to download, with its hash
 
 Options:
       --simulate
@@ -703,7 +691,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -833,7 +821,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -911,7 +899,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -998,7 +986,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -1083,7 +1071,7 @@ Options:
 </section>
 <section id="vault">
 <h2>bonk vault</h2>
-<pre><code>Disk carrying several ISO images: prepare, list, add, remove, update
+<pre><code>Disk carrying several ISO images: prepare, list
 
 Usage: bonk vault [OPTIONS] &lt;COMMAND&gt;
 
@@ -1097,7 +1085,7 @@ Commands:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1123,7 +1111,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -1225,7 +1213,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -1306,7 +1294,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -1390,7 +1378,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -1471,7 +1459,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --size &lt;BYTES&gt;
           Size of the target image created by --simulate (decimal or 0x...); by default that of the source image when it is raw
@@ -1555,7 +1543,7 @@ Usage: bonk capabilities [OPTIONS]
 Options:
       --json                     Result as JSON
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1573,7 +1561,7 @@ Options:
       --output &lt;FILE&gt;            Write the report to this file (refuses to overwrite an existing file) instead of the output
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
       --include-serials          Keep serial numbers and the user name, masked by default
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --capture                  Attach the raw enumeration sources (anonymized), replayable elsewhere with --fixture
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
@@ -1597,7 +1585,7 @@ Commands:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1615,7 +1603,7 @@ Options:
       --json                     JSON output (always contains the source content)
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
       --content                  Also show the content of each source, as read
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1635,7 +1623,7 @@ Arguments:
 Options:
       --json                     JSON output
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --show-internal            Evaluate with internal non-system disks offered
       --allow-virtual            Evaluate in test mode: virtual disks allowed
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
@@ -1663,7 +1651,7 @@ Options:
           Detailed log (-v), then very detailed (-vv) on standard error
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --trace-io[=&lt;TRACE_IO&gt;]
           Log each block access (offset, duration, checksum); `=data` adds the first bytes, for an image file only
@@ -1717,7 +1705,7 @@ Options:
           [default: 4096]
 
   -q, --quiet
-          Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+          Keep only the result: no progress line, and only errors in the log
 
       --log-file &lt;PATH&gt;
           Also write the log to this file (appended)
@@ -1758,7 +1746,7 @@ Arguments:
 Options:
       --json                     JSON output
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1781,7 +1769,7 @@ Commands:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1798,7 +1786,7 @@ Usage: bonk config list [OPTIONS]
 Options:
       --json                     JSON output
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1817,7 +1805,7 @@ Arguments:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1837,7 +1825,7 @@ Arguments:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1856,7 +1844,7 @@ Arguments:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1866,7 +1854,7 @@ Options:
 </section>
 <section id="schema">
 <h2>bonk schema</h2>
-<pre><code>JSON Schema of a command's JSON output or of a service event
+<pre><code>JSON Schema of a command's `--json` output
 
 Usage: bonk schema [OPTIONS] [NAME]
 
@@ -1875,7 +1863,7 @@ Arguments:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1894,7 +1882,7 @@ Arguments:
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1910,7 +1898,7 @@ Usage: bonk serve [OPTIONS]
 
 Options:
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
@@ -1928,7 +1916,7 @@ Options:
       --image &lt;ID&gt;               Open with this image of the signed catalog chosen (`bonk catalog list`); nothing is written
   -v, --verbose...               Detailed log (-v), then very detailed (-vv) on standard error
       --link &lt;URL&gt;               Same, from a `bonk://install/&lt;ID&gt;` link: what the system passes when such a link is opened
-  -q, --quiet                    Keep only the result: no automatic progress line (`--progress json` still applies), and only errors in the log
+  -q, --quiet                    Keep only the result: no progress line, and only errors in the log
       --log-file &lt;PATH&gt;          Also write the log to this file (appended)
       --log-format &lt;LOG_FORMAT&gt;  Log format: text, or one JSON event per line [possible values: text, json]
       --fixture &lt;FILE&gt;           Replay a captured enumeration (`bonk diagnose --capture`) instead of reading this system: reads, `--dry-run` and `--simulate` only, never a write to a disk
