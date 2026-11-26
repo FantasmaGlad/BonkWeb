@@ -414,7 +414,8 @@ export const fr: Dictionary = {
     osNote: {
       linux: "",
       windows: "",
-      macos: "Le .dmg contient l'application avec sa fenêtre ; la ligne de commande vient de Homebrew ou du script ci-dessous.",
+      macos:
+        "Le .dmg contient l'application avec sa fenêtre ; la ligne de commande vient de Homebrew ou du script ci-dessous.",
       android:
         "Pour les téléphones ARM64, et x86_64 pour les Chromebooks, avec un adaptateur USB, sans root. Essayée sur cinq téléphones.",
     },

@@ -374,7 +374,8 @@ export const en = {
     osNote: {
       linux: "",
       windows: "",
-      macos: "The .dmg holds the window app; the command line comes from Homebrew or the script below.",
+      macos:
+        "The .dmg holds the window app; the command line comes from Homebrew or the script below.",
       android:
         "For ARM64 phones, and x86_64 for Chromebooks, with a USB adapter, without root. Tried on five phones.",
     },
