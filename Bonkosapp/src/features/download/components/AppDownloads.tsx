@@ -15,10 +15,7 @@ export function AppDownloads({ arch }: { arch: Arch | undefined }) {
           <section key={group.os} className={styles.group} aria-labelledby={`os-${group.os}`}>
             <h3 id={`os-${group.os}`}>{group.name}</h3>
             <p className={styles.status}>
-              {[
-                text.common.status[group.status],
-                group.os === "android" ? text.install.androidNote : undefined,
-              ]
+              {[text.common.status[group.status], text.install.osNote[group.os]]
                 .filter(Boolean)
                 .join(" ")}
             </p>

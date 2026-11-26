@@ -411,8 +411,14 @@ export const fr: Dictionary = {
     },
     appsText: "Un seul programme : la fenêtre et la ligne de commande.",
     anyDistribution: "Toute distribution",
-    androidNote:
-      "Pour les téléphones ARM64, et x86_64 pour les Chromebooks, avec un adaptateur USB, sans root. Essayée sur cinq téléphones.",
+    osNote: {
+      linux: "",
+      windows: "",
+      macos:
+        "Le .dmg contient l'application avec sa fenêtre ; la ligne de commande vient de Homebrew ou du script ci-dessous.",
+      android:
+        "Pour les téléphones ARM64, et x86_64 pour les Chromebooks, avec un adaptateur USB, sans root. Essayée sur cinq téléphones.",
+    },
     terminalText: "Le dépôt de votre gestionnaire de paquets installe Bonk et le tient à jour.",
     steps: { install: "Installer", update: "Mettre à jour", remove: "Retirer" },
     cliText:
