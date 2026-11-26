@@ -46,7 +46,6 @@ export const fr: Dictionary = {
     status: {
       real: "Essayé sur de vraies clés.",
       ci: "Éprouvé en intégration continue, pas encore sur une vraie clé.",
-      beta: "Bêta.",
       shared:
         "Voit une clé USB une fois celle-ci activée pour Linux dans les paramètres de ChromeOS (environnement de développement Linux, Gérer les périphériques USB).",
       untested: "Pas encore essayé sur cet appareil.",
@@ -95,7 +94,7 @@ export const fr: Dictionary = {
       },
       {
         title: "Depuis un téléphone Android",
-        text: "Avec un adaptateur USB OTG et sans root. En bêta sur les téléphones ARM64.",
+        text: "Avec un adaptateur USB OTG et sans root, sur les téléphones ARM64.",
       },
     ],
     catalogTitle: "Le catalogue",
@@ -412,8 +411,8 @@ export const fr: Dictionary = {
     },
     appsText: "Un seul programme : la fenêtre et la ligne de commande.",
     anyDistribution: "Toute distribution",
-    androidBeta:
-      "Pour les téléphones ARM64, et x86_64 pour les Chromebooks, avec un adaptateur USB, sans root. Essayée pour l'instant sur un téléphone (Android 16) avec des images Linux : contrôlez la clé après coup.",
+    androidNote:
+      "Pour les téléphones ARM64, et x86_64 pour les Chromebooks, avec un adaptateur USB, sans root. Essayée sur cinq téléphones.",
     terminalText: "Le dépôt de votre gestionnaire de paquets installe Bonk et le tient à jour.",
     steps: { install: "Installer", update: "Mettre à jour", remove: "Retirer" },
     cliText:

@@ -261,7 +261,8 @@ describe("téléchargement et commandes", () => {
     expect(heading("Linux")).toContain("Tried on real drives.");
     expect(heading("Windows 10+")).toContain("Tried on real drives.");
     expect(heading("macOS 12+")).toContain("not yet on a real drive");
-    expect(heading("Android 8+")).toContain("Beta.");
+    expect(heading("Android 8+")).toContain("Tried on real drives.");
+    expect(heading("Android 8+")).toContain("Tried on five phones.");
     fireEvent.click(screen.getByRole("tab", { name: "Chromebook" }));
     expect(document.body.textContent).toContain(
       "once it is enabled for Linux in the ChromeOS settings",

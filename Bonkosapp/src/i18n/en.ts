@@ -44,7 +44,6 @@ export const en = {
     status: {
       real: "Tried on real drives.",
       ci: "Tested in continuous integration, not yet on a real drive.",
-      beta: "Beta.",
       shared:
         "Sees a USB drive once it is enabled for Linux in the ChromeOS settings (Linux development environment, Manage USB devices).",
       untested: "Not yet tried on this device.",
@@ -90,7 +89,7 @@ export const en = {
       },
       {
         title: "From an Android phone",
-        text: "With a USB OTG adapter and without root. In beta on ARM64 phones.",
+        text: "With a USB OTG adapter and without root, on ARM64 phones.",
       },
     ],
     catalogTitle: "The catalog",
@@ -372,8 +371,8 @@ export const en = {
     },
     appsText: "One program: the window, and the command line.",
     anyDistribution: "Any distribution",
-    androidBeta:
-      "For ARM64 phones, and x86_64 for Chromebooks, with a USB adapter, without root. Tried so far on one phone (Android 16) with Linux images: check the drive afterwards.",
+    androidNote:
+      "For ARM64 phones, and x86_64 for Chromebooks, with a USB adapter, without root. Tried on five phones.",
     terminalText: "The repository of your package manager installs Bonk and keeps it up to date.",
     steps: { install: "Install", update: "Update", remove: "Remove" },
     cliText:
