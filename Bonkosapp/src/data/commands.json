@@ -106,8 +106,8 @@
         {
           "flag": "<TARGET>",
           "text": {
-            "en": "Stable disk identifier (see `bonk list --all`), its path (`/dev/sdb`), or an image file",
-            "fr": "Identifiant stable du disque (voir `bonk list --all`), son chemin (`/dev/sdb`) ou un fichier image"
+            "en": "Stable disk identifier (see `bonk list --all`), its path (`/dev/sdb`), an image file or its https:// address",
+            "fr": "Identifiant stable du disque (voir `bonk list --all`), son chemin (`/dev/sdb`), un fichier image ou son adresse https://"
           }
         }
       ],
@@ -726,8 +726,8 @@
         {
           "flag": "<TARGET>",
           "text": {
-            "en": "Stable disk identifier (see `bonk list --all`), its path (`/dev/sdb`), or an image file",
-            "fr": "Identifiant stable du disque (voir `bonk list --all`), son chemin (`/dev/sdb`) ou un fichier image"
+            "en": "Stable disk identifier (see `bonk list --all`), its path (`/dev/sdb`), an image file or its https:// address",
+            "fr": "Identifiant stable du disque (voir `bonk list --all`), son chemin (`/dev/sdb`), un fichier image ou son adresse https://"
           }
         }
       ],
@@ -1346,6 +1346,13 @@
             "en": "Download directory; by default the user's cache directory",
             "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
           }
+        },
+        {
+          "flag": "--families <FILE>",
+          "text": {
+            "en": "Vault families from this JSON file, checked by the catalog's rules, instead of the catalog's: for a family not published yet",
+            "fr": "Familles du coffre lues dans ce fichier JSON, contrôlées par les règles du catalogue, à la place de celles du catalogue : pour une famille pas encore publiée"
+          }
         }
       ]
     },
@@ -1526,8 +1533,15 @@
         {
           "flag": "--cache-dir <DIR>",
           "text": {
-            "en": "Download directory; by default the user's cache directory",
-            "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
+            "en": "Download directory, where the saved catalog gives the vault families; by default the user's cache directory",
+            "fr": "Dossier des téléchargements, où le catalogue enregistré donne les familles du coffre ; par défaut le dossier de cache de l'utilisateur"
+          }
+        },
+        {
+          "flag": "--families <FILE>",
+          "text": {
+            "en": "Vault families from this JSON file, checked by the catalog's rules, instead of the catalog's: for a family not published yet",
+            "fr": "Familles du coffre lues dans ce fichier JSON, contrôlées par les règles du catalogue, à la place de celles du catalogue : pour une famille pas encore publiée"
           }
         }
       ]
@@ -1725,6 +1739,13 @@
           "text": {
             "en": "Download directory; by default the user's cache directory",
             "fr": "Dossier des téléchargements ; par défaut le dossier de cache de l'utilisateur"
+          }
+        },
+        {
+          "flag": "--families <FILE>",
+          "text": {
+            "en": "Vault families from this JSON file, checked by the catalog's rules, instead of the catalog's: for a family not published yet",
+            "fr": "Familles du coffre lues dans ce fichier JSON, contrôlées par les règles du catalogue, à la place de celles du catalogue : pour une famille pas encore publiée"
           }
         }
       ]
