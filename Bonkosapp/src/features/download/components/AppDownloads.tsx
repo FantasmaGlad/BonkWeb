@@ -17,7 +17,7 @@ export function AppDownloads({ arch }: { arch: Arch | undefined }) {
             <p className={styles.status}>
               {[
                 text.common.status[group.status],
-                group.status === "beta" ? text.install.androidBeta : undefined,
+                group.os === "android" ? text.install.androidNote : undefined,
               ]
                 .filter(Boolean)
                 .join(" ")}

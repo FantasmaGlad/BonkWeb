@@ -4,7 +4,7 @@ export const OS_GROUPS: readonly OsGroup[] = [
   { os: "linux", name: "Linux", logo: "linux", status: "real" },
   { os: "windows", name: "Windows 10+", logo: "windows", status: "real" },
   { os: "macos", name: "macOS 12+", logo: "apple", status: "ci" },
-  { os: "android", name: "Android 8+", logo: "android", status: "beta" },
+  { os: "android", name: "Android 8+", logo: "android", status: "real" },
 ];
 
 export const ARCH_LABELS: Record<BuildArch, string> = {
