@@ -1229,8 +1229,8 @@
     {
       "command": "bonk vault init",
       "text": {
-        "en": "Prepare a disk to carry several ISO images: exFAT data partition and EFI boot partition. Erases everything",
-        "fr": "Prépare un disque pour porter plusieurs images ISO : partition de données exFAT et partition de démarrage EFI. Efface tout"
+        "en": "Prepare a disk to carry several ISO images: exFAT data partition and EFI boot partition, started in BIOS and UEFI with Secure Boot off (suspend BitLocker first on an encrypted Windows PC). Erases everything",
+        "fr": "Prépare un disque pour porter plusieurs images ISO : partition de données exFAT et partition de démarrage EFI, démarrées en BIOS et en UEFI, Secure Boot désactivé (suspendre BitLocker avant sur un PC Windows chiffré). Efface tout"
       },
       "args": [
         {
