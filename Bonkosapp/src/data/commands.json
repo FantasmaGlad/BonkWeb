@@ -106,8 +106,8 @@
         {
           "flag": "<TARGET>",
           "text": {
-            "en": "Stable disk identifier (see `bonk list --all`) or its path (`/dev/sdb`)",
-            "fr": "Identifiant stable du disque (voir `bonk list --all`) ou son chemin (`/dev/sdb`)"
+            "en": "Stable disk identifier (see `bonk list --all`), its path (`/dev/sdb`), or an image file",
+            "fr": "Identifiant stable du disque (voir `bonk list --all`), son chemin (`/dev/sdb`) ou un fichier image"
           }
         }
       ],
@@ -726,8 +726,8 @@
         {
           "flag": "<TARGET>",
           "text": {
-            "en": "Stable disk identifier (see `bonk list --all`) or its path (`/dev/sdb`)",
-            "fr": "Identifiant stable du disque (voir `bonk list --all`) ou son chemin (`/dev/sdb`)"
+            "en": "Stable disk identifier (see `bonk list --all`), its path (`/dev/sdb`), or an image file",
+            "fr": "Identifiant stable du disque (voir `bonk list --all`), son chemin (`/dev/sdb`) ou un fichier image"
           }
         }
       ],
