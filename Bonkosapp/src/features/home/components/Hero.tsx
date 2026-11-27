@@ -13,7 +13,7 @@ export function Hero({ next }: { next: string }) {
           <p className="lead">{text.home.lead}</p>
           <SmartDownload />
         </div>
-        <img className={styles.art} src="/bonk.png" alt="" width="377" height="471" />
+        <img className={styles.art} src="/bonk.png" alt="" width="480" height="480" />
       </div>
     </FirstScreen>
   );
