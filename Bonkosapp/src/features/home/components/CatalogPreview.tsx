@@ -11,13 +11,13 @@ import styles from "./CatalogPreview.module.css";
 const LOGOS = 9;
 const RECENT = 6;
 
-export function CatalogPreview() {
+export function CatalogPreview({ id }: { id: string }) {
   const text = useText();
   const language = useLanguage();
   const { catalog, failed } = useCatalog();
   const systems = catalog ? summarize(catalog) : [];
   return (
-    <section className={styles.section} aria-labelledby="catalog-title">
+    <section id={id} className={styles.section} aria-labelledby="catalog-title">
       <div className={styles.intro}>
         <h2 id="catalog-title">{text.home.catalogTitle}</h2>
         <p className="muted">{text.home.catalogText}</p>

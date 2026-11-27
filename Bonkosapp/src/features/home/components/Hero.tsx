@@ -6,7 +6,7 @@ import { SmartDownload } from "./SmartDownload";
 export function Hero({ next }: { next: string }) {
   const text = useText();
   return (
-    <FirstScreen labelledBy="hero-title" next={next} nextLabel={text.home.scroll}>
+    <FirstScreen labelledBy="hero-title" next={next} nextLabel={text.home.catalogTitle}>
       <div className={styles.body}>
         <div className={styles.text}>
           <h1 id="hero-title">{text.home.title}</h1>

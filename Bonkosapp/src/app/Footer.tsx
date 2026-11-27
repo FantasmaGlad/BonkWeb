@@ -1,6 +1,7 @@
 import {
   CATALOG_URL,
   COMMANDS_PAGE,
+  MIRROR,
   PACKAGES,
   RELEASES,
   SECURITY_MAIL,
@@ -38,6 +39,7 @@ const COLUMNS: readonly { title: keyof FooterText; links: readonly FooterLink[] 
     title: "project",
     links: [
       { href: SOURCE, label: "source" },
+      { href: MIRROR, label: "mirror" },
       { href: SECURITY_POLICY, label: "policy" },
       { href: `mailto:${SECURITY_MAIL}`, label: "security" },
     ],

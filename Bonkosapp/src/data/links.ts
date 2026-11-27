@@ -1,5 +1,7 @@
 export const SOURCE = "https://github.com/FantasmaGlad/Bonk";
 export const RELEASES = `${SOURCE}/releases/latest`;
+export const MIRROR = "https://gitlab.com/FantasmaGlad/Bonk";
+export const MIRROR_RELEASES = `${MIRROR}/-/releases`;
 export const SECURITY_MAIL = "security@bonk-os.app";
 export const COMMANDS_PAGE = "/commands/";
 export const PACKAGES = "https://packages.bonk-os.app";
