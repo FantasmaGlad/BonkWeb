@@ -20,6 +20,7 @@ export const fr: Dictionary = {
     systems: "Systèmes",
     download: "Télécharger",
     downloadMore: " et commandes",
+    gitlab: "Copie de secours sur GitLab",
     github: "Code source sur GitHub",
   },
   footer: {
@@ -32,6 +33,8 @@ export const fr: Dictionary = {
     download: "Télécharger",
     commands: "Commandes",
     source: "Code source",
+    mirror: "Copie de secours sur GitLab",
+    mirrorReleases: "copie de secours sur GitLab",
     releases: "Tous les fichiers et empreintes",
     allCommands: "Toutes les commandes",
     catalog: "Catalogue signé",
@@ -63,41 +66,6 @@ export const fr: Dictionary = {
     otherDevice: "Bonk fonctionne sur un ordinateur ou sous Android.",
     otherSystem: "Autre système",
     explore: "Explorer les systèmes",
-    scroll: "Fonctionnement",
-    howTitle: "Fonctionnement",
-    steps: [
-      {
-        title: "Choisissez un système",
-        text: "Dans le catalogue, ou un fichier image que vous avez déjà.",
-      },
-      {
-        title: "Bonk le récupère et le contrôle",
-        text: "L'image est téléchargée chez son éditeur et comparée au SHA-256 publié.",
-      },
-      {
-        title: "Bonk écrit la clé",
-        text: "La clé est écrite, puis relue pour confirmer chaque octet.",
-      },
-    ],
-    guaranteesTitle: "Ce dont Bonk se charge",
-    guarantees: [
-      {
-        title: "Contrôle SHA-256",
-        text: "Chaque image du catalogue est comparée à l'empreinte de son éditeur avant de toucher à la clé.",
-      },
-      {
-        title: "Disque système protégé",
-        text: "Le disque sur lequel tourne votre ordinateur n'est jamais proposé comme cible.",
-      },
-      {
-        title: "Images Windows préparées",
-        text: "Une ISO Windows est reconnue et disposée en clé d'installation, sans étape de plus.",
-      },
-      {
-        title: "Depuis un téléphone Android",
-        text: "Avec un adaptateur USB OTG et sans root, sur les téléphones ARM64.",
-      },
-    ],
     catalogTitle: "Le catalogue",
     catalogText:
       "Liens de téléchargement officiels et empreintes SHA-256, relus chaque jour chez chaque éditeur. Rien n'est hébergé ni modifié par Bonk.",

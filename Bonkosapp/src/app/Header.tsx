@@ -1,8 +1,9 @@
-import { SOURCE } from "../data/links";
+import { MIRROR, SOURCE } from "../data/links";
 import { useText } from "../i18n/I18nProvider";
 import { Link } from "../router/Link";
 import { useLocation } from "../router/Router";
 import { GitHubMark } from "../shared/components/GitHubMark";
+import { GitLabMark } from "../shared/components/GitLabMark";
 import styles from "./Header.module.css";
 import bar from "./Layout.module.css";
 import { PATHS, type View, viewOf } from "./routes";
@@ -30,8 +31,11 @@ export function Header() {
         <nav className={styles.nav} aria-label={text.nav.label}>
           {entry("marketplace", text.nav.systems)}
           {entry("download", text.nav.download, text.nav.downloadMore)}
-          <a className={styles.github} href={SOURCE} aria-label={text.nav.github}>
+          <a className={styles.mark} href={SOURCE} aria-label={text.nav.github}>
             <GitHubMark />
+          </a>
+          <a className={styles.mark} href={MIRROR} aria-label={text.nav.gitlab}>
+            <GitLabMark />
           </a>
         </nav>
       </div>

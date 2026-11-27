@@ -36,7 +36,7 @@
   color: var(--accent);
 }
 
-.nav .github {
+.nav .mark {
   display: inline-flex;
   padding: 0.25rem 0;
   border-bottom: 0;

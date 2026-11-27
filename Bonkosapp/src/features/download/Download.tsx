@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { COMMANDS_ANCHOR, PATHS } from "../../app/routes";
-import { RELEASES } from "../../data/links";
+import { MIRROR_RELEASES, RELEASES } from "../../data/links";
 import { RELEASE } from "../../data/releases";
 import { useLanguage, useText } from "../../i18n/I18nProvider";
 import { Breadcrumb } from "../../shared/components/Breadcrumb";
@@ -38,7 +38,8 @@ export function Download() {
         <h1 id="download-title">{text.title}</h1>
         <p className="lead">
           {text.intro(RELEASE.version, dateLabel(RELEASE.published, language))}{" "}
-          <a href={RELEASES}>{all.footer.releases}</a>
+          <a href={RELEASES}>{all.footer.releases}</a>,{" "}
+          <a href={MIRROR_RELEASES}>{all.footer.mirrorReleases}</a>
         </p>
         <nav aria-label={text.title}>
           <ul className={styles.contents}>

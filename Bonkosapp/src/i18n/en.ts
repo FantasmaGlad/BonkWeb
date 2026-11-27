@@ -19,6 +19,7 @@ export const en = {
     systems: "Systems",
     download: "Download",
     downloadMore: " and commands",
+    gitlab: "Backup copy on GitLab",
     github: "Source code on GitHub",
   },
   footer: {
@@ -31,6 +32,8 @@ export const en = {
     download: "Download",
     commands: "Commands",
     source: "Source code",
+    mirror: "Backup copy on GitLab",
+    mirrorReleases: "backup copy on GitLab",
     releases: "All files and checksums",
     allCommands: "All commands",
     catalog: "Signed catalog",
@@ -62,38 +65,6 @@ export const en = {
     otherDevice: "Bonk runs on a computer or on Android.",
     otherSystem: "Another system",
     explore: "Explore systems",
-    scroll: "How it works",
-    howTitle: "How it works",
-    steps: [
-      { title: "Choose a system", text: "From the catalog, or an image file you already have." },
-      {
-        title: "Bonk fetches and checks it",
-        text: "The image is downloaded from its publisher and compared with the published SHA-256.",
-      },
-      {
-        title: "Bonk writes the drive",
-        text: "The drive is written, then read back to confirm every byte.",
-      },
-    ],
-    guaranteesTitle: "What Bonk takes care of",
-    guarantees: [
-      {
-        title: "SHA-256 check",
-        text: "Every catalog image is checked against its publisher's hash before the drive is touched.",
-      },
-      {
-        title: "System disk protected",
-        text: "The disk your computer runs on is never offered as a target.",
-      },
-      {
-        title: "Windows images prepared",
-        text: "A Windows ISO is recognised and laid out as an installation drive, with no extra step.",
-      },
-      {
-        title: "From an Android phone",
-        text: "With a USB OTG adapter and without root, on ARM64 phones.",
-      },
-    ],
     catalogTitle: "The catalog",
     catalogText:
       "Official download links and SHA-256 hashes, read every day from each publisher. Bonk hosts and changes nothing.",

@@ -5,4 +5,5 @@
 - [Systems](https://bonk-os.app/images/): catalog of images, official links and hashes
 - [Download](https://bonk-os.app/install/): packages and commands
 - [Source](https://github.com/FantasmaGlad/Bonk)
+- [Backup copy on GitLab](https://gitlab.com/FantasmaGlad/Bonk)
 - [Catalog (JSON, signed)](https://catalog.bonk-os.app/v2/catalog.json)

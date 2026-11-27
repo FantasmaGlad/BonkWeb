@@ -104,7 +104,7 @@ ${errors
 </section>
 </main>
 <footer>
-<p><a href="https://bonk-os.app">bonk-os.app</a> · <a href="https://bonk-os.app/install/">Install</a> · <a href="https://catalog.bonk-os.app">catalog</a> · <a href="https://packages.bonk-os.app">packages</a> · <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a></p>
+<p><a href="https://bonk-os.app">bonk-os.app</a> · <a href="https://bonk-os.app/install/">Install</a> · <a href="https://catalog.bonk-os.app">catalog</a> · <a href="https://packages.bonk-os.app">packages</a> · <a href="https://github.com/FantasmaGlad/Bonk">GitHub</a> · <a href="https://gitlab.com/FantasmaGlad/Bonk">GitLab (backup)</a></p>
 </footer>
 </body>
 </html>
