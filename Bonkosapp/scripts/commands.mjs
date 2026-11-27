@@ -68,6 +68,7 @@ const page = `<!doctype html>
 <meta name="description" content="Every Bonk command, its options and its error codes, as printed by Bonk ${VERSION}.">
 <link rel="canonical" href="https://bonk-os.app/commands/">
 <link rel="icon" href="/favicon.ico">
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/commands/site.css">
 </head>
 <body>

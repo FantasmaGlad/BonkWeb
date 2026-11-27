@@ -25,7 +25,7 @@ export function Header() {
           to={PATHS.home}
           aria-current={current === "home" ? "page" : undefined}
         >
-          <img src="/logo.png" alt="" width="36" height="36" />
+          <img src="/logo.svg" alt="" width="36" height="36" />
           <span>Bonk</span>
         </Link>
         <nav className={styles.nav} aria-label={text.nav.label}>

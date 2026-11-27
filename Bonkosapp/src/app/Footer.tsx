@@ -53,7 +53,7 @@ export function Footer() {
       <nav className={styles.columns} aria-label={text.label}>
         <div className={styles.about}>
           <p className={styles.brand}>
-            <img src="/logo.png" alt="" width="32" height="32" />
+            <img src="/logo.svg" alt="" width="32" height="32" />
             <strong>Bonk</strong>
           </p>
           <p className="muted">{text.tagline}</p>
