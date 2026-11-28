@@ -6,7 +6,7 @@ import { buttonClass } from "../../../shared/components/button";
 import { CommandBlock } from "../../../shared/components/CommandBlock";
 import { CopyButton } from "../../../shared/components/CopyButton";
 import { writable } from "../../../shared/lib/catalog";
-import { exactBytes, sizeLabel } from "../../../shared/lib/format";
+import { sizeLabel, wholeNumber } from "../../../shared/lib/format";
 import type { CatalogImage } from "../../../types/catalog";
 import { useBonkLink } from "../hooks/useBonkLink";
 import { useCommandBuilder } from "../hooks/useCommandBuilder";
@@ -92,7 +92,7 @@ function Verification({
         {image.size_bytes ? (
           <div>
             <dt>{text.size}</dt>
-            <dd>{`${text.bytes(exactBytes(image.size_bytes, language))} (${size})`}</dd>
+            <dd>{`${text.bytes(wholeNumber(image.size_bytes, language))} (${size})`}</dd>
           </div>
         ) : null}
         <div>

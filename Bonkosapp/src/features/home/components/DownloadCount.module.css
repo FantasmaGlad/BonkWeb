@@ -1,0 +1,27 @@
+.badge {
+  display: inline-flex;
+  margin-top: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  overflow: hidden;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.label,
+.value {
+  padding: 0.1rem 0.6rem;
+}
+
+.label {
+  background: var(--sunk);
+  color: var(--muted);
+}
+
+.value {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
