@@ -60,8 +60,7 @@ export const en = {
     lead: "Bonk writes Linux, BSD and Windows images that come straight from their publishers.",
     download: "Download Bonk",
     downloads: "Downloads",
-    downloadsTitle:
-      "Downloads of Bonk's files on GitHub, every release still published, updated each day",
+    downloadsTitle: "Downloads from GitHub and from the package repositories, updated each day",
     downloadFor: (system: string) => `Download for ${system}`,
     detected: "Detected:",
     unknown: "Your browser does not say which computer this is.",

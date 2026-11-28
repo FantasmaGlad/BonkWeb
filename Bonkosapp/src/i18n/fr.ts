@@ -62,7 +62,7 @@ export const fr: Dictionary = {
     download: "Télécharger Bonk",
     downloads: "Téléchargements",
     downloadsTitle:
-      "Téléchargements des fichiers de Bonk sur GitHub, toutes les versions encore publiées, mis à jour chaque jour",
+      "Téléchargements depuis GitHub et les dépôts de paquets, mis à jour chaque jour",
     downloadFor: (system) => `Télécharger pour ${system}`,
     detected: "Détecté :",
     unknown: "Votre navigateur n'indique pas quel est cet ordinateur.",

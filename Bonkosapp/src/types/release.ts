@@ -8,7 +8,7 @@ export type Release = {
   published: string;
   base: string;
   assets: ReleaseAsset[];
-  /** Downloads of every file of every release still on GitHub, read at build time. */
+  /** Downloads of every release still on GitHub, and of the packages its repositories serve, read at build time. */
   downloads: number;
 };
 

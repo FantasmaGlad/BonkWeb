@@ -47,6 +47,21 @@ for (let page = 1; ; page += 1) {
   if (releases.length < 100) break;
 }
 
+// The packages its repositories serve themselves, counted each day on packages.bonk-os.app; Homebrew, the
+// scripts and Scoop reach GitHub through a redirect and are already in its count.
+const REPOSITORIES = ["apt", "rpm", "pacman", "termux"];
+const totals = await fetch(
+  "https://raw.githubusercontent.com/FantasmaGlad/bonk-packages/compteurs/totaux.json",
+).then(
+  (response) => (response.ok ? response.json() : null),
+  () => null,
+);
+if (totals) {
+  for (const repository of REPOSITORIES) downloads += totals[repository] ?? 0;
+} else {
+  console.warn("packages.bonk-os.app counts not read: GitHub downloads only");
+}
+
 const data = {
   version: release.tag_name.replace(/^v/, ""),
   tag: release.tag_name,
