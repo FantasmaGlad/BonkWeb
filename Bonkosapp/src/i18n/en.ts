@@ -211,7 +211,7 @@ export const en = {
     windows: "Windows (PowerShell)",
     termux: "Termux (Android)",
     termuxText:
-      "Without root, through termux-usb: the Termux:API app comes from the same source as Termux (F-Droid or GitHub). The script adds Bonk's repository to pkg, which then installs and updates it (pkg install bonk, pkg upgrade). Not yet tried on a phone.",
+      "Without root, through termux-usb: the Termux:API app comes from the same source as Termux (F-Droid or GitHub). The script adds Bonk's repository to pkg, which then installs and updates it (pkg install bonk, pkg upgrade).",
     cliPackages: "bonk-cli package",
     cliSwitch:
       "bonk and bonk-cli install the same command. APT, DNF, Zypper and pacman replace one with the other; with Homebrew and Scoop, remove the other first.",

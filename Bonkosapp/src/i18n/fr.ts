@@ -228,7 +228,7 @@ export const fr: Dictionary = {
     windows: "Windows (PowerShell)",
     termux: "Termux (Android)",
     termuxText:
-      "Sans root, par termux-usb : l'application Termux:API vient de la même source que Termux (F-Droid ou GitHub). Le script ajoute le dépôt de Bonk à pkg, qui l'installe puis le met à jour (pkg install bonk, pkg upgrade). Pas encore essayé sur un téléphone.",
+      "Sans root, par termux-usb : l'application Termux:API vient de la même source que Termux (F-Droid ou GitHub). Le script ajoute le dépôt de Bonk à pkg, qui l'installe puis le met à jour (pkg install bonk, pkg upgrade).",
     cliPackages: "Paquet bonk-cli",
     cliSwitch:
       "bonk et bonk-cli installent la même commande. APT, DNF, Zypper et pacman remplacent l'un par l'autre ; avec Homebrew et Scoop, retirez l'autre d'abord.",
