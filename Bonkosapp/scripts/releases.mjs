@@ -45,7 +45,7 @@ const counts = await fetch(
 );
 if (counts) {
   mkdirSync("public/api", { recursive: true });
-  writeFileSync("public/api/downloads.json", `${JSON.stringify(counts, null, 1)}\n`);
+  writeFileSync("public/api/downloads.json", `${JSON.stringify(counts, null, 2)}\n`);
 } else {
   console.warn("download counts not read: no badge and no /api/downloads.json");
 }
