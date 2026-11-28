@@ -60,6 +60,9 @@ export const fr: Dictionary = {
     title: "Mettez n'importe quel système sur une clé USB.",
     lead: "Bonk écrit les images Linux, BSD et Windows qui viennent directement de leurs éditeurs.",
     download: "Télécharger Bonk",
+    downloads: "Téléchargements",
+    downloadsTitle:
+      "Téléchargements des fichiers de Bonk sur GitHub, toutes les versions encore publiées, mis à jour chaque jour",
     downloadFor: (system) => `Télécharger pour ${system}`,
     detected: "Détecté :",
     unknown: "Votre navigateur n'indique pas quel est cet ordinateur.",

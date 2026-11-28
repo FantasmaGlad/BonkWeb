@@ -1,12 +1,12 @@
 import { expect, it } from "vitest";
-import { driveFor, exactBytes, ramLabel, sizeLabel } from "./format";
+import { driveFor, ramLabel, sizeLabel, wholeNumber } from "./format";
 
 it("écrit les tailles à la française et ne montre jamais 0.0 pour une petite image", () => {
   expect(sizeLabel(5_100_000_000, "en")).toBe("5.1 GB");
   expect(sizeLabel(5_100_000_000, "fr")).toBe("5,1 Go");
   expect(sizeLabel(17_350_656, "en")).toBe("17 MB");
   expect(sizeLabel(17_350_656, "fr")).toBe("17 Mo");
-  expect(exactBytes(6482409472, "en")).toBe("6,482,409,472");
+  expect(wholeNumber(6482409472, "en")).toBe("6,482,409,472");
 });
 
 it("écrit la mémoire dans l'unité de l'éditeur", () => {

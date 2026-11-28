@@ -14,8 +14,8 @@ export const sizeLabel = (bytes: number, language: Language): string =>
     ? `${Math.round(bytes / 1e6)} ${UNITS[language].mb}`
     : `${decimal((bytes / 1e9).toFixed(1), language)} ${UNITS[language].gb}`;
 
-export const exactBytes = (bytes: number, language: Language): string =>
-  new Intl.NumberFormat(language).format(bytes);
+export const wholeNumber = (value: number, language: Language): string =>
+  new Intl.NumberFormat(language).format(value);
 
 export const ramLabel = (megabytes: number, language: Language): string =>
   megabytes < 1024

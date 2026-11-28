@@ -15,6 +15,7 @@ const release = (version: string, without: string[] = []): Release => ({
     .map((build) => build.file.replaceAll("{version}", version))
     .filter((name) => !without.some((part) => name.includes(part)))
     .map((name) => ({ name, size: 1, sha256: "a".repeat(64) })),
+  downloads: 0,
 });
 
 const ALL = resolvePlatforms(APP_PLATFORMS, release("9.9.9"));
