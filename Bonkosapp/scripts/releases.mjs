@@ -55,7 +55,7 @@ const data = {
   version: release.tag_name.replace(/^v/, ""),
   tag: release.tag_name,
   published: release.published_at.slice(0, 10),
-  base,
+  base: `https://packages.bonk-os.app/dl/site/${release.tag_name}`,
   assets,
   downloads,
 };
