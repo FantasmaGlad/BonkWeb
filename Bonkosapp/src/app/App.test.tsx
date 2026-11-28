@@ -93,7 +93,7 @@ describe("accueil", () => {
       ["/?lang=fr", "Téléchargements", "fr"],
     ] as const) {
       open(address);
-      const count = new Intl.NumberFormat(language).format(RELEASE.downloads);
+      const count = new Intl.NumberFormat(language).format(Number(RELEASE.downloads));
       const badge = screen.getByRole("link", { name: `${label} ${count}` });
       expect(badge.getAttribute("href")).toBe(
         "https://github.com/FantasmaGlad/Bonk/releases/latest",

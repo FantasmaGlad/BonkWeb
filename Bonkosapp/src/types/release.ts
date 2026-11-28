@@ -8,8 +8,8 @@ export type Release = {
   published: string;
   base: string;
   assets: ReleaseAsset[];
-  /** Downloads of every release still on GitHub, and of the packages its repositories serve, read at build time. */
-  downloads: number;
+  /** Downloads of Bonk's program files on GitHub and of the packages its repositories serve; null when unread. */
+  downloads: number | null;
 };
 
 export type BuildArch = Arch | "universal";
