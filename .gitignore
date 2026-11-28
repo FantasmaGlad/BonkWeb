@@ -7,3 +7,4 @@ dist-ssr/
 Bonkosapp/public/version.txt
 Bonkosapp/src/data/releases.json
 Bonkosapp/public/api/
+Bonkosapp/src/data/catalogKeys.json

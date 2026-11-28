@@ -8,11 +8,11 @@
     "node": ">=24"
   },
   "scripts": {
-    "dev": "node scripts/releases.mjs --sample && vite",
-    "build": "node scripts/releases.mjs --sample && tsc --noEmit && vite build && vite build --ssr src/prerender.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "dev": "node scripts/catalog-keys.mjs && node scripts/releases.mjs --sample && vite",
+    "build": "node scripts/catalog-keys.mjs && node scripts/releases.mjs --sample && tsc --noEmit && vite build && vite build --ssr src/prerender.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "biome check .",
-    "test": "node scripts/releases.mjs --sample && vitest run"
+    "test": "node scripts/catalog-keys.mjs && node scripts/releases.mjs --sample && vitest run"
   },
   "dependencies": {
     "react": "^19.3.1",
