@@ -88,16 +88,16 @@ describe("accueil", () => {
   });
 
   it("montre les téléchargements de GitHub lus à la construction, dans la langue de la page", () => {
-    for (const [address, label, count] of [
-      ["/", "Downloads", "1,637"],
-      ["/?lang=fr", "Téléchargements", "1\u202f637"],
+    for (const [address, label, language] of [
+      ["/", "Downloads", "en"],
+      ["/?lang=fr", "Téléchargements", "fr"],
     ] as const) {
       open(address);
+      const count = new Intl.NumberFormat(language).format(RELEASE.downloads);
       const badge = screen.getByRole("link", { name: `${label} ${count}` });
       expect(badge.getAttribute("href")).toBe(
         "https://github.com/FantasmaGlad/Bonk/releases/latest",
       );
-      expect(RELEASE.downloads).toBe(1637);
       cleanup();
     }
   });
