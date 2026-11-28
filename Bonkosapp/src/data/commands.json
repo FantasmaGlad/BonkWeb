@@ -1329,8 +1329,8 @@
         {
           "flag": "--grub-dir <DIR>",
           "text": {
-            "en": "Folder holding the GRUB images (BOOTX64.EFI, BOOTAA64.EFI), for a machine without network: each checked against the hash of the last catalog seen",
-            "fr": "Dossier des images GRUB (BOOTX64.EFI, BOOTAA64.EFI), pour une machine sans réseau : chacune contrôlée par l'empreinte du dernier catalogue vu"
+            "en": "Folder holding the GRUB images (BOOTX64.EFI, BOOTAA64.EFI, bios/boot.img, bios/core.img), for a machine without network: each checked against the hash of the last catalog seen; without bios/core.img, the vault starts by UEFI only",
+            "fr": "Dossier des images GRUB (BOOTX64.EFI, BOOTAA64.EFI, bios/boot.img, bios/core.img), pour une machine sans réseau : chacune contrôlée par l'empreinte du dernier catalogue vu ; sans bios/core.img, le coffre ne démarre qu'en UEFI"
           }
         },
         {
@@ -1447,8 +1447,8 @@
         {
           "flag": "[ISO]",
           "text": {
-            "en": "ISO image to copy: Debian live, Ubuntu, Arch Linux, Fedora live or an Anaconda installer (AlmaLinux, Rocky Linux); spaces in its name become _",
-            "fr": "Image ISO à copier : Debian live, Ubuntu, Arch Linux, Fedora live ou un installateur Anaconda (AlmaLinux, Rocky Linux) ; les espaces de son nom deviennent _"
+            "en": "ISO image to copy, of a family the vault menu starts (`bonk info <iso>` names it); spaces in its name become _",
+            "fr": "Image ISO à copier, d'une famille que le menu du coffre démarre (`bonk info <iso>` la nomme) ; les espaces de son nom deviennent _"
           }
         }
       ],
@@ -1723,8 +1723,8 @@
         {
           "flag": "--grub-dir <DIR>",
           "text": {
-            "en": "Folder holding the GRUB images (BOOTX64.EFI, BOOTAA64.EFI), for a machine without network: each checked against the hash of the last catalog seen",
-            "fr": "Dossier des images GRUB (BOOTX64.EFI, BOOTAA64.EFI), pour une machine sans réseau : chacune contrôlée par l'empreinte du dernier catalogue vu"
+            "en": "Folder holding the GRUB images (BOOTX64.EFI, BOOTAA64.EFI, bios/boot.img, bios/core.img), for a machine without network: each checked against the hash of the last catalog seen; without bios/core.img, the vault starts by UEFI only",
+            "fr": "Dossier des images GRUB (BOOTX64.EFI, BOOTAA64.EFI, bios/boot.img, bios/core.img), pour une machine sans réseau : chacune contrôlée par l'empreinte du dernier catalogue vu ; sans bios/core.img, le coffre ne démarre qu'en UEFI"
           }
         },
         {
