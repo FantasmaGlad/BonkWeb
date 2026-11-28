@@ -7,6 +7,7 @@ import styles from "./DownloadCount.module.css";
 export function DownloadCount() {
   const text = useText().home;
   const language = useLanguage();
+  if (RELEASE.downloads === null) return null;
   return (
     <a className={styles.badge} href={RELEASES} title={text.downloadsTitle}>
       <span className={styles.label}>{text.downloads}</span>{" "}
